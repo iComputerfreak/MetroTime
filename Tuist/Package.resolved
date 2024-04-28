@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "jfswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iComputerfreak/JFSwiftUI",
+      "state" : {
+        "revision" : "f68cf65dd9e857c84e798c578d74d2fe4575d25a",
+        "version" : "1.3.2"
+      }
+    },
+    {
+      "identity" : "xmlcoder",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CoreOffice/XMLCoder",
+      "state" : {
+        "revision" : "b1e944cbd0ef33787b13f639a5418d55b3bed501",
+        "version" : "0.17.1"
+      }
+    }
+  ],
+  "version" : 2
+}

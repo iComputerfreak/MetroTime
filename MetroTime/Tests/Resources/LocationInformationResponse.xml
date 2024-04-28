@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Trias
+    xmlns="http://www.vdv.de/trias" version="1.2">
+    <ServiceDelivery>
+        <ResponseTimestamp
+            xmlns="http://www.siri.org.uk/siri">2024-04-28T13:38:58Z
+        </ResponseTimestamp>
+        <ProducerRef
+            xmlns="http://www.siri.org.uk/siri">EFAController10.3.18.46-EFA03
+        </ProducerRef>
+        <Status
+            xmlns="http://www.siri.org.uk/siri">true
+        </Status>
+        <MoreData>false</MoreData>
+        <Language>de</Language>
+        <CalcTime>576</CalcTime>
+        <DeliveryPayload>
+            <LocationInformationResponse>
+                <LocationResult>
+                    <Location>
+                        <StopPoint>
+                            <StopPointRef>de:08212:508</StopPointRef>
+                            <StopPointName>
+                                <Text>Otto-Sachs-Straße</Text>
+                                <Language>de</Language>
+                            </StopPointName>
+                            <LocalityRef>8212000:15</LocalityRef>
+                            <WheelchairAccessible>false</WheelchairAccessible>
+                            <Lighting>false</Lighting>
+                            <Covered>false</Covered>
+                        </StopPoint>
+                        <LocationName>
+                            <Text>Karlsruhe</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>8.38938</Longitude>
+                            <Latitude>49.00345</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.972000003</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500001266::8212000:-1:Otto-Sachs-Straße:Karlsruhe:Otto-Sachs-Straße::Otto-Sachs-Straße: 76133:ANY:DIVA_STREET:933931:5724440:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Karlsruhe, Otto-Sachs-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 76133</PostalCode>
+                            <LocalityName>Karlsruhe</LocalityName>
+                            <LocalityRef>8212000:-1</LocalityRef>
+                            <StreetName>Otto-Sachs-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Karlsruhe</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>8.38964</Longitude>
+                            <Latitude>49.00412</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.972000003</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000754::8121000:-1:Otto-Hahn-Straße:Heilbronn:Otto-Hahn-Straße::Otto-Hahn-Straße: 74078:ANY:DIVA_STREET:1018484:5692947:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Heilbronn, Otto-Hahn-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 74078</PostalCode>
+                            <LocalityName>Heilbronn</LocalityName>
+                            <LocalityRef>8121000:-1</LocalityRef>
+                            <StreetName>Otto-Hahn-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Heilbronn</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>9.14920</Longitude>
+                            <Latitude>49.18936</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.832000017</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000756::8121000:-1:Otto-Wels-Straße:Heilbronn:Otto-Wels-Straße::Otto-Wels-Straße: 74078:ANY:DIVA_STREET:1017183:5692085:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Heilbronn, Otto-Wels-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 74078</PostalCode>
+                            <LocalityName>Heilbronn</LocalityName>
+                            <LocalityRef>8121000:-1</LocalityRef>
+                            <StreetName>Otto-Wels-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Heilbronn</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>9.13751</Longitude>
+                            <Latitude>49.19442</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.832000017</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000755::8121000:-1:Otto-Kirchheimer-Straße:Heilbronn:Otto-Kirchheimer-Straße::Otto-Kirchheimer-Straße: 74080:ANY:DIVA_STREET:1022627:5702645:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Heilbronn, Otto-Kirchheimer-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 74080</PostalCode>
+                            <LocalityName>Heilbronn</LocalityName>
+                            <LocalityRef>8121000:-1</LocalityRef>
+                            <StreetName>Otto-Kirchheimer-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Heilbronn</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>9.18641</Longitude>
+                            <Latitude>49.13239</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.822000027</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <StopPoint>
+                            <StopPointRef>de:06631:22219</StopPointRef>
+                            <StopPointName>
+                                <Text>Wüstensachsen Otto-Keidel-Straße</Text>
+                                <Language>de</Language>
+                            </StopPointName>
+                            <LocalityRef>6631005:51</LocalityRef>
+                            <WheelchairAccessible>false</WheelchairAccessible>
+                            <Lighting>false</Lighting>
+                            <Covered>false</Covered>
+                        </StopPoint>
+                        <LocationName>
+                            <Text>Ehrenberg (Rhön)</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>9.99969</Longitude>
+                            <Latitude>50.49855</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.750999987</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000298::8128131:-1:Otto-Schott-Straße:Wertheim (TBB):Otto-Schott-Straße::Otto-Schott-Straße: 97877:ANY:DIVA_STREET:1056163:5590845:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Wertheim (TBB), Otto-Schott-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 97877</PostalCode>
+                            <LocalityName>Wertheim (TBB)</LocalityName>
+                            <LocalityRef>8128131:-1</LocalityRef>
+                            <StreetName>Otto-Schott-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Wertheim (TBB)</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>9.48767</Longitude>
+                            <Latitude>49.78518</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.828999996</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000189::8225109:-1:Otto-Hahn-Straße:Walldürn:Otto-Hahn-Straße::Otto-Hahn-Straße: 74731:ANY:DIVA_STREET:1042837:5627130:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Walldürn, Otto-Hahn-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 74731</PostalCode>
+                            <LocalityName>Walldürn</LocalityName>
+                            <LocalityRef>8225109:-1</LocalityRef>
+                            <StreetName>Otto-Hahn-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Walldürn</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>9.36796</Longitude>
+                            <Latitude>49.57427</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.776000023</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000190::8225109:-1:Otto-Hefner-Straße:Walldürn:Otto-Hefner-Straße::Otto-Hefner-Straße: 74731:ANY:DIVA_STREET:1042808:5624468:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Walldürn, Otto-Hefner-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 74731</PostalCode>
+                            <LocalityName>Walldürn</LocalityName>
+                            <LocalityRef>8225109:-1</LocalityRef>
+                            <StreetName>Otto-Hefner-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Walldürn</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>9.36770</Longitude>
+                            <Latitude>49.58977</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.772000015</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000180::8315015:-1:Otto-Gutmann-Straße:Breisach am Rhein:Otto-Gutmann-Straße::Otto-Gutmann-Straße: 79206:ANY:DIVA_STREET:846917:5889756:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Breisach am Rhein, Otto-Gutmann-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 79206</PostalCode>
+                            <LocalityName>Breisach am Rhein</LocalityName>
+                            <LocalityRef>8315015:-1</LocalityRef>
+                            <StreetName>Otto-Gutmann-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Breisach am Rhein</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>7.60798</Longitude>
+                            <Latitude>48.02037</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.772000015</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000106::8225109:-1:Heinrich-Otto-Straße:Walldürn:Heinrich-Otto-Straße::Heinrich-Otto-Straße: 74731:ANY:DIVA_STREET:1041705:5626130:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Walldürn, Heinrich-Otto-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 74731</PostalCode>
+                            <LocalityName>Walldürn</LocalityName>
+                            <LocalityRef>8225109:-1</LocalityRef>
+                            <StreetName>Heinrich-Otto-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Walldürn</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>9.35780</Longitude>
+                            <Latitude>49.58009</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.768999994</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000053::8236072:-1:Ernst-Sachs-Straße:Straubenhardt:Ernst-Sachs-Straße::Ernst-Sachs-Straße: 75334:ANY:DIVA_STREET:948553:5751219:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Straubenhardt, Ernst-Sachs-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 75334</PostalCode>
+                            <LocalityName>Straubenhardt</LocalityName>
+                            <LocalityRef>8236072:-1</LocalityRef>
+                            <StreetName>Ernst-Sachs-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Straubenhardt</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>8.52100</Longitude>
+                            <Latitude>48.84606</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.768999994</Probability>
+                </LocationResult>
+                <LocationResult>
+                    <Location>
+                        <Address>
+                            <AddressCode>streetID:1500000437::8127076:-1:Nelly-Sachs-Straße:Schwäbisch Hall:Nelly-Sachs-Straße::Nelly-Sachs-Straße: 74523:ANY:DIVA_STREET:1082473:5705067:MRCV:B_W</AddressCode>
+                            <AddressName>
+                                <Text>Schwäbisch Hall, Nelly-Sachs-Straße</Text>
+                                <Language>de</Language>
+                            </AddressName>
+                            <PostalCode> 74523</PostalCode>
+                            <LocalityName>Schwäbisch Hall</LocalityName>
+                            <LocalityRef>8127076:-1</LocalityRef>
+                            <StreetName>Nelly-Sachs-Straße</StreetName>
+                        </Address>
+                        <LocationName>
+                            <Text>Schwäbisch Hall</Text>
+                            <Language>de</Language>
+                        </LocationName>
+                        <GeoPosition>
+                            <Longitude>9.72402</Longitude>
+                            <Latitude>49.11815</Latitude>
+                        </GeoPosition>
+                    </Location>
+                    <Complete>true</Complete>
+                    <Probability>0.768999994</Probability>
+                </LocationResult>
+            </LocationInformationResponse>
+        </DeliveryPayload>
+    </ServiceDelivery>
+</Trias>
