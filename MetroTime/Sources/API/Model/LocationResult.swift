@@ -3,7 +3,7 @@
 import Foundation
 
 /// Resultatstruktur für ein Ortsobjekt
-struct LocationResult: Decodable {
+struct LocationResult: Codable {
     enum CodingKeys: String, CodingKey {
         case location = "Location"
         case complete = "Complete"

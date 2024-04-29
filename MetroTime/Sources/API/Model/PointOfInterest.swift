@@ -2,7 +2,6 @@
 
 import Foundation
 
-/// See 10.2.1 StopEventRequestStructure
-struct StopEventRequestStructure: Encodable {
+struct PointOfInterest: Codable {
     // TODO: Implement
 }

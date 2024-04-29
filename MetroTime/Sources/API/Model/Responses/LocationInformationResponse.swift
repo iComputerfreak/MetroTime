@@ -3,7 +3,7 @@
 import Foundation
 
 /// Fasst die Ergebnisdaten für eine Ortsinformationsanfrage zusammen
-struct LocationInformationResponse: Decodable {
+struct LocationInformationResponse: Codable {
     enum CodingKeys: String, CodingKey {
         case continueAt = "ContinueAt"
         case errorMessages = "ErrorMessage"

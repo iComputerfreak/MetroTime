@@ -2,7 +2,7 @@
 
 import Foundation
 
-struct InternationalText: Decodable {
+struct InternationalText: Codable {
     enum CodingKeys: String, CodingKey {
         case text = "Text"
         case textID = "TextId"

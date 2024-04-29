@@ -2,7 +2,7 @@
 
 import Foundation
 
-struct DeliveryPayload<Response: Decodable>: Decodable {
+struct DeliveryPayload<Response: Codable>: Codable {
     enum CodingKeys: CodingKey {
         case response(key: String)
         
@@ -32,5 +32,11 @@ struct DeliveryPayload<Response: Decodable>: Decodable {
         let key = CodingKeys.response(key: String(describing: Response.self))
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.response = try container.decode(Response.self, forKey: key)
+    }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        let key = CodingKeys.response(key: String(describing: Response.self))
+        try container.encode(response, forKey: key)
     }
 }

@@ -2,7 +2,7 @@
 
 import Foundation
 
-struct TriasResponse<Response: Decodable>: Decodable {
+struct TriasResponse<Response: Codable>: Codable {
     enum CodingKeys: String, CodingKey {
         case serviceDelivery = "ServiceDelivery"
     }

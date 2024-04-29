@@ -3,7 +3,7 @@
 import Foundation
 
 /// Geographische Position in WGS84
-struct GeoPosition: Decodable {
+struct GeoPosition: Codable {
     enum CodingKeys: String, CodingKey {
         case latitude = "Latitude"
         case longitude = "Longitude"

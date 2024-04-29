@@ -4,7 +4,7 @@ import Foundation
 
 /// Grundstruktur für jede TRIAS-spezifische Antwort
 /// - NOTE: See 7.1.4 ServiceDeliveryStructure
-struct ServiceDelivery<Response: Decodable>: Decodable {
+struct ServiceDelivery<Response: Codable>: Codable {
     enum CodingKeys: String, CodingKey {
         case responseTimestamp = "ResponseTimestamp"
         case producerRef = "ProducerRef"
