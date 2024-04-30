@@ -12,6 +12,7 @@ struct Location: Codable {
         case address = "Address"
         case locationName = "LocationName"
         case geoPosition = "GeoPosition"
+        case attributes = "Attribute"
     }
     
     /// Angaben zu einem Haltepunkt. Vgl. 7.5.2.
@@ -30,5 +31,6 @@ struct Location: Codable {
     /// Koordinatenposition. Vgl. 7.2.3.
     let geoPosition: GeoPosition
     
-    // TODO: Attributes
+    /// Attribute, die dem Ortspunkt zugeordnet sind. Vgl. 7.4.10
+    let attributes: [GeneralAttribute]?
 }

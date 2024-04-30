@@ -37,7 +37,7 @@ struct StopPoint: Codable {
     let estimatedBay: InternationalText?
     
     /// Privater Code für diesen Haltepunkt in einem anderen Schlüsselsystem. Vgl. 7.4.3.
-    let privateCodes: [String]?
+    let privateCodes: [PrivateCode]?
     /// Referenz auf die Haltestelle, zu der dieser Haltepunkt gehört. Vgl. 7.5.1
     let parentRef: String?
     /// Referenz auf die Ortschaft, zu der dieser Haltepunkt gehört. Vgl. 7.5.1.

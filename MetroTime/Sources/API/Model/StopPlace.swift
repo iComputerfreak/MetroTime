@@ -26,7 +26,7 @@ struct StopPlace: Codable {
     let nameSuffix: InternationalText?
     
     /// Privater Code für diese Haltestelle in einem anderen Schlüsselsystem.
-    let privateCodes: [String]?
+    let privateCodes: [PrivateCode]?
     /// Referenz auf die Ortschaft, zu der diese Haltestelle gehört. Vgl. 7.5.1.
     let localityRef: String?
     
