@@ -5,9 +5,51 @@ import JFSwiftUI
 import SwiftUI
 import XMLCoder
 
+struct DetailView: View {
+    enum LoadingState {
+        case loading
+        case loaded
+    }
+    
+    let stopID: String
+    
+    @State private var state: LoadingState = .loading
+    @State private var departures: [String] = []
+    
+    var body: some View {
+        Group {
+            switch state {
+            case .loading:
+                ProgressView()
+                    .task {
+                        do {
+                            try await fetchDepartures()
+                        } catch {
+                            print(error)
+                        }
+                    }
+                
+            case .loaded:
+                List {
+                    ForEach(Array(departures.enumerated()), id: \.offset) { _, departure in
+                        Text(departure)
+                    }
+                }
+            }
+        }
+        .navigationTitle(stopID)
+    }
+    
+    private func fetchDepartures() async throws {
+        try await Task.sleep(for: .seconds(1))
+        departures = ["Departure 1", "Departure 2", "Departure 3"]
+        state = .loaded
+    }
+}
+
 public struct ContentView: View {
     class ViewModel: ObservableObject {
-        @Published var results: [String] = []
+        @Published var results: [Location] = []
         @Published var searchText: String = ""
     }
     
@@ -18,7 +60,15 @@ public struct ContentView: View {
         NavigationStack {
             List {
                 ForEach(Array(viewModel.results.enumerated()), id: \.offset) { _, result in
-                    Text(result)
+                    NavigationLink {
+                        if let stopPointRef = result.stopPoint?.stopPointRef {
+                            DetailView(stopID: stopPointRef)
+                        } else {
+                            Text("No stop point reference found.")
+                        }
+                    } label: {
+                        Text(name(for: result))
+                    }
                 }
                 if viewModel.results.isEmpty {
                     Text("No results for term '\(viewModel.searchText)'.")
@@ -70,10 +120,7 @@ public struct ContentView: View {
             .sorted { result1, result2 in
                 (result1.probability ?? 0) < (result2.probability ?? 0)
             }
-            .compactMap { result in
-                let location = result.location
-                return name(for: location)
-            }
+            .map(\.location)
         self.viewModel.results = locations ?? []
     }
     
