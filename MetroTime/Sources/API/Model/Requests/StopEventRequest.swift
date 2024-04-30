@@ -19,5 +19,5 @@ struct LocationContext: Codable {
     /// Beabsichtigte Abfahrts- oder Ankunftszeit an dem in Location oder TripLocation bezeichneten Ort.
     let depArrTime: Date?
     /// Angaben des Benutzers, wie er/sie den Ort mittels IV erreichen/verlassen könnte (vgl. 7.3.2).
-    let individualTransportOptions: [IndividualTransportOption]?
+    let individualTransportOptions: [IndividualTransportOptions]?
 }

@@ -27,6 +27,15 @@ struct PointOfInterestCategory: Codable {
 
 /// Modellierung eines wichtigen Punkts (POI).
 struct PointOfInterest: Codable {
+    enum CodingKeys: String, CodingKey {
+        case pointOfInterestCode = "PointOfInterestCode"
+        case pointOfInterestName = "PointOfInterestName"
+        case nameSuffix = "NameSuffix"
+        case pointOfInterestCategory = "PointOfInterestCategory"
+        case privateCodes = "PrivateCode"
+        case localityRef = "LocalityRef"
+    }
+    
     /// Identifikator des wichtigen Punkts.
     let pointOfInterestCode: String
     /// Name des wichtigen Punkts für Fahrgastinformation
