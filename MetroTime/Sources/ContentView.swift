@@ -17,7 +17,7 @@ public struct ContentView: View {
     public var body: some View {
         NavigationStack {
             List {
-                ForEach(Array(viewModel.results.sorted().enumerated()), id: \.offset) { _, result in
+                ForEach(Array(viewModel.results.enumerated()), id: \.offset) { _, result in
                     Text(result)
                 }
                 if viewModel.results.isEmpty {
@@ -54,49 +54,73 @@ public struct ContentView: View {
     }
     
     private func search(for query: String) async throws {
-        guard let requestorRef = ProcessInfo.processInfo.environment["TRIAS_REQUESTOR_REF"] else {
-            print("NO REQUESTOR REF!")
-            return
-        }
-        let timestamp = ISO8601DateFormatter().string(from: .now)
-        
-        let session = URLSession.shared
         let url = URL(string: "https://projekte.kvv-efa.de/freytrias/trias")!
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("text/xml", forHTTPHeaderField: "Content-Type")
-        request.httpBody = """
-        <Trias version="1.2" xmlns="http://www.vdv.de/trias" xmlns:siri="http://www.siri.org.uk/siri">
-            <ServiceRequest>
-                <siri:RequestorRef>\(requestorRef)</siri:RequestorRef>
-                <siri:RequestTimestamp>\(timestamp)</siri:RequestTimestamp>
-                <RequestPayload>
-                    <LocationInformationRequest>
-                        <InitialInput>
-                            <LocationName>\(query)</LocationName>
-                        </InitialInput>
-                    </LocationInformationRequest>
-                </RequestPayload>
-            </ServiceRequest>
-        </Trias>
-        """.data(using: .utf8)
+        request.httpBody = try requestBody(for: query)
         
-        let (data, response) = try await session.data(for: request)
+        let response = try await decodeRequest(request)
+        let locations = response.locations?
+            .filter { result in
+                result.location.stopPoint != nil &&
+                result.location.locationName.text.contains("Karlsruhe")
+            }
+            .sorted { result1, result2 in
+                (result1.probability ?? 0) < (result2.probability ?? 0)
+            }
+            .compactMap { result in
+                let location = result.location
+                return name(for: location)
+            }
+        self.viewModel.results = locations ?? []
+    }
+    
+    private func name(for location: Location) -> String {
+        let name: String
+        if let stopPoint = location.stopPoint {
+            name = "StopPoint \(stopPoint.stopPointName.text)"
+        } else if let stopPlace = location.stopPlace {
+            name = "StopPlace \(stopPlace.stopPlaceName.text)"
+        } else if let locality = location.locality {
+            name = "Locality \(locality.localityName.text)"
+        } else if let pointOfInterest = location.pointOfInterest {
+            name = "PointOfInterest \(pointOfInterest.pointOfInterestName.text)"
+        } else if let address = location.address {
+            name = "Address \(address.streetName ?? "No Street")"
+        } else {
+            name = "Unknown Location"
+        }
+        
+        return "\(name) (\(location.locationName.text))"
+    }
+    
+    private func requestBody(for query: String) throws -> Data {
+        guard let requestorRef = ProcessInfo.processInfo.environment["TRIAS_REQUESTOR_REF"] else {
+            fatalError("NO REQUESTOR REF!")
+        }
+        
+        let requestBody = APIRequestFactory.createLocationInformationRequest(for: query, requestorRef: requestorRef)
+        let encoder = XMLEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        return try encoder.encode(requestBody, withRootKey: "Trias", rootAttributes: [
+            "version": "1.2",
+            "xmlns": "http://www.vdv.de/trias",
+            "xmlns:siri": "http://www.siri.org.uk/siri"
+        ])
+    }
+    
+    private func decodeRequest(_ request: URLRequest) async throws -> LocationInformationResponse {
+        let (data, response) = try await URLSession.shared.data(for: request)
         if let response = response as? HTTPURLResponse, response.statusCode != 200 {
             print("Request returned HTTP \(response.statusCode):\n\(String(data: data, encoding: .utf8) ?? "NO DATA")")
         }
         let decoder = XMLDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let decoded = try decoder.decode(TriasResponse<LocationInformationResponse>.self, from: data)
-        print(decoded)
-        let locations = decoded.serviceDelivery.payload.response.locations?
-            .compactMap { result in
-                let location = result.location
-                let locationName = location.locationName.text
-                let stopName = location.stopPoint?.stopPointName.text
-                return "\(stopName ?? "") (\(locationName))"
-            }
-        self.viewModel.results = locations ?? []
+        
+        return decoded.serviceDelivery.payload.requestOrResponse
     }
 }
 
