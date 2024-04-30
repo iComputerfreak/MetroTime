@@ -7,7 +7,7 @@ let project = Project(
             name: "MetroTime",
             destinations: .iOS,
             product: .app,
-            productName: "MetroTime2",
+            productName: "MetroTime",
             bundleId: "de.JonasFrey.MetroTime",
             deploymentTargets: .iOS("16.0"),
             infoPlist: .extendingDefault(
