@@ -1,4 +1,4 @@
-@testable import MetroTime2
+@testable import MetroTime
 
 import Foundation
 import XCTest
@@ -38,7 +38,7 @@ extension MetroTimeTests {
         XCTAssertEqual(response.serviceDelivery.language, "de")
         XCTAssertEqual(response.serviceDelivery.calcTime, 576)
         
-        let payload = response.serviceDelivery.payload.response
+        let payload = response.serviceDelivery.payload.requestOrResponse
         XCTAssertNil(payload.continueAt)
         XCTAssertNil(payload.errorMessages)
         
