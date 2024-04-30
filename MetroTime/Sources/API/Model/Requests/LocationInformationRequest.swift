@@ -22,4 +22,14 @@ struct LocationInformationRequest: Codable {
     let locationRef: LocationRef?
     /// Weitere Anfrageparameter. Vgl. 8.3.7.
     let locationParam: LocationParam?
+    
+    init(
+        initialInput: InitialLocationInput? = nil,
+        locationRef: LocationRef? = nil,
+        locationParam: LocationParam? = nil
+    ) {
+        self.initialInput = initialInput
+        self.locationRef = locationRef
+        self.locationParam = locationParam
+    }
 }

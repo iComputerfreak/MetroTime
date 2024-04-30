@@ -49,4 +49,28 @@ struct StopEventParam: Codable {
     let includeOperatingDays: Bool?
     /// Steuert, ob Echtzeitdaten berücksichtigt und ausgegeben werden sollen
     let includeRealtimeData: Bool?
+    
+    init(
+        ptModeFilter: PTModeFilter? = nil,
+        lineFilter: LineDirectionFilter? = nil,
+        operatorFilter: OperatorFilter? = nil,
+        numberOfResults: Int? = nil,
+        timeWindow: XMLDuration? = nil,
+        stopEventType: StopEventType? = nil,
+        includePreviousCalls: Bool? = nil,
+        includeOnwardCalls: Bool? = nil,
+        includeOperatingDays: Bool? = nil,
+        includeRealtimeData: Bool? = nil
+    ) {
+        self.ptModeFilter = ptModeFilter
+        self.lineFilter = lineFilter
+        self.operatorFilter = operatorFilter
+        self.numberOfResults = numberOfResults
+        self.timeWindow = timeWindow
+        self.stopEventType = stopEventType
+        self.includePreviousCalls = includePreviousCalls
+        self.includeOnwardCalls = includeOnwardCalls
+        self.includeOperatingDays = includeOperatingDays
+        self.includeRealtimeData = includeRealtimeData
+    }
 }

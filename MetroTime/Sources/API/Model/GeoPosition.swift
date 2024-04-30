@@ -16,4 +16,14 @@ struct GeoPosition: Codable {
     let longitude: Double
     /// Höhe über dem Meeresspiegel in Meter.
     let altitude: Double?
+    
+    init(
+        latitude: Double,
+        longitude: Double,
+        altitude: Double? = nil
+    ) {
+        self.latitude = latitude
+        self.longitude = longitude
+        self.altitude = altitude
+    }
 }

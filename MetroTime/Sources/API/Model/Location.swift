@@ -33,4 +33,24 @@ struct Location: Codable {
     
     /// Attribute, die dem Ortspunkt zugeordnet sind. Vgl. 7.4.10
     let attributes: [GeneralAttribute]?
+    
+    init(
+        stopPoint: StopPoint? = nil,
+        stopPlace: StopPlace? = nil,
+        locality: Locality? = nil,
+        pointOfInterest: PointOfInterest? = nil,
+        address: Address? = nil,
+        locationName: InternationalText,
+        geoPosition: GeoPosition,
+        attributes: [GeneralAttribute]? = nil
+    ) {
+        self.stopPoint = stopPoint
+        self.stopPlace = stopPlace
+        self.locality = locality
+        self.pointOfInterest = pointOfInterest
+        self.address = address
+        self.locationName = locationName
+        self.geoPosition = geoPosition
+        self.attributes = attributes
+    }
 }

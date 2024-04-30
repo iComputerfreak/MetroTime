@@ -42,4 +42,30 @@ struct Address: Codable {
     let houseNumber: String?
     /// Name der kreuzenden Straße
     let crossingStreet: String?
+    
+    init(
+        addressCode: String,
+        addressName: InternationalText,
+        privateCodes: [PrivateCode]? = nil,
+        nameSuffix: InternationalText? = nil,
+        countryName: String? = nil,
+        postalCode: String? = nil,
+        localityName: String? = nil,
+        localityRef: String? = nil,
+        streetName: String? = nil,
+        houseNumber: String? = nil,
+        crossingStreet: String? = nil
+    ) {
+        self.addressCode = addressCode
+        self.addressName = addressName
+        self.privateCodes = privateCodes
+        self.nameSuffix = nameSuffix
+        self.countryName = countryName
+        self.postalCode = postalCode
+        self.localityName = localityName
+        self.localityRef = localityRef
+        self.streetName = streetName
+        self.houseNumber = houseNumber
+        self.crossingStreet = crossingStreet
+    }
 }

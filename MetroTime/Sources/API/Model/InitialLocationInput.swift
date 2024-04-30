@@ -22,4 +22,10 @@ struct InitialLocationInput: Codable {
     let geoPosition: GeoPosition?
     /// Geografischer Filter. Falls angegeben, müssen alle gefundenene Ortsobjekte diesem Filter entsprechen. Vgl. 8.3.3.
     let geoRestriction: GeoRestrictions?
+    
+    init(locationName: String? = nil, geoPosition: GeoPosition? = nil, geoRestriction: GeoRestrictions? = nil) {
+        self.locationName = locationName
+        self.geoPosition = geoPosition
+        self.geoRestriction = geoRestriction
+    }
 }

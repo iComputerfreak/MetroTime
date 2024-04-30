@@ -20,4 +20,14 @@ struct LocationInformationResponse: Codable {
     /// Gefundene Ortsobjektergebnisse.
     /// Die Ortsobjekte müssen nach dem Übereinstimmungsgrad mit den Eingabedaten sortiert sein, d.h. das erste ist das am besten passende Objekt. Vgl. 8.4.2
     let locations: [LocationResult]?
+    
+    init(
+        continueAt: Int? = nil,
+        errorMessages: [String]? = nil,
+        locations: [LocationResult]? = nil
+    ) {
+        self.continueAt = continueAt
+        self.errorMessages = errorMessages
+        self.locations = locations
+    }
 }

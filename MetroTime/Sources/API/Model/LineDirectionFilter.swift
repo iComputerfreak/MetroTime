@@ -13,4 +13,9 @@ struct LineDirectionFilter: Codable {
     /// Indikator, ob die Linien(richtungen) dieser Liste in die Suche aufgenommen oder von ihr ausgeschlossen werden sollen.
     /// Default ist Ausschluss (Exclude).
     let exclude: Bool?
+    
+    init(line: [LineDirection], exclude: Bool? = true) {
+        self.line = line
+        self.exclude = exclude
+    }
 }

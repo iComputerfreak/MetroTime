@@ -12,4 +12,12 @@ struct PointOfInterestFilter: Codable {
     /// Vgl. 7.5.6. Wenn mehrere aufgelistet sind, werden die Kategorien bei der Suche mit einem logischen „ODER“ (im Fall von Exclude=`false`)
     /// bzw. mit einem logischen „UND“ (im Fall von Exclude=`true`) berücksichtigt
     let pointOfInterestCategories: [PointOfInterestCategory]
+    
+    init(
+        exclude: Bool? = nil,
+        pointOfInterestCategories: [PointOfInterestCategory]
+    ) {
+        self.exclude = exclude
+        self.pointOfInterestCategories = pointOfInterestCategories
+    }
 }

@@ -12,4 +12,10 @@ struct InternationalText: Codable {
     let text: String
     let textID: String?
     let language: String?
+    
+    init(text: String, textID: String? = nil, language: String? = nil) {
+        self.text = text
+        self.textID = textID
+        self.language = language
+    }
 }

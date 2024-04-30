@@ -65,4 +65,36 @@ struct ServiceDelivery<Response: Codable>: Codable {
     // MARK: -
     /// Dienstspezifischer Antwortinhalt (vgl. 7.1.5)
     let payload: ServicePayload<Response>
+    
+    init(
+        responseTimestamp: Date,
+        producerRef: String,
+        payload: ServicePayload<Response>,
+        address: String? = nil,
+        responseMessageIdentifier: String? = nil,
+        requestMessageRef: String? = nil,
+        status: Bool? = nil,
+        errorCondition: String? = nil,
+        moreData: Bool? = nil,
+        dataVersion: String? = nil,
+        language: String? = nil,
+        calcTime: Int? = nil,
+        signature: String? = nil,
+        certificateID: String? = nil
+    ) {
+        self.responseTimestamp = responseTimestamp
+        self.producerRef = producerRef
+        self.address = address
+        self.responseMessageIdentifier = responseMessageIdentifier
+        self.requestMessageRef = requestMessageRef
+        self.status = status
+        self.errorCondition = errorCondition
+        self.moreData = moreData
+        self.dataVersion = dataVersion
+        self.language = language
+        self.calcTime = calcTime
+        self.signature = signature
+        self.certificateID = certificateID
+        self.payload = payload
+    }
 }

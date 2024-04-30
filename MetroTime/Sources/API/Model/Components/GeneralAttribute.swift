@@ -26,4 +26,18 @@ struct GeneralAttribute: Codable {
     let importance: Double?
     /// URL zu weiteren Informationen über dieses Attribut. Falls vorhanden, soll der gesamte Text als Link zu dieser URL gekennzeichnet werden
     let infoURL: URL?
+    
+    init(
+        text: InternationalText,
+        code: String,
+        mandatory: Bool? = nil,
+        importance: Double? = nil,
+        infoURL: URL? = nil
+    ) {
+        self.text = text
+        self.code = code
+        self.mandatory = mandatory
+        self.importance = importance
+        self.infoURL = infoURL
+    }
 }

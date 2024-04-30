@@ -13,4 +13,9 @@ struct StopEventRequest: Encodable {
     let location: LocationContext
     /// Spezifische Anfrageparameter. Vgl. 10.2.2.
     let params: StopEventParam?
+    
+    init(location: LocationContext, params: StopEventParam? = nil) {
+        self.location = location
+        self.params = params
+    }
 }

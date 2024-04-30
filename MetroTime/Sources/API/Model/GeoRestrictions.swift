@@ -16,4 +16,10 @@ struct GeoRestrictions: Codable {
     let rectangle: GeoRectangle?
     /// Der Filter wird durch ein Polygon definiert. Vgl. 8.3.6.
     let area: GeoArea?
+    
+    init(circle: GeoCircle? = nil, rectangle: GeoRectangle? = nil, area: GeoArea? = nil) {
+        self.circle = circle
+        self.rectangle = rectangle
+        self.area = area
+    }
 }

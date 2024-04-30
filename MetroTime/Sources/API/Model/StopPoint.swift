@@ -50,4 +50,30 @@ struct StopPoint: Codable {
     let lighting: Bool?
     /// Angabe, ob dieser Haltepunkt Witterungsschutz bietet (vor Regen, Schnee, Sturm etc.).
     let covered: Bool?
+    
+    init(
+        stopPointRef: String,
+        stopPointName: InternationalText,
+        nameSuffix: InternationalText? = nil,
+        plannedBay: InternationalText? = nil,
+        estimatedBay: InternationalText? = nil,
+        privateCodes: [PrivateCode]? = nil,
+        parentRef: String? = nil,
+        localityRef: String? = nil,
+        wheelchairAccessible: Bool? = nil,
+        lighting: Bool? = nil,
+        covered: Bool? = nil
+    ) {
+        self.stopPointRef = stopPointRef
+        self.stopPointName = stopPointName
+        self.nameSuffix = nameSuffix
+        self.plannedBay = plannedBay
+        self.estimatedBay = estimatedBay
+        self.privateCodes = privateCodes
+        self.parentRef = parentRef
+        self.localityRef = localityRef
+        self.wheelchairAccessible = wheelchairAccessible
+        self.lighting = lighting
+        self.covered = covered
+    }
 }

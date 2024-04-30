@@ -37,4 +37,24 @@ struct StopPlace: Codable {
     let lighting: Bool?
     /// Angabe, ob dieser Haltepunkt Witterungsschutz bietet (vor Regen, Schnee, Sturm etc.).
     let covered: Bool?
+    
+    init(
+        stopPlaceRef: String,
+        stopPlaceName: InternationalText,
+        nameSuffix: InternationalText? = nil,
+        privateCodes: [PrivateCode]? = nil,
+        localityRef: String? = nil,
+        wheelchairAccessible: Bool? = nil,
+        lighting: Bool? = nil,
+        covered: Bool? = nil
+    ) {
+        self.stopPlaceRef = stopPlaceRef
+        self.stopPlaceName = stopPlaceName
+        self.nameSuffix = nameSuffix
+        self.privateCodes = privateCodes
+        self.localityRef = localityRef
+        self.wheelchairAccessible = wheelchairAccessible
+        self.lighting = lighting
+        self.covered = covered
+    }
 }

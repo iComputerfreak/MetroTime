@@ -31,4 +31,20 @@ struct IndividualTransportOptions: Codable {
     /// Werte kleiner 100 verringern die Geschwindigkeit,
     /// Werte größer 100 vergrößern die Geschwindigkeit anteilig.
     let speed: Double?
+    
+    init(
+        mode: IndividualMode,
+        maxDistance: Int? = nil,
+        maxDuration: XMLDuration? = nil,
+        minDistance: Int? = nil,
+        minDuration: Duration? = nil,
+        speed: Double? = nil
+    ) {
+        self.mode = mode
+        self.maxDistance = maxDistance
+        self.maxDuration = maxDuration
+        self.minDistance = minDistance
+        self.minDuration = minDuration
+        self.speed = speed
+    }
 }

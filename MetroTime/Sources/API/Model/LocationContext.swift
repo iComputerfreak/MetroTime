@@ -19,4 +19,16 @@ struct LocationContext: Codable {
     let depArrTime: Date?
     /// Angaben des Benutzers, wie er/sie den Ort mittels IV erreichen/verlassen könnte (vgl. 7.3.2).
     let individualTransportOptions: [IndividualTransportOptions]?
+    
+    init(
+        locationRef: String? = nil,
+        tripLocation: TripLocation? = nil,
+        depArrTime: Date? = nil,
+        individualTransportOptions: [IndividualTransportOptions]? = nil
+    ) {
+        self.locationRef = locationRef
+        self.tripLocation = tripLocation
+        self.depArrTime = depArrTime
+        self.individualTransportOptions = individualTransportOptions
+    }
 }

@@ -22,4 +22,18 @@ struct Locality: Codable {
     let parentRef: String?
     /// Polygonzug, der das Gebiet der Ortschaft beschreibt.
     let points: [GeoPosition]
+    
+    init(
+        localityCode: String,
+        localityName: InternationalText,
+        privateCodes: [PrivateCode]?,
+        parentRef: String?,
+        points: [GeoPosition]
+    ) {
+        self.localityCode = localityCode
+        self.localityName = localityName
+        self.privateCodes = privateCodes
+        self.parentRef = parentRef
+        self.points = points
+    }
 }

@@ -14,4 +14,9 @@ struct OperatorFilter: Codable {
     let exclude: Bool?
     /// Referenz auf Verkehrsunternehmen. Vgl. 7.4.1.
     let operatorRef: [String]?
+    
+    init(exclude: Bool? = nil, operatorRef: [String]? = nil) {
+        self.exclude = exclude
+        self.operatorRef = operatorRef
+    }
 }

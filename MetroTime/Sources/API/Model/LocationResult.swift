@@ -20,4 +20,16 @@ struct LocationResult: Codable {
     /// Auflistung der Verkehrsmittel, die an dem Ortsobjekt verkehren.
     /// Sollte nur bei Haltestellen gefüllt sein und nur dann, wenn es in der Anfrage angefordert wurde. Vgl. 7.3.4
     let modes: [String]?
+    
+    init(
+        location: Location,
+        complete: Bool,
+        probability: Double? = nil,
+        modes: [String]? = nil
+    ) {
+        self.location = location
+        self.complete = complete
+        self.probability = probability
+        self.modes = modes
+    }
 }

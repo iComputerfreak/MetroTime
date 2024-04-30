@@ -48,4 +48,20 @@ struct PointOfInterest: Codable {
     let privateCodes: [PrivateCode]?
     /// Referenz auf die zugeordnete Ortschaft, zu der dieser wichtige Punkt gehört. Vgl. 7.5.1.
     let localityRef: String?
+    
+    init(
+        pointOfInterestCode: String,
+        pointOfInterestName: InternationalText,
+        nameSuffix: InternationalText? = nil,
+        pointOfInterestCategory: PointOfInterestCategory? = nil,
+        privateCodes: [PrivateCode]? = nil,
+        localityRef: String? = nil
+    ) {
+        self.pointOfInterestCode = pointOfInterestCode
+        self.pointOfInterestName = pointOfInterestName
+        self.nameSuffix = nameSuffix
+        self.pointOfInterestCategory = pointOfInterestCategory
+        self.privateCodes = privateCodes
+        self.localityRef = localityRef
+    }
 }

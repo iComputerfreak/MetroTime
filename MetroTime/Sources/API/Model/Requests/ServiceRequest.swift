@@ -46,4 +46,26 @@ struct ServiceRequest<Request: Codable>: Codable {
     // MARK: -
     /// Dienstspezifischer Anfrageinhalt (vgl. 7.1.3).
     let payload: ServicePayload<Request>
+    
+    init(
+        requestTimestamp: Date,
+        address: String? = nil,
+        requestorRef: String,
+        messageIdentifier: String? = nil,
+        dataVersion: String? = nil,
+        language: String? = nil,
+        signature: String? = nil,
+        certificateID: String? = nil,
+        payload: ServicePayload<Request>
+    ) {
+        self.requestTimestamp = requestTimestamp
+        self.address = address
+        self.requestorRef = requestorRef
+        self.messageIdentifier = messageIdentifier
+        self.dataVersion = dataVersion
+        self.language = language
+        self.signature = signature
+        self.certificateID = certificateID
+        self.payload = payload
+    }
 }

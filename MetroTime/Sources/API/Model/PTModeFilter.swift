@@ -35,4 +35,12 @@ struct PTModeFilter: Codable {
     let ptModes: [PTMode]?
     
     // NOTE: PtSubmodeChoiceGroup not implemented
+    
+    init(
+        exclude: Bool? = nil,
+        ptModes: [PTMode]? = nil
+    ) {
+        self.exclude = exclude
+        self.ptModes = ptModes
+    }
 }

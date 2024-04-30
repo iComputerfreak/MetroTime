@@ -29,4 +29,22 @@ struct LocationRef: Codable {
     
     /// Name oder Bezeichnung des Ortspunkts
     let locationName: InternationalText
+    
+    init(
+        stopPointRef: String? = nil,
+        stopPlaceRef: String? = nil,
+        geoPosition: GeoPosition? = nil,
+        localityRef: String? = nil,
+        pointOfInterestRef: String? = nil,
+        addressRef: String,
+        locationName: InternationalText
+    ) {
+        self.stopPointRef = stopPointRef
+        self.stopPlaceRef = stopPlaceRef
+        self.geoPosition = geoPosition
+        self.localityRef = localityRef
+        self.pointOfInterestRef = pointOfInterestRef
+        self.addressRef = addressRef
+        self.locationName = locationName
+    }
 }

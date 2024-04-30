@@ -13,4 +13,9 @@ struct LineDirection: Codable {
     let lineRef: String
     /// Referenz auf die Linienrichtung. Vgl. 7.4.1.
     let directionRef: String?
+    
+    init(lineRef: String, directionRef: String? = nil) {
+        self.lineRef = lineRef
+        self.directionRef = directionRef
+    }
 }
