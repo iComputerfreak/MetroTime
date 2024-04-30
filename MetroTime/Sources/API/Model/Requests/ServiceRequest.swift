@@ -5,15 +5,15 @@ import Foundation
 /// Grundstruktur für jede TRIAS-Anfrage (ohne Abonnement).
 struct ServiceRequest<Request: Codable>: Codable {
     enum CodingKeys: String, CodingKey {
-        case requestTimestamp = "RequestTimestamp"
+        case requestTimestamp = "siri:RequestTimestamp"
         case address = "Address"
-        case requestorRef = "RequestorRef"
+        case requestorRef = "siri:RequestorRef"
         case messageIdentifier = "MessageIdentifier"
         case dataVersion = "DataVersion"
         case language = "Language"
         case signature = "Signature"
         case certificateID = "CertificateId"
-        case payload = "Payload"
+        case payload = "RequestPayload"
     }
     
     // MARK: - Inherited from AbstractTriasResponse

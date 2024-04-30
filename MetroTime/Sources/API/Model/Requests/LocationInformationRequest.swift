@@ -5,7 +5,7 @@ import Foundation
 /// Fasst die Daten Ortsobjektanfrage zusammen
 struct LocationInformationRequest: Codable {
     enum CodingKeys: String, CodingKey {
-        case initialInput = "InitialLocationInput"
+        case initialInput = "InitialInput"
         case locationRef = "LocationRef"
         case locationParam = "LocationParam"
     }
