@@ -17,7 +17,7 @@ let project = Project(
             ),
             sources: ["MetroTime/Sources/**"],
             resources: ["MetroTime/Resources/**"],
-            scripts: [.pre(script: """
+            scripts: [.post(script: """
             if [[ "$(uname -m)" == arm64 ]]; then
                 export PATH="/opt/homebrew/bin:$PATH"
             fi

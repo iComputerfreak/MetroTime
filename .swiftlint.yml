@@ -24,7 +24,6 @@ opt_in_rules:
 - file_name
 - file_types_order
 - first_where
-- function_default_parameter_at_end
 - is_disjoint
 - joined_default_parameter
 - let_var_whitespace
