@@ -3,7 +3,7 @@
 import Foundation
 
 /// Fasst die Anfragedaten für eine Abfahrts- oder Ankunftstafel zusammen
-struct StopEventRequest: Encodable {
+struct StopEventRequest: Codable {
     enum CodingKeys: String, CodingKey {
         case location = "Location"
         case params = "Params"

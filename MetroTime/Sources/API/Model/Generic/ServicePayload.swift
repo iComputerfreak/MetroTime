@@ -2,6 +2,7 @@
 
 import Foundation
 
+// TODO: We shouldn't require requests to be decodable and responses to be encodable
 struct ServicePayload<RequestOrResponse: Codable>: Codable {
     enum CodingKeys: CodingKey {
         case requestOrResponse(key: String)

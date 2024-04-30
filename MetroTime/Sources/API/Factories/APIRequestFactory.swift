@@ -25,4 +25,26 @@ enum APIRequestFactory {
             )
         )
     }
+    
+    static func createStopEventRequest(
+        for stopID: String,
+        requestorRef: String
+    ) -> TriasRequest<StopEventRequest> {
+        TriasRequest(
+            serviceRequest: .init(
+                requestTimestamp: .now,
+                requestorRef: requestorRef,
+                payload: .init(
+                    requestOrResponse: StopEventRequest(
+                        location: .init(locationRef: stopID),
+                        params: .init(
+                            lineFilter: nil,
+                            stopEventType: .departure,
+                            includeRealtimeData: true
+                        )
+                    )
+                )
+            )
+        )
+    }
 }
