@@ -64,5 +64,5 @@ struct ServiceDelivery<Response: Codable>: Codable {
     
     // MARK: -
     /// Dienstspezifischer Antwortinhalt (vgl. 7.1.5)
-    let payload: DeliveryPayload<Response>
+    let payload: ServicePayload<Response>
 }

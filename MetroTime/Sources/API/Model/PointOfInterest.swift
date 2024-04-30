@@ -21,7 +21,7 @@ struct PointOfInterestCategory: Codable {
         case osmTags = "OsmTag"
     }
     
-    /// Liste der POI-Kategorien, definiert durch Schlüssel-Wert-Paare wie in OpenStreetMap.7 Vgl. 7.5.7
+    /// Liste der POI-Kategorien, definiert durch Schlüssel-Wert-Paare wie in OpenStreetMap 7 Vgl. 7.5.7
     let osmTags: [OSMTag]
 }
 
