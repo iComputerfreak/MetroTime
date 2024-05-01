@@ -36,12 +36,17 @@ enum APIRequestFactory {
                 requestorRef: requestorRef,
                 payload: .init(
                     requestOrResponse: StopEventRequest(
-                        location: .init(locationRef: stopID),
-                        params: .init(
-                            lineFilter: nil,
-                            stopEventType: .departure,
-                            includeRealtimeData: true
-                        )
+                        location: LocationContext(
+                            locationRef: LocationRef(
+                                stopPointRef: stopID,
+                                locationName: .init(text: "")
+                            )
+                        ),
+                        params: StopEventParam(
+                             lineFilter: nil,
+                             stopEventType: nil,
+                             includeRealtimeData: true
+                         )
                     )
                 )
             )
