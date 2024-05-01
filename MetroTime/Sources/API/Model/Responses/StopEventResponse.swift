@@ -13,7 +13,7 @@ struct StopEventResponse: Codable {
     // TODO: Use and localize the possible error codes in the PDF
     /// Fehlermeldungen bezogen auf die Gesamtbeantwortung der Anfrage. Siehe die nachstehende Tabelle für mögliche Werte. Vgl. 7.4.2.
     let errorMessage: ErrorMessage?
-    /// Container für Daten, die in der Antwort mehrfach auftreten und referenziert werden. Vgl.10.3.2.
+    /// Container für Daten, die in der Antwort mehrfach auftreten und referenziert werden. Vgl. 10.3.2.
     let stopEventResponseContext: StopEventResponseContext?
     /// Container für ein Abfahrts- oder Ankunftsereignis. Vgl. 10.3.3.
     let stopEventResults: [StopEventResult]?

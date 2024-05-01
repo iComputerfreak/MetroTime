@@ -3,5 +3,5 @@
 import Foundation
 
 struct StopEventResponseContext: Codable {
-    
+    // TODO: Implement
 }

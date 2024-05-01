@@ -36,7 +36,7 @@ struct DatedServiceGroup: Codable {
     let operatorRef: String?
     /// Beschreibung des Fahrwegs
     let routeDescription: InternationalText?
-    /// Wichtige Halte auf dem Fahrweg. Vgl.7.6.1.
+    /// Wichtige Halte auf dem Fahrweg. Vgl. 7.6.1.
     let vias: [ServiceViaPoint]?
     /// Hinweise und Attribute (mit Klassifikationen) zur Fahrt. Vgl. 7.4.10
     let attributes: [GeneralAttribute]?

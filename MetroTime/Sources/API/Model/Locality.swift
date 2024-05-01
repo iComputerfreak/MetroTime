@@ -26,8 +26,8 @@ struct Locality: Codable {
     init(
         localityCode: String,
         localityName: InternationalText,
-        privateCodes: [PrivateCode]?,
-        parentRef: String?,
+        privateCodes: [PrivateCode]? = nil,
+        parentRef: String? = nil,
         points: [GeoPosition]
     ) {
         self.localityCode = localityCode
