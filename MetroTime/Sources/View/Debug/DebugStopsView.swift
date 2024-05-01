@@ -1,113 +1,10 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
 import Combine
-import JFSwiftUI
 import SwiftUI
 import XMLCoder
 
-struct DetailView: View {
-    enum LoadingState {
-        case loading
-        case loaded
-    }
-    
-    let stopID: String
-    
-    @State private var state: LoadingState = .loading
-    @State private var departures: [StopEventResult] = []
-    
-    var body: some View {
-        Group {
-            switch state {
-            case .loading:
-                ProgressView()
-                    .task {
-                        do {
-                            try await fetchDepartures()
-                        } catch {
-                            print("Error fetching departures: \(error): \(error.localizedDescription)")
-                        }
-                    }
-                
-            case .loaded:
-                List {
-                    ForEach(departures, id: \.resultID) { result in
-                        let line = (result.stopEvent.service.serviceSection?.publishedLineName?.text ?? "Straßenbahn 0")
-                            .trimmingPrefix("Straßenbahn ")
-                        let destination = result.stopEvent.service.destinationText.text
-                        let estimated = result.stopEvent.thisCall.callAtStop.serviceDeparture?.estimatedTime?.formatted(date: .omitted, time: .shortened)
-                        let planned = result.stopEvent.thisCall.callAtStop.serviceDeparture?.timetabledTime?.formatted(date: .omitted, time: .shortened)
-                        HStack {
-                            Text("\(line) \(destination)")
-                            Spacer()
-                            if let estimated {
-                                Text(estimated).bold()
-                            } else {
-                                Text(planned ?? "--:--")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .navigationTitle(stopID)
-    }
-    
-    private func fetchDepartures() async throws {
-        guard let requestorRef = ProcessInfo.processInfo.environment["TRIAS_REQUESTOR_REF"] else {
-            fatalError("NO REQUESTOR REF!")
-        }
-        
-        var request = URLRequest(url: URL(string: "https://projekte.kvv-efa.de/freytrias/trias")!)
-        request.httpMethod = "POST"
-        request.setValue("text/xml", forHTTPHeaderField: "Content-Type")
-        // TODO: Debug why encoding / decoding does not work.
-        let requestBody = APIRequestFactory.createStopEventRequest(for: stopID, requestorRef: requestorRef)
-        let encoder = XMLEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        encoder.prettyPrintIndentation = .spaces(2)
-        encoder.dateEncodingStrategy = .iso8601
-        request.httpBody = try encoder.encode(requestBody, withRootKey: "Trias", rootAttributes: [
-            "version": "1.2",
-            "xmlns": "http://www.vdv.de/trias",
-            "xmlns:siri": "http://www.siri.org.uk/siri"
-        ])
-        let bodyString = String(data: request.httpBody!, encoding: .utf8)!
-        print("Sending API Request with Body:\n\(bodyString)")
-        
-        guard let response: TriasResponse<StopEventResponse> = try await decodeRequest(request) else {
-            return
-        }
-        
-        print(response)
-        
-        guard let results = response.serviceDelivery.payload.requestOrResponse.stopEventResults else {
-            print("No results. Error message: \(response.serviceDelivery.payload.requestOrResponse.errorMessage?.text?.text ?? "nil")")
-            return
-        }
-        
-        departures = results
-        state = .loaded
-    }
-    
-    private func decodeRequest<T: Decodable>(_ request: URLRequest) async throws -> T? {
-        let (data, response) = try await URLSession.shared.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            print("Request failed with status code: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
-            return nil
-        }
-        guard !data.isEmpty else {
-            print("No data received.")
-            return nil
-        }
-        
-        let decoder = XMLDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return try decoder.decode(T.self, from: data)
-    }
-}
-
-public struct ContentView: View {
+struct DebugStopsView: View {
     class ViewModel: ObservableObject {
         @Published var results: [Location] = []
         @Published var searchText: String = ""
@@ -116,29 +13,13 @@ public struct ContentView: View {
     @State private var cancellable: AnyCancellable?
     @StateObject private var viewModel: ViewModel = .init()
     
-    private func id(for result: Location) -> String? {
-        if let stopPoint = result.stopPoint {
-            return stopPoint.stopPointRef
-        } else if let stopPlace = result.stopPlace {
-            return stopPlace.stopPlaceRef
-        } else if let address = result.address {
-            return address.localityRef
-        } else if let poi = result.pointOfInterest {
-            return poi.localityRef
-        } else if let locality = result.locality {
-            return locality.parentRef
-        } else {
-            return nil
-        }
-    }
-    
-    public var body: some View {
+    var body: some View {
         NavigationStack {
             List {
                 ForEach(Array(viewModel.results.enumerated()), id: \.offset) { _, result in
                     NavigationLink {
                         if let stopPointRef = result.stopPoint?.stopPointRef {
-                            DetailView(stopID: stopPointRef)
+                            DebugDeparturesView(viewModel: .init(stopID: stopPointRef))
                         } else {
                             Text("No stop point reference found.")
                         }
@@ -248,5 +129,5 @@ public struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    DebugStopsView()
 }
