@@ -6,7 +6,7 @@ import SwiftUI
 struct MetroTimeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }
