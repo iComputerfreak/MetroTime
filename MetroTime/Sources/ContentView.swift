@@ -14,7 +14,7 @@ struct DetailView: View {
     let stopID: String
     
     @State private var state: LoadingState = .loading
-    @State private var departures: [String] = []
+    @State private var departures: [StopEventResult] = []
     
     var body: some View {
         Group {
@@ -25,14 +25,27 @@ struct DetailView: View {
                         do {
                             try await fetchDepartures()
                         } catch {
-                            print(error)
+                            print("Error fetching departures: \(error): \(error.localizedDescription)")
                         }
                     }
                 
             case .loaded:
                 List {
-                    ForEach(Array(departures.enumerated()), id: \.offset) { _, departure in
-                        Text(departure)
+                    ForEach(departures, id: \.resultID) { result in
+                        let line = (result.stopEvent.service.serviceSection?.publishedLineName?.text ?? "Straßenbahn 0")
+                            .trimmingPrefix("Straßenbahn ")
+                        let destination = result.stopEvent.service.destinationText.text
+                        let estimated = result.stopEvent.thisCall.callAtStop.serviceDeparture?.estimatedTime?.formatted(date: .omitted, time: .shortened)
+                        let planned = result.stopEvent.thisCall.callAtStop.serviceDeparture?.timetabledTime?.formatted(date: .omitted, time: .shortened)
+                        HStack {
+                            Text("\(line) \(destination)")
+                            Spacer()
+                            if let estimated {
+                                Text(estimated).bold()
+                            } else {
+                                Text(planned ?? "--:--")
+                            }
+                        }
                     }
                 }
             }
@@ -41,9 +54,56 @@ struct DetailView: View {
     }
     
     private func fetchDepartures() async throws {
-        try await Task.sleep(for: .seconds(1))
-        departures = ["Departure 1", "Departure 2", "Departure 3"]
+        guard let requestorRef = ProcessInfo.processInfo.environment["TRIAS_REQUESTOR_REF"] else {
+            fatalError("NO REQUESTOR REF!")
+        }
+        
+        var request = URLRequest(url: URL(string: "https://projekte.kvv-efa.de/freytrias/trias")!)
+        request.httpMethod = "POST"
+        request.setValue("text/xml", forHTTPHeaderField: "Content-Type")
+        // TODO: Debug why encoding / decoding does not work.
+        let requestBody = APIRequestFactory.createStopEventRequest(for: stopID, requestorRef: requestorRef)
+        let encoder = XMLEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        encoder.prettyPrintIndentation = .spaces(2)
+        encoder.dateEncodingStrategy = .iso8601
+        request.httpBody = try encoder.encode(requestBody, withRootKey: "Trias", rootAttributes: [
+            "version": "1.2",
+            "xmlns": "http://www.vdv.de/trias",
+            "xmlns:siri": "http://www.siri.org.uk/siri"
+        ])
+        let bodyString = String(data: request.httpBody!, encoding: .utf8)!
+        print("Sending API Request with Body:\n\(bodyString)")
+        
+        guard let response: TriasResponse<StopEventResponse> = try await decodeRequest(request) else {
+            return
+        }
+        
+        print(response)
+        
+        guard let results = response.serviceDelivery.payload.requestOrResponse.stopEventResults else {
+            print("No results. Error message: \(response.serviceDelivery.payload.requestOrResponse.errorMessage?.text?.text ?? "nil")")
+            return
+        }
+        
+        departures = results
         state = .loaded
+    }
+    
+    private func decodeRequest<T: Decodable>(_ request: URLRequest) async throws -> T? {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            print("Request failed with status code: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
+            return nil
+        }
+        guard !data.isEmpty else {
+            print("No data received.")
+            return nil
+        }
+        
+        let decoder = XMLDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try decoder.decode(T.self, from: data)
     }
 }
 
@@ -55,6 +115,22 @@ public struct ContentView: View {
     
     @State private var cancellable: AnyCancellable?
     @StateObject private var viewModel: ViewModel = .init()
+    
+    private func id(for result: Location) -> String? {
+        if let stopPoint = result.stopPoint {
+            return stopPoint.stopPointRef
+        } else if let stopPlace = result.stopPlace {
+            return stopPlace.stopPlaceRef
+        } else if let address = result.address {
+            return address.localityRef
+        } else if let poi = result.pointOfInterest {
+            return poi.localityRef
+        } else if let locality = result.locality {
+            return locality.parentRef
+        } else {
+            return nil
+        }
+    }
     
     public var body: some View {
         NavigationStack {
@@ -114,8 +190,8 @@ public struct ContentView: View {
         let response = try await decodeRequest(request)
         let locations = response.locations?
             .filter { result in
-                result.location.stopPoint != nil &&
-                result.location.locationName.text.contains("Karlsruhe")
+                (result.location.stopPoint != nil || result.location.stopPlace != nil)
+//                result.location.locationName.text.contains("Karlsruhe")
             }
             .sorted { result1, result2 in
                 (result1.probability ?? 0) < (result2.probability ?? 0)
@@ -148,7 +224,7 @@ public struct ContentView: View {
             fatalError("NO REQUESTOR REF!")
         }
         
-        let requestBody = APIRequestFactory.createLocationInformationRequest(for: query, requestorRef: requestorRef)
+        let requestBody = APIRequestFactory.createLocationInformationRequest(for: query, requestorRef: requestorRef, allowedTypes: [.stop])
         let encoder = XMLEncoder()
         encoder.dateEncodingStrategy = .iso8601
         return try encoder.encode(requestBody, withRootKey: "Trias", rootAttributes: [
