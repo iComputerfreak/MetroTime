@@ -3,7 +3,7 @@
 import Foundation
 
 /// Unter-Klassifizierung der Untergrundbahnen (nach TPEG pti_table 04).
-enum MetroSubmode: Codable {
+enum MetroSubmode: String, Codable {
     case unknown
     case undefined
     case metro

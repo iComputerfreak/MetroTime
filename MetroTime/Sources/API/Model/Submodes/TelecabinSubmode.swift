@@ -3,7 +3,7 @@
 import Foundation
 
 /// Unter-Klassifizierung der Lift- und Aufzugsarten (nach TPEG pti_table 09).
-enum TelecabinSubmode: Codable {
+enum TelecabinSubmode: String, Codable {
     case unknown
     case undefined
     case telecabin

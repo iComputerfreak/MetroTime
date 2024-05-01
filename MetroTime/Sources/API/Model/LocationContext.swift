@@ -11,7 +11,7 @@ struct LocationContext: Codable {
     }
     
     /// Angabe eines räumlichen Orts (vgl. 7.5.11).
-    let locationRef: String?
+    let locationRef: LocationRef?
     /// Aufenthaltsort in einem (sich bewegenden) Fahrzeug (vgl. 7.6.5).
     let tripLocation: TripLocation?
     
@@ -21,7 +21,7 @@ struct LocationContext: Codable {
     let individualTransportOptions: [IndividualTransportOptions]?
     
     init(
-        locationRef: String? = nil,
+        locationRef: LocationRef? = nil,
         tripLocation: TripLocation? = nil,
         depArrTime: Date? = nil,
         individualTransportOptions: [IndividualTransportOptions]? = nil

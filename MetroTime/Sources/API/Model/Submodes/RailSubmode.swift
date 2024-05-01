@@ -3,7 +3,7 @@
 import Foundation
 
 /// Unter-Klassifizierung der Züge (nach TPEG pti_table 02).
-enum RailSubmode: Codable {
+enum RailSubmode: String, Codable {
     case unknown
     case undefined
     case localRail

@@ -3,7 +3,7 @@
 import Foundation
 
 /// Unter-Klassifizierung der Wasserverkehrsmittel (nach TPEG pti_table 07).
-enum WaterSubmode: Codable {
+enum WaterSubmode: String, Codable {
     case unknown
     case undefined
     case internationalCarFerry

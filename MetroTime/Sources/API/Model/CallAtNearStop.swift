@@ -10,7 +10,7 @@ struct CallAtNearStop: Codable {
         case walkDuration = "WalkDuration"
     }
     
-    /// Abfahrt oder Ankunft an einem Haltepunkt. Vgl.7.6.6
+    /// Abfahrt oder Ankunft an einem Haltepunkt. Vgl. 7.6.6
     let callAtStop: CallAtStop
     /// Distanz des Haltepunkts vom angefragten Ort in Metern. Der angefragte Ort kann z. B. eine Adresse sein
     let walkDistance: Int?

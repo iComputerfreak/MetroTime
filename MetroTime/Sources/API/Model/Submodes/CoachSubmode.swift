@@ -3,7 +3,7 @@
 import Foundation
 
 /// Unter-Klassifizierung der Überlandbusse (nach TPEG pti_table 03).
-enum CoachSubmode: Codable {
+enum CoachSubmode: String, Codable {
     case unknown
     case undefined
     case internationalCoach

@@ -25,7 +25,7 @@ struct LocationRef: Codable {
     /// Referenz auf einen Code für einen POI. Vgl. 7.5.1
     let pointOfInterestRef: String?
     /// Referenz auf eine Adresse. Vgl. 7.5.1.
-    let addressRef: String
+    let addressRef: String?
     
     /// Name oder Bezeichnung des Ortspunkts
     let locationName: InternationalText
@@ -36,7 +36,7 @@ struct LocationRef: Codable {
         geoPosition: GeoPosition? = nil,
         localityRef: String? = nil,
         pointOfInterestRef: String? = nil,
-        addressRef: String,
+        addressRef: String? = nil,
         locationName: InternationalText
     ) {
         self.stopPointRef = stopPointRef

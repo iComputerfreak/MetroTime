@@ -3,7 +3,7 @@
 import Foundation
 
 /// Unter-Klassifizierung der Luftverkehrsmittel (nach TPEG pti_table 08).
-enum AirSubmode: Codable {
+enum AirSubmode: String, Codable {
     case unknown
     case undefined
     case internationalFlight

@@ -12,13 +12,22 @@ enum DatedJourneyOccupancy: Codable {
 
 // TODO: Inherited properties should be resolved by inheritance instead of duplication
 struct DatedJourney: Codable {
+    enum CodingKeys: String, CodingKey {
+        case originStopPointRef = "OriginStopPointRef"
+        case originText = "OriginText"
+        case destinationStopPointRef = "DestinationStopPointRef"
+        case destinationText = "DestinationText"
+        case unplanned = "Unplanned"
+        case cancelled = "Cancelled"
+        case deviation = "Deviation"
+        case occupancy = "Occupancy"
+        case situationFullRefs = "SituationFullRef"
+        case serviceSection = "ServiceSection"
+    }
+    
     // MARK: Dated Service Group
-    let operatingDayRef: String?
-    let vehicleRef: String?
-    let journeyRef: String
-    let lineRef: String
-    let directionRef: String
-    let mode: IndividualMode
+    /// DatedServiceGroup
+    let serviceSection: DatedServiceGroup?
     
     // MARK: Service Origin
     /// ID des ersten Haltepunkts der Fahrt; Starthaltestelle. Vgl. 7.5.1.
@@ -44,6 +53,6 @@ struct DatedJourney: Codable {
     
     /// Verweis auf eine Störungsnachricht.
     ///
-    /// Diese Nachricht kann im Kontext der Antwort (Response context) zu finden sein oder auf anderem Wege bekannt gemacht werden. Vgl.7.8.2.
+    /// Diese Nachricht kann im Kontext der Antwort (Response context) zu finden sein oder auf anderem Wege bekannt gemacht werden. Vgl. 7.8.2.
     let situationFullRefs: [SituationFullRef]?
 }

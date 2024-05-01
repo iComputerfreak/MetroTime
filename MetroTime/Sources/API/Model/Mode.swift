@@ -4,6 +4,22 @@ import Foundation
 
 /// Verkehrsmittel mit Klassifizierung und Namen
 struct Mode: Codable {
+    enum CodingKeys: String, CodingKey {
+        case ptMode = "PtMode"
+        case airSubmode = "AirSubmode"
+        case busSubmode = "BusSubmode"
+        case coachSubmode = "CoachSubmode"
+        case funicularSubmode = "FunicularSubmode"
+        case metroSubmode = "MetroSubmode"
+        case railSubmode = "RailSubmode"
+        case telecabinSubmode = "TelecabinSubmode"
+        case tramSubmode = "TramSubmode"
+        case waterSubmode = "WaterSubmode"
+        case name = "Name"
+        case shortName = "ShortName"
+        case description = "Description"
+    }
+    
     /// Angabe der ÖV-Verkehrsmittelart
     let ptMode: PTMode
     

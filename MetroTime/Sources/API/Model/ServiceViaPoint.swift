@@ -2,24 +2,16 @@
 
 import Foundation
 
-/// Halt einer Fahrt an einem Haltepunkt oder Haltestelle
-struct CallAtStop: Codable {
+struct ServiceViaPoint: Codable {
     enum CodingKeys: String, CodingKey {
         case stopPointRef = "StopPointRef"
         case stopPointName = "StopPointName"
         case nameSuffix = "NameSuffix"
         case plannedBay = "PlannedBay"
         case estimatedBay = "EstimatedBay"
-        case serviceArrival = "ServiceArrival"
-        case serviceDeparture = "ServiceDeparture"
-        case stopSeqNumber = "StopSeqNumber"
-        case demandStop = "DemandStop"
-        case unplannedStop = "UnplannedStop"
-        case notServicedStop = "NotServicedStop"
-        case situationFullRefs = "SituationFullRef"
+        case displayPriority = "DisplayPriority"
     }
     
-    // MARK: Stop Point
     /// Referenz auf einen Code für einen Haltepunkt. Vgl. 7.5.1.
     let stopPointRef: String
     /// Name des Haltepunkts für Fahrgastinformation.
@@ -36,24 +28,6 @@ struct CallAtStop: Codable {
     /// ähnlich Haltestellenname).
     /// Nach letztem Prognosestand.
     let estimatedBay: InternationalText?
-    
-    // MARK: Service Arrival / Departure
-    let serviceArrival: ServiceArrivalOrDeparture?
-    let serviceDeparture: ServiceArrivalOrDeparture?
-    
-    // MARK: Stop Call Status
-    /// Laufende Nummer des Halts im Fahrweg der Fahrt
-    let stopSeqNumber: Int?
-    /// Bedarfshalt. Fahrzeug bedient diesen Halt nur nach Voranmeldung.
-    let demandStop: Bool?
-    /// Halt, der laut Planung nicht vorgesehen war.
-    let unplannedStop: Bool?
-    /// Entgegen der Planung findet kein Halt statt.
-    let notServicedStop: Bool?
-    
-    /// Verweis auf eine Störungsnachricht.
-    ///
-    /// Diese Nachricht kann im ResponseContext der Antwort zu finden sein oder auf anderem Wege bekannt gemacht werden.
-    /// Vgl. 7.8.2.
-    let situationFullRefs: [SituationFullRef]?
+    /// Priorität, mit der dieser Via-Punkt angezeigt werden soll (z. B. falls Platz knapp ist und nicht alle Via-Punkte angezeigt werden können).
+    let displayPriority: Int?
 }

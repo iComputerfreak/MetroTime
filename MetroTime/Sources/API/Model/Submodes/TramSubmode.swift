@@ -3,7 +3,7 @@
 import Foundation
 
 /// Unter-Klassifizierung der Straßenbahnen (nach TPEG pti_table 06).
-enum TramSubmode: Codable {
+enum TramSubmode: String, Codable {
     case unknown
     case undefined
     case cityTram

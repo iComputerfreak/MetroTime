@@ -3,7 +3,7 @@
 import Foundation
 
 /// Unter-Klassifizierung der Seilbahnen (nach TPEG pti_table 10).
-enum FunicularSubmode: Codable {
+enum FunicularSubmode: String, Codable {
     case unknown
     case undefined
     case funicular

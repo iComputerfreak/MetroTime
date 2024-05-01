@@ -3,7 +3,7 @@
 import Foundation
 
 /// Unter-Klassifizierung der Busse (nach TPEG pti_table 05).
-enum BusSubmode: Codable {
+enum BusSubmode: String, Codable {
     case unknown
     case undefined
     case localBus
