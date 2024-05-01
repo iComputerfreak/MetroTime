@@ -14,6 +14,21 @@
         }
       }
     },
+    "2 Wolfartsweier" : {
+
+    },
+    "Button" : {
+
+    },
+    "Departures" : {
+
+    },
+    "Error!" : {
+
+    },
+    "Lookup" : {
+
+    },
     "No results for term '%@'." : {
 
     },
@@ -21,6 +36,9 @@
 
     },
     "Search for a station" : {
+
+    },
+    "Settings" : {
 
     }
   },

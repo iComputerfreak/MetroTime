@@ -8,6 +8,9 @@ struct RootView: View {
             HomeView()
                 .tabItem { Label("Home", systemImage: "house") }
             
+            LookupView()
+                .tabItem { Label("Lookup", systemImage: "magnifyingglass") }
+            
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gear") }
         }
