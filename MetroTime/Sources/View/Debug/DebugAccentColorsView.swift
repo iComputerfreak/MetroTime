@@ -37,6 +37,8 @@ struct DebugAccentColorsView: View {
         Color(red: 189 / 255, green: 89 / 255, blue: 149 / 255),
         Color(red: 232 / 255, green: 59 / 255, blue: 89 / 255),
         Color(red: 102 / 255, green: 3 / 255, blue: 128 / 255),
+        Color(red: 184 / 255, green: 138 / 255, blue: 0 / 255),
+        Color.orange
     ]
     
     @Environment(\.colorScheme)
@@ -57,7 +59,7 @@ struct DebugAccentColorsView: View {
     }
     
     @ToolbarContentBuilder private var toggleColorSchemeToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
+        ToolbarItem(placement: .topBarTrailing) {
             Button {
                 toggleColorScheme()
             } label: {

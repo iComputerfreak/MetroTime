@@ -4,7 +4,24 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-        Text("Settings")
+        NavigationStack {
+            Text("Settings")
+            .toolbar {
+                #if DEBUG
+                    debugButton
+                #endif
+            }
+        }
+    }
+    
+    @ToolbarContentBuilder var debugButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            NavigationLink {
+                DebugView()
+            } label: {
+                Label("Debug", systemImage: "ladybug")
+            }
+        }
     }
 }
 

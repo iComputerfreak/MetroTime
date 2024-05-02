@@ -20,6 +20,9 @@
     "Button" : {
 
     },
+    "Colors" : {
+
+    },
     "Departures" : {
 
     },
@@ -36,9 +39,6 @@
 
     },
     "Search for a station" : {
-
-    },
-    "Settings" : {
 
     }
   },
