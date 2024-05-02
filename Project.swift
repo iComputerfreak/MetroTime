@@ -31,7 +31,19 @@ let project = Project(
             dependencies: [
                 .external(name: "JFSwiftUI", condition: nil),
                 .external(name: "XMLCoder", condition: nil),
-            ]
+            ],
+            settings: .settings(
+                configurations: [
+                    .debug(
+                        name: .debug,
+                        xcconfig: .relativeToRoot("MetroTime/Resources/Build.xcconfig")
+                    ),
+                    .release(
+                        name: .release,
+                        xcconfig: .relativeToRoot("MetroTime/Resources/Build.xcconfig")
+                    ),
+                ]
+            )
         ),
         .target(
             name: "MetroTimeTests",
