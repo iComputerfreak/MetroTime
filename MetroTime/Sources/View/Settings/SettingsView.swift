@@ -5,7 +5,15 @@ import SwiftUI
 struct SettingsView: View {
     var body: some View {
         NavigationStack {
-            Text("Settings")
+            List {
+                Text("Rows per station")
+                Text("Accent color")
+                Text("Refresh interval")
+                // Set custom colors based on the available lines at the stations the user selected
+                Text("Custom Colors")
+                // Allow the user to specify prefixes that should be removed from the monitor (e.g. "Straßenbahn")
+                Text("Prefixes")
+            }
             .toolbar {
                 #if DEBUG
                     debugButton
