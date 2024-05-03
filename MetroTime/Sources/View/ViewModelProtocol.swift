@@ -3,5 +3,5 @@
 import Foundation
 
 protocol ViewModelProtocol: ObservableObject {
-    // Common protocol of all view models
+    static var `default`: Self { get }
 }
