@@ -2,31 +2,21 @@
 
 import SwiftUI
 
-class HomeViewModel: ObservableObject {
-    @Published var stops: [String] = [
-        "Karl-Wilhelm-Platz",
-        "Europaplatz/Postgalerie (U)",
-        "Otto-Sachs-Straße"
-    ]
-    
-    func departures(for stop: String) -> [String] {
-        return ["U1", "U2", "U3"]
-    }
-}
-
-struct HomeView: View {
-    @StateObject private var model: HomeViewModel = .init()
+struct HomeView: StatefulView {
+    @StateObject var viewModel: HomeViewModel = .init()
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(model.stops, id: \.self) { stop in
+                ForEach(viewModel.stops, id: \.self) { stop in
                     Section {
-                        ForEach(model.departures(for: stop), id: \.self) { _ in
+                        ForEach(viewModel.departures(for: stop), id: \.self) { _ in
                             HStack {
                                 Text("2 Wolfartsweier")
                                 Spacer()
-                                Text("--:--")
+                                Text(
+                                    ["in 5 min.", "--:--"].randomElement()!
+                                )
                             }
                         }
                     } header: {
@@ -37,7 +27,20 @@ struct HomeView: View {
             .refreshable {
                 // TODO: Refresh
             }
+            .toolbar {
+                addButton
+            }
             .navigationTitle(Text("Departures"))
+        }
+    }
+    
+    @ToolbarContentBuilder var addButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            NavigationLink {
+                AddStationView()
+            } label: {
+                Label("Add", systemImage: "plus")
+            }
         }
     }
 }
