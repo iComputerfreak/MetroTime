@@ -76,14 +76,6 @@ private extension StopEventResult {
     }
 }
 
-extension DebugDeparturesViewModel {
-    static let `default`: DebugDeparturesViewModel = .init(
-        stopID: "",
-        state: .loading,
-        departures: []
-    )
-}
-
 #Preview {
     DebugDeparturesView(viewModel: .init(stopID: "de:08317:14020"))
 }

@@ -4,7 +4,7 @@ import Foundation
 import SwiftUI
 import XMLCoder
 
-class DebugDeparturesViewModel: ViewModelProtocol {
+final class DebugDeparturesViewModel: ViewModelProtocol {
     enum State {
         case loading
         case loaded
@@ -73,4 +73,12 @@ class DebugDeparturesViewModel: ViewModelProtocol {
         decoder.dateDecodingStrategy = .iso8601
         return try decoder.decode(T.self, from: data)
     }
+}
+
+extension DebugDeparturesViewModel {
+    static let `default`: DebugDeparturesViewModel = .init(
+        stopID: "",
+        state: .loading,
+        departures: []
+    )
 }
