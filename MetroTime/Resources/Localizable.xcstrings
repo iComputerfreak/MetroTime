@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "--:--" : {
-
-    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -17,10 +14,13 @@
     "2 Wolfartsweier" : {
 
     },
+    "Accent color" : {
+
+    },
     "Button" : {
 
     },
-    "Colors" : {
+    "Custom Colors" : {
 
     },
     "Departures" : {
@@ -29,16 +29,56 @@
     "Error!" : {
 
     },
+    "errorView.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
+    "in 5 min." : {
+
+    },
+    "Karlsruhe" : {
+
+    },
     "Lookup" : {
+
+    },
+    "No Results" : {
 
     },
     "No results for term '%@'." : {
 
     },
+    "No Results." : {
+
+    },
+    "No stations could be found." : {
+
+    },
     "No stop point reference found." : {
 
     },
+    "Prefixes" : {
+
+    },
+    "Refresh interval" : {
+
+    },
+    "Rows per station" : {
+
+    },
     "Search for a station" : {
+
+    },
+    "There are no results for your search." : {
+
+    },
+    "TODO" : {
 
     }
   },
