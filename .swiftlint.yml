@@ -322,12 +322,6 @@ custom_rules:
     name: "Too Much Indentation"
     message: "Don't indent code by more than 4 whitespaces."
     severity: warning
-  too_much_unindentation:
-    included: ".*.swift"
-    regex: ' {28}[^\s\.](.|[^\n]*[^\)][^\ ][^\}])\n+ {0,23}[^\s\/]| {24}[^\s\.](.|[^\n]*[^\)][^\ ][^\}])\n+ {0,19}[^\s\/]| {20}[^\s\.](.|[^\n]*[^\)][^\ ][^\}])\n+ {0,15}[^\s\/]| {16}[^\s\.](.|[^\n]*[^\)][^\ ][^\}])\n+ {0,11}[^\s\/]| {12}[^\s\.](.|[^\n]*[^\)][^\ ][^\}])\n+ {0,7}[^\s\/]| {8}[^\s\.](.|[^\n]*[^\)][^\ ][^\}])\n+ {0,3}[^\s\/]'
-    name: "Too Much Unindentation"
-    message: "Don't unindent code by more than 4 whitespaces."
-    severity: warning
   tuple_index:
     included: ".*.swift"
     regex: '(\$\d|\w*[^\d \(\[\{])\.\d'
