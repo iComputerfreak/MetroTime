@@ -2,7 +2,8 @@
 
 import Foundation
 
-struct Departure {
+struct Departure: Codable, Identifiable {
+    let id: String
     let line: String
     let direction: String
     let plannedDeparture: Date
