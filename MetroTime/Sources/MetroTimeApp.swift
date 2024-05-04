@@ -4,7 +4,6 @@ import SwiftUI
 
 @main
 struct MetroTimeApp: App {
-    // TODO: Add AppDomain and AppData packages
     // TODO: Move models into AppData and add protocols in AppDomain
     // TODO: Move existing protocols into AppDomain
     // TODO: Create service for API and for favorited stops and lines (incl. protocol)

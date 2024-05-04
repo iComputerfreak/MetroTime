@@ -26,9 +26,6 @@ struct StationRow: View {
     }
 }
 
-// TODO: Move into JFUtils
-typealias VoidCallback = () -> Void
-
 // TODO: Move
 struct AddButtonLabel: View {
     let isAdded: Bool
