@@ -25,13 +25,3 @@ struct StationRow: View {
         StationRow(station: Station(id: "3", name: "Europaplatz/Postgalerie (U)"))
     }
 }
-
-// TODO: Move
-struct AddButtonLabel: View {
-    let isAdded: Bool
-    
-    var body: some View {
-        Image(systemName: isAdded ? "checkmark.circle" : "plus.circle")
-            .foregroundStyle(isAdded ? .green : .accentColor)
-    }
-}
