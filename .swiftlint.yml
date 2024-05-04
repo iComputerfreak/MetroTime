@@ -1,8 +1,10 @@
 included:
 - MetroTime/Sources
+- Modules/**/Sources
 
 excluded:
-- .build
+# - .build
+# - Dependencies
 
 # Basic Configuration
 opt_in_rules:
