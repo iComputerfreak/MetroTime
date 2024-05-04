@@ -33,6 +33,9 @@ let project = Project(
             dependencies: [
                 .external(name: "XMLCoder", condition: nil),
                 .external(name: "JFUtils", condition: nil),
+                .target(name: "AppFoundation"),
+                .target(name: "AppDomain"),
+                .target(name: "AppData"),
             ],
             settings: .settings(
                 configurations: [
@@ -59,7 +62,10 @@ let project = Project(
                 .target(name: "MetroTime"),
             ]
         ),
-    ]),
+    ] +
+    createTargets(for: "AppFoundation") +
+    createTargets(for: "AppDomain", dependsOn: ["AppFoundation"]) +
+    createTargets(for: "AppData", dependsOn: ["AppFoundation", "AppDomain"]),
     schemes: [
         .scheme(
             name: "MetroTime",
@@ -68,3 +74,34 @@ let project = Project(
         )
     ]
 )
+
+private func createTargets(for modules: [String], dependsOn dependencies: [String] = []) -> [Target] {
+    modules.flatMap { createTargets(for: $0, dependsOn: dependencies) }
+}
+
+private func createTargets(for module: String, dependsOn dependencies: [String] = []) -> [Target] {
+    [
+        .target(
+            name: module,
+            destinations: .iOS,
+            product: .framework,
+            bundleId: "de.JonasFrey.MetroTime.\(module)",
+            infoPlist: .default,
+            sources: ["Modules/\(module)/Sources/**"],
+            resources: [],
+            dependencies: dependencies.map { .target(name: $0, condition: nil) }
+        ),
+        .target(
+            name: "\(module)Tests",
+            destinations: .iOS,
+            product: .unitTests,
+            bundleId: "de.JonasFrey.MetroTime.\(module)Tests",
+            infoPlist: .default,
+            sources: ["Modules/\(module)/Tests/**"],
+            resources: [],
+            dependencies: [
+                .target(name: module),
+            ]
+        ),
+    ]
+}
