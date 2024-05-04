@@ -25,7 +25,7 @@ extension View {
     func injectServices() -> some View {
         self
             // TODO: Where to get the endpoint from? Environment? How to make secure?
-            .environmentObject(TriasAPI(baseURL: URL(string: "")!))
+            .environmentObject(TriasAPI(baseURL: URL(string: "https://example.com")!))
     }
     
     func injectPreviewServices() -> some View {

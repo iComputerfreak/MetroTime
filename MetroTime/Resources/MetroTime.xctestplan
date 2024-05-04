@@ -1,0 +1,45 @@
+{
+  "configurations" : [
+    {
+      "id" : "C12671EF-7138-48FC-9849-11461D089E5F",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:MetroTime.xcodeproj",
+        "identifier" : "A3CBC53B5C26CE212D5C485C",
+        "name" : "MetroTimeTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:MetroTime.xcodeproj",
+        "identifier" : "E6E3D499EF30D0E664FB6B48",
+        "name" : "AppFoundationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:MetroTime.xcodeproj",
+        "identifier" : "254774089E943732B4B6EC36",
+        "name" : "AppDataTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:MetroTime.xcodeproj",
+        "identifier" : "7B7F8A36AE25ACA3F63788AC",
+        "name" : "AppDomainTests"
+      }
+    }
+  ],
+  "version" : 1
+}
