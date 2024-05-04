@@ -34,6 +34,7 @@ let project = Project(
                 .external(name: "XMLCoder", condition: nil),
                 .external(name: "JFUtils", condition: nil),
                 .target(name: "AppFoundation"),
+                .target(name: "AppNetworking"),
                 .target(name: "AppDomain"),
                 .target(name: "AppData"),
             ],
@@ -64,6 +65,7 @@ let project = Project(
         ),
     ] +
     createTargets(for: "AppFoundation") +
+    createTargets(for: "AppNetworking", dependsOn: ["AppFoundation"]) +
     createTargets(for: "AppDomain", dependsOn: ["AppFoundation"]) +
     createTargets(for: "AppData", dependsOn: ["AppFoundation", "AppDomain"]),
     schemes: [
