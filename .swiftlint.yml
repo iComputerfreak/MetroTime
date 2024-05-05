@@ -56,7 +56,6 @@ opt_in_rules:
 - sorted_first_last
 - sorted_imports
 - switch_case_on_newline
-- trailing_closure
 - type_contents_order
 - unavailable_function
 - unneeded_parentheses_in_closure_argument
@@ -103,7 +102,9 @@ identifier_name:
     - id
     - to
 
-line_length: 160
+line_length:
+  warning: 160
+  ignores_comments: true
 
 nesting:
   type_level: 3
