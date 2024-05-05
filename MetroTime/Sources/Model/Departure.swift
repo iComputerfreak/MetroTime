@@ -1,8 +1,8 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
-import Foundation
+import AppDomain
 
-struct Departure: Codable, Identifiable {
+struct Departure: DepartureProtocol {
     let id: String
     let line: String
     let direction: String

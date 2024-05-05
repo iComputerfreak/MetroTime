@@ -1,9 +1,8 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
-import Foundation
+import AppDomain
 
-/// Represents a specific metro / tram / train line with a direction
-struct Line: Codable, Identifiable {
+struct Line: LineProtocol {
     let id: String
     let name: String
     let directionID: String
