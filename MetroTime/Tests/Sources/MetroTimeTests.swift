@@ -1,4 +1,5 @@
 @testable import MetroTime
+@testable import AppData
 
 import Foundation
 import XCTest

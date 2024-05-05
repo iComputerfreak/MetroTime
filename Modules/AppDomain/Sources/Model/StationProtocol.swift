@@ -6,4 +6,6 @@ import Foundation
 public protocol StationProtocol: Codable, Identifiable {
     var id: String { get }
     var name: String { get }
+    var localityID: String { get }
+    var localityName: String { get }
 }

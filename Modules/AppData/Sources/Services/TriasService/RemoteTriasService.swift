@@ -7,12 +7,12 @@ import Foundation
 public final class RemoteTriasService: TriasService {
     public init() {}
     
-    public func fetchStations(by name: String) async throws -> [any StationProtocol] {
+    public func fetchStations(byName name: String) async throws -> [any StationProtocol] {
         []
     }
     
-    public func fetchStation(by id: String) async throws -> any StationProtocol {
-        Station(id: "", name: "")
+    public func fetchStation(byID id: String) async throws -> any StationProtocol {
+        Station(id: "", name: "", localityID: "", locality: "")
     }
     
     public func fetchDepartures(at station: any StationProtocol) async throws -> [any DepartureProtocol] {
