@@ -1,5 +1,6 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppData
 import SwiftUI
 
 struct StationLineResultsView: View {
@@ -14,7 +15,7 @@ struct StationLineResultsView: View {
                     description: Text("There are no results for your search.")
                 )
             } else {
-                ForEach(viewModel.results) { line in
+                ForEach(viewModel.results, id: \.id) { line in
                     Button {
                         // TODO: Add line to favorites
                     } label: {
@@ -33,9 +34,9 @@ struct StationLineResultsView: View {
                 station: Station(id: "1", name: "Otto-Sachs-Straße"),
                 state: .loaded,
                 results: [
-                    .init(id: "1", name: "Straßenbahn 4", directionID: "dir:durlach", direction: "Durlach"),
-                    .init(id: "2", name: "Straßenbahn 4", directionID: "dir:waldstadt", direction: "Waldstadt"),
-                    .init(id: "3", name: "Straßenbahn 2", directionID: "dir:wolfartsweier", direction: "Wolfartsweier"),
+                    Line(id: "1", name: "Straßenbahn 4", directionID: "dir:durlach", direction: "Durlach"),
+                    Line(id: "2", name: "Straßenbahn 4", directionID: "dir:waldstadt", direction: "Waldstadt"),
+                    Line(id: "3", name: "Straßenbahn 2", directionID: "dir:wolfartsweier", direction: "Wolfartsweier"),
                 ]
             )
         )

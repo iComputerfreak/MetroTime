@@ -2,9 +2,16 @@
 
 import AppDomain
 
-struct Line: LineProtocol {
-    let id: String
-    let name: String
-    let directionID: String
-    let direction: String
+public  struct Line: LineProtocol {
+    public let id: String
+    public let name: String
+    public let directionID: String
+    public let direction: String
+    
+    public init(id: String, name: String, directionID: String, direction: String) {
+        self.id = id
+        self.name = name
+        self.directionID = directionID
+        self.direction = direction
+    }
 }

@@ -1,5 +1,7 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppData
+import AppDomain
 import SwiftUI
 
 final class StationLineResultsViewModel: ViewModelProtocol {
@@ -9,11 +11,11 @@ final class StationLineResultsViewModel: ViewModelProtocol {
         case error(Error)
     }
     
-    let station: Station
+    let station: any StationProtocol
     @Published var state: State
-    @Published var results: [Line]
+    @Published var results: [any LineProtocol]
     
-    init(station: Station, state: State, results: [Line]) {
+    init(station: any StationProtocol, state: State, results: [any LineProtocol]) {
         self.station = station
         self.state = state
         self.results = results
@@ -22,7 +24,7 @@ final class StationLineResultsViewModel: ViewModelProtocol {
 
 extension StationLineResultsViewModel {
     static let `default` = StationLineResultsViewModel(
-        station: .init(id: "", name: ""),
+        station: Station(id: "", name: ""),
         state: .loading,
         results: []
     )

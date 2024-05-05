@@ -1,5 +1,6 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppData
 import SwiftUI
 
 struct StationResultsView: StatefulView {
@@ -16,7 +17,7 @@ struct StationResultsView: StatefulView {
             List {
                 // TODO: Group the results by locality
                 Section {
-                    ForEach(viewModel.results) { result in
+                    ForEach(viewModel.results, id: \.id) { result in
                         Button {
                             // TODO: Add this station to the 
                         } label: {
@@ -35,9 +36,9 @@ struct StationResultsView: StatefulView {
 #Preview("Results") {
     StationResultsView()
         .environmentObject(AddStationViewModel(state: .loaded, searchText: "", results: [
-            .init(id: "1", name: "Karl-Wilhelm-Platz"),
-            .init(id: "2", name: "Europaplatz/Postgalerie (U)"),
-            .init(id: "3", name: "Otto-Sachs-Straße")
+            Station(id: "1", name: "Karl-Wilhelm-Platz"),
+            Station(id: "2", name: "Europaplatz/Postgalerie (U)"),
+            Station(id: "3", name: "Otto-Sachs-Straße")
         ]))
 }
 

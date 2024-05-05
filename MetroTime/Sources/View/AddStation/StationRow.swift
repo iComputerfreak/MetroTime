@@ -1,9 +1,11 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppData
+import AppDomain
 import SwiftUI
 
 struct StationRow: View {
-    let station: Station
+    let station: any StationProtocol
     
     var isAdded: Bool {
         station.id == "1"

@@ -1,9 +1,11 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppData
+import AppDomain
 import SwiftUI
 
 struct LineRow: View {
-    let line: Line
+    let line: any LineProtocol
     
     var isAdded: Bool {
         line.id == "1"

@@ -1,5 +1,6 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppData
 import SwiftUI
 
 struct AddStationView: StatefulView {
@@ -12,9 +13,9 @@ struct AddStationView: StatefulView {
                 .task {
                     try? await Task.sleep(for: .seconds(1))
                     viewModel.results = [
-                        .init(id: "1", name: "Karl-Wilhelm-Platz"),
-                        .init(id: "2", name: "Europaplatz/Postgalerie (U)"),
-                        .init(id: "3", name: "Otto-Sachs-Straße"),
+                        Station(id: "1", name: "Karl-Wilhelm-Platz"),
+                        Station(id: "2", name: "Europaplatz/Postgalerie (U)"),
+                        Station(id: "3", name: "Otto-Sachs-Straße"),
                     ]
                     viewModel.state = .loaded
                 }

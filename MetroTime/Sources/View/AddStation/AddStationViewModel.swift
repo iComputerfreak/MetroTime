@@ -1,5 +1,6 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppDomain
 import Foundation
 
 final class AddStationViewModel: ViewModelProtocol {
@@ -11,9 +12,9 @@ final class AddStationViewModel: ViewModelProtocol {
     
     @Published var state: State
     @Published var searchText: String
-    @Published var results: [Station]
+    @Published var results: [any StationProtocol]
     
-    init(state: State, searchText: String, results: [Station]) {
+    init(state: State, searchText: String, results: [any StationProtocol]) {
         self.state = state
         self.searchText = searchText
         self.results = results
