@@ -2,7 +2,7 @@ import Foundation
 
 public enum URLFactory {
     public static func makeURL<ResponseType>(from endpoint: Endpoint<ResponseType>, withBaseURL baseURL: URL) throws -> URL {
-        let currentURL = endpoint.pathComponents.reduce(into: baseURL) { (url, pathComponent) in
+        let currentURL = endpoint.pathComponents.reduce(into: baseURL) { url, pathComponent in
             url.appendPathComponent(pathComponent)
         }
 

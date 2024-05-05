@@ -1,7 +1,7 @@
 import Foundation
 
 /// Implementation of a session cache interceptor which allows the response data from an `HTTP/HTTPS` request to be temporarily stored.
-public final class DefaultSessionCacheIntercepter: SessionCacheInterceptor {
+public final class DefaultSessionCacheInterceptor: SessionCacheInterceptor {
     public static let expectedSchemes: [String] = ["http", "https"]
 
     private(set) var storagePolicy: URLCache.StoragePolicy

@@ -17,7 +17,7 @@ internal final class EmptyContentHeaderFieldsInterceptor: HeaderFieldsIntercepto
      * - Content-length:
      *   `0` byte for empty content
      */
-    private static let headerFieldsForEmptyContent = [
+    private static let headerFieldsForEmptyContent: [String: String] = [
         "Content-type": "text/plain",
         "Content-length": "0"
     ]
@@ -26,7 +26,7 @@ internal final class EmptyContentHeaderFieldsInterceptor: HeaderFieldsIntercepto
         self.init(headerFields: Self.headerFieldsForEmptyContent)
     }
 
-    override public func intercept(_ request: URLRequest) -> URLRequest {
+    override func intercept(_ request: URLRequest) -> URLRequest {
         var mutatedRequest: URLRequest = request
 
         // Repalce related header fields with the corresponding values

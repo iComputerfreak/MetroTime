@@ -5,7 +5,7 @@ import Foundation
 /// To be able to be highly flexible to also being able to switch between authentication methods, we provided the possibility to pass in an `autoclosure`
 /// which is evaluated when this request is being intercepted.
 public final class AuthenticationInterceptor: Interceptor {
-    private struct Constants {
+    private enum Constants {
         static let authorizationHeaderKey: String = "Authorization"
         static let basicAuthStringPrefix: String = "Basic"
         static let bearerAuthStringPrefix: String = "Bearer"
@@ -13,7 +13,7 @@ public final class AuthenticationInterceptor: Interceptor {
 
     /// The authentication methods currently supported.
     public enum AuthenticationMethod {
-        case none
+        case noAuthentication
         case basicAuthentication(username: String, password: String)
         case bearerToken(token: String)
         case custom(headerKey: String, headerValue: String)
@@ -61,7 +61,7 @@ public final class AuthenticationInterceptor: Interceptor {
 
     private func getAuthorizationHeader() -> [String: String]? {
         switch authenticationMethod() {
-        case .none:
+        case .noAuthentication:
             return nil
 
         case let .basicAuthentication(username, password):

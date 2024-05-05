@@ -37,10 +37,6 @@ public final class SessionCache {
         self.interceptors = interceptors
     }
 
-    subscript<T>(dynamicMember keyPath: KeyPath<URLCache, T>) -> T {
-        cache[keyPath: keyPath]
-    }
-
     // MARK: - Retrieval
     /// Queries an object with specified type for the given request.
     ///
@@ -123,5 +119,9 @@ public final class SessionCache {
     /// Removes all cached responses from current storage.
     public func reset() {
         cache.removeAllCachedResponses()
+    }
+    
+    subscript<T>(dynamicMember keyPath: KeyPath<URLCache, T>) -> T {
+        cache[keyPath: keyPath]
     }
 }
