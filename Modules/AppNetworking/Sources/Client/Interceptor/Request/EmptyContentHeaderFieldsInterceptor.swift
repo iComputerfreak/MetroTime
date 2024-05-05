@@ -17,15 +17,13 @@ internal final class EmptyContentHeaderFieldsInterceptor: HeaderFieldsIntercepto
      * - Content-length:
      *   `0` byte for empty content
      */
-    private static let headerFieldsForEmptyContent = { () -> [String: String] in
-        return [
-            "Content-type": "text/plain",
-            "Content-length": "0"
-        ]
-    }
+    private static let headerFieldsForEmptyContent = [
+        "Content-type": "text/plain",
+        "Content-length": "0"
+    ]
 
     convenience init() {
-        self.init(headerFields: Self.headerFieldsForEmptyContent())
+        self.init(headerFields: Self.headerFieldsForEmptyContent)
     }
 
     override public func intercept(_ request: URLRequest) -> URLRequest {

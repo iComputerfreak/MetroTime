@@ -30,7 +30,7 @@ public protocol Interceptor {
      * - Returns:
      * The intercepted and modified response.
      */
-    func intercept(response: URLResponse?, data: Data?, error: Error?) -> URLResponse?
+    func intercept(response: URLResponse?, data: Data?) -> URLResponse?
 }
 
 extension Interceptor {
@@ -38,7 +38,7 @@ extension Interceptor {
         return request
     }
 
-    public func intercept(response: URLResponse?, data: Data?, error: Error?) -> URLResponse? {
+    public func intercept(response: URLResponse?, data: Data?) -> URLResponse? {
         return response
     }
 }

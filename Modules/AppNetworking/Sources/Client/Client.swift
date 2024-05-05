@@ -5,8 +5,9 @@ public enum APIError: Error {
     case unexpectedError
     case responseMissing
     case decodingError(Error)
-    case clientError(statusCode: Int, error: Error?, body: Data?)
-    case serverError(statusCode: Int, error: Error?, body: Data?)
+    case unexpectedStatusCode(statusCode: Int, headers: [AnyHashable: Any], body: Data?)
+    case serverError(statusCode: Int, body: Data?)
+    case informationalResponse(statusCode: Int, body: Data?)
     case missingResponseBody
     case invalidURLComponents
 }
@@ -21,19 +22,6 @@ public final class Client {
 
     public let session: URLSession
     private lazy var responseHandler: ResponseHandler = .init(configuration: configuration)
-
-    private lazy var requestExecuter: RequestExecuter = {
-        switch configuration.requestExecuterType {
-        case .sync:
-            return SyncRequestExecuter(session: session)
-
-        case .async:
-            return AsyncRequestExecuter(session: session)
-
-        case let .custom(executerType):
-            return executerType.init(session: session)
-        }
-    }()
 
     // MARK: - Initialisation
     /**
@@ -54,200 +42,53 @@ public final class Client {
     @discardableResult
     public func get<ResponseType: Decodable>(
         endpoint: Endpoint<ResponseType>,
-        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:],
-        _ completion: @escaping RequestCompletion<ResponseType>
-    ) -> CancellableRequest? {
-        do {
-            let request: URLRequest = try createRequest(
-                forHttpMethod: .GET,
-                and: endpoint,
-                andAdditionalHeaderFields: additionalHeaderFields
-            )
-            return requestExecuter.send(request: request) { [weak self] data, urlResponse, error in
-                guard let self = self else { return }
-
-                self.responseHandler.handleDecodableResponse(
-                    data: data,
-                    urlResponse: urlResponse,
-                    error: error,
-                    endpoint: endpoint,
-                    completion: completion
-                )
-            }
-        } catch {
-            enqueue(completion(nil, .failure(error)))
-        }
-
-        return nil
+        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:]
+    ) async throws -> ResponseType {
+        try await executeRequest(method: .get, endpoint: endpoint, andAdditionalHeaderFields: additionalHeaderFields)
     }
 
     @discardableResult
     public func post<BodyType: Encodable, ResponseType: Decodable>(
         endpoint: Endpoint<ResponseType>,
-        body: BodyType,
-        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:],
-        _ completion: @escaping RequestCompletion<ResponseType>
-    ) -> CancellableRequest? {
-        do {
-            let encoder: Encoder = endpoint.encoder ?? configuration.encoder
-            let bodyData: Data = try encoder.encode(body)
-            let request: URLRequest = try createRequest(
-                forHttpMethod: .POST,
-                and: endpoint,
-                and: bodyData,
-                andAdditionalHeaderFields: additionalHeaderFields
-            )
-            return requestExecuter.send(request: request) { [weak self] data, urlResponse, error in
-                guard let self = self else { return }
-
-                self.responseHandler.handleDecodableResponse(
-                    data: data,
-                    urlResponse: urlResponse,
-                    error: error,
-                    endpoint: endpoint,
-                    completion: completion
-                )
-            }
-        } catch {
-            enqueue(completion(nil, .failure(error)))
-        }
-
-        return nil
-    }
-
-    @discardableResult
-    public func post<ResponseType>(
-        endpoint: Endpoint<ResponseType>,
-        body: ExpressibleByNilLiteral? = nil,
-        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:],
-        _ completion: @escaping RequestCompletion<ResponseType>
-    ) -> CancellableRequest? {
-        do {
-            let request: URLRequest = try createRequest(
-                forHttpMethod: .POST,
-                and: endpoint,
-                andAdditionalHeaderFields: additionalHeaderFields
-            )
-            return requestExecuter.send(request: request) { [weak self] data, urlResponse, error in
-                guard let self = self else { return }
-
-                self.responseHandler.handleVoidResponse(
-                    data: data,
-                    urlResponse: urlResponse,
-                    error: error,
-                    endpoint: endpoint,
-                    completion: completion
-                )
-            }
-        } catch {
-            enqueue(completion(nil, .failure(error)))
-        }
-
-        return nil
+        body: BodyType? = nil,
+        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:]
+    ) async throws -> ResponseType {
+        try await executeRequest(method: .post, endpoint: endpoint, body: body, andAdditionalHeaderFields: additionalHeaderFields)
     }
 
     @discardableResult
     public func put<BodyType: Encodable, ResponseType: Decodable>(
         endpoint: Endpoint<ResponseType>,
         body: BodyType,
-        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:],
-        _ completion: @escaping RequestCompletion<ResponseType>
-    ) -> CancellableRequest? {
-        do {
-            let encoder: Encoder = endpoint.encoder ?? configuration.encoder
-            let bodyData: Data = try encoder.encode(body)
-            let request: URLRequest = try createRequest(
-                forHttpMethod: .PUT,
-                and: endpoint,
-                and: bodyData,
-                andAdditionalHeaderFields: additionalHeaderFields
-            )
-            return requestExecuter.send(request: request) { [weak self] data, urlResponse, error in
-                guard let self = self else { return }
-
-                self.responseHandler.handleDecodableResponse(
-                    data: data,
-                    urlResponse: urlResponse,
-                    error: error,
-                    endpoint: endpoint,
-                    completion: completion
-                )
-            }
-        } catch {
-            enqueue(completion(nil, .failure(error)))
-        }
-
-        return nil
+        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:]
+    ) async throws -> ResponseType {
+        try await executeRequest(method: .put, endpoint: endpoint, body: body, andAdditionalHeaderFields: additionalHeaderFields)
     }
 
     @discardableResult
     public func patch<BodyType: Encodable, ResponseType: Decodable>(
         endpoint: Endpoint<ResponseType>,
         body: BodyType,
-        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:],
-        _ completion: @escaping RequestCompletion<ResponseType>
-    ) -> CancellableRequest? {
-        do {
-            let encoder: Encoder = endpoint.encoder ?? configuration.encoder
-            let bodyData: Data = try encoder.encode(body)
-            let request: URLRequest = try createRequest(
-                forHttpMethod: .PATCH,
-                and: endpoint,
-                and: bodyData,
-                andAdditionalHeaderFields: additionalHeaderFields
-            )
-            return requestExecuter.send(request: request) { [weak self] data, urlResponse, error in
-                guard let self = self else { return }
-
-                self.responseHandler.handleDecodableResponse(
-                    data: data,
-                    urlResponse: urlResponse,
-                    error: error,
-                    endpoint: endpoint,
-                    completion: completion
-                )
-            }
-        } catch {
-            enqueue(completion(nil, .failure(error)))
-        }
-
-        return nil
+        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:]
+    ) async throws -> ResponseType {
+        try await executeRequest(method: .patch, endpoint: endpoint, body: body, andAdditionalHeaderFields: additionalHeaderFields)
     }
 
     @discardableResult
     public func delete<ResponseType: Decodable>(
         endpoint: Endpoint<ResponseType>,
         parameter: [String: Any] = [:],
-        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:],
-        _ completion: @escaping RequestCompletion<ResponseType>
-    ) -> CancellableRequest? {
-        do {
-            let request: URLRequest = try createRequest(
-                forHttpMethod: .DELETE,
-                and: endpoint,
-                andAdditionalHeaderFields: additionalHeaderFields
-            )
-            return requestExecuter.send(request: request) { [weak self] data, urlResponse, error in
-                guard let self = self else { return }
-
-                self.responseHandler.handleDecodableResponse(
-                    data: data,
-                    urlResponse: urlResponse,
-                    error: error,
-                    endpoint: endpoint,
-                    completion: completion
-                )
-            }
-        } catch {
-            enqueue(completion(nil, .failure(error)))
-        }
-
-        return nil
+        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:]
+    ) async throws -> ResponseType {
+        try await executeRequest(method: .delete, endpoint: endpoint, andAdditionalHeaderFields: additionalHeaderFields)
     }
 
+    /// Sends a custom `URLRequest` and returns the response
+    ///
+    /// - Important: Does **not** apply interceptors!
     @discardableResult
-    public func send(request: URLRequest, _ completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> CancellableRequest? {
-        return requestExecuter.send(request: request, completion)
+    public func send(request: URLRequest) async throws -> (Data, URLResponse) {
+        try await session.data(for: request)
     }
 
     private func createRequest<ResponseType>(
@@ -268,7 +109,7 @@ public final class Client {
         //
         // Adds custom interceptor after last interceptor for header fields
         // to avoid conflict with other custom interceptor if any.
-        if body == nil && httpMethod == .POST {
+        if body == nil && httpMethod == .post {
             let targetIndex = requestInterceptors.lastIndex { $0 is HeaderFieldsInterceptor }
             let indexToInsert = targetIndex.flatMap { requestInterceptors.index(after: $0) }
             requestInterceptors.insert(
@@ -286,11 +127,26 @@ public final class Client {
             return interceptor.intercept(request)
         }
     }
-
-    /// Perform something on the configuration's response queue.
-    public func enqueue(_ completion: @escaping @autoclosure () -> Void) {
-        configuration.responseQueue.async {
-            completion()
-        }
+    
+    private func executeRequest<BodyType: Encodable, ResponseType: Decodable>(
+        method: HTTPMethod,
+        endpoint: Endpoint<ResponseType>,
+        body: BodyType? = nil as Empty?,
+        andAdditionalHeaderFields additionalHeaderFields: [String: String] = [:]
+    ) async throws -> ResponseType {
+        let encoder = endpoint.encoder ?? configuration.encoder
+        let bodyData = try body.map { try encoder.encode($0) }
+        let request = try createRequest(
+            forHttpMethod: method,
+            and: endpoint,
+            and: bodyData,
+            andAdditionalHeaderFields: additionalHeaderFields
+        )
+        let (data, urlResponse) = try await session.data(for: request)
+        return try responseHandler.handleResponse(
+            data: data,
+            urlResponse: urlResponse,
+            endpoint: endpoint
+        )
     }
 }
