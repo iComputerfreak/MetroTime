@@ -88,6 +88,7 @@ private func createTargets(for module: String, dependsOn dependencies: [String] 
             destinations: .iOS,
             product: .framework,
             bundleId: "de.JonasFrey.MetroTime.\(module)",
+            deploymentTargets: .iOS("16.0"),
             infoPlist: .default,
             sources: ["Modules/\(module)/Sources/**"],
             resources: [],
