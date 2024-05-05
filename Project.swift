@@ -12,6 +12,8 @@ echo "warning: SwiftLint not installed, download from https://github.com/realm/S
 fi
 """
 
+let deploymentTarget: DeploymentTargets = .iOS("17.0")
+
 let project = Project(
     name: "MetroTime",
     targets: [
@@ -21,7 +23,7 @@ let project = Project(
             product: .app,
             productName: "MetroTime",
             bundleId: "de.JonasFrey.MetroTime",
-            deploymentTargets: .iOS("16.0"),
+            deploymentTargets: deploymentTarget,
             infoPlist: .extendingDefault(
                 with: [
                     "UILaunchStoryboardName": "LaunchScreen.storyboard",
@@ -33,6 +35,7 @@ let project = Project(
             dependencies: [
                 .external(name: "XMLCoder", condition: nil),
                 .external(name: "JFUtils", condition: nil),
+                .external(name: "Factory", condition: nil),
                 .target(name: "AppFoundation"),
                 .target(name: "AppNetworking"),
                 .target(name: "AppDomain"),
@@ -88,7 +91,7 @@ private func createTargets(for module: String, dependsOn dependencies: [String] 
             destinations: .iOS,
             product: .framework,
             bundleId: "de.JonasFrey.MetroTime.\(module)",
-            deploymentTargets: .iOS("16.0"),
+            deploymentTargets: deploymentTarget,
             infoPlist: .default,
             sources: ["Modules/\(module)/Sources/**"],
             resources: [],
