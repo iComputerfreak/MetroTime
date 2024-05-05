@@ -2,6 +2,8 @@
 
 import Foundation
 
+// TODO: Remove when TriasService is implemented
+
 /// - Note: API documentation available at https://www.vdv.de/431-2sds-v1.1.pdfx
 actor TriasAPI: ObservableObject {
     enum Path: String {

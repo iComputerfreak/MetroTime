@@ -26,9 +26,6 @@
     "Departures" : {
 
     },
-    "Error!" : {
-
-    },
     "errorView.title" : {
       "localizations" : {
         "en" : {
@@ -51,16 +48,10 @@
     "No Results" : {
 
     },
-    "No results for term '%@'." : {
-
-    },
     "No Results." : {
 
     },
     "No stations could be found." : {
-
-    },
-    "No stop point reference found." : {
 
     },
     "Prefixes" : {
@@ -70,9 +61,6 @@
 
     },
     "Rows per station" : {
-
-    },
-    "Search for a station" : {
 
     },
     "There are no results for your search." : {
