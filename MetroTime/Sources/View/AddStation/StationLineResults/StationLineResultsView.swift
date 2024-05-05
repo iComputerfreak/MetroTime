@@ -1,10 +1,14 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
 import AppData
+import AppDomain
 import SwiftUI
 
 struct StationLineResultsView: View {
     @EnvironmentObject var viewModel: StationLineResultsViewModel
+    
+    @Environment(\.userDefaultsService)
+    private var userDefaultsService: UserDefaultsService
     
     var body: some View {
         List {
@@ -21,6 +25,7 @@ struct StationLineResultsView: View {
                     } label: {
                         LineRow(line: line)
                     }
+                    // TODO: Disable button if station is already added?
                 }
             }
         }
