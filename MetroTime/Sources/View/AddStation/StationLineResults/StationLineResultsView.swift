@@ -7,16 +7,13 @@ import SwiftUI
 struct StationLineResultsView: View {
     @EnvironmentObject var viewModel: StationLineResultsViewModel
     
-    @Environment(\.userDefaultsService)
-    private var userDefaultsService: UserDefaultsService
-    
     var body: some View {
         List {
             if viewModel.results.isEmpty {
                 ContentUnavailableView(
-                    title: Text("No Results"),
+                    "generic.noResults.title",
                     systemImage: "magnifyingglass",
-                    description: Text("There are no results for your search.")
+                    description: Text("stationLineResultsView.noResults.description")
                 )
             } else {
                 ForEach(viewModel.results, id: \.id) { line in
@@ -34,16 +31,5 @@ struct StationLineResultsView: View {
 
 #Preview {
     StationLineResultsView()
-        .environmentObject(
-            StationLineResultsViewModel(
-                station: Station(id: "1", name: "Otto-Sachs-Straße"),
-                state: .loaded,
-                results: [
-                    Line(id: "1", name: "Straßenbahn 4", directionID: "dir:durlach", direction: "Durlach"),
-                    Line(id: "2", name: "Straßenbahn 4", directionID: "dir:waldstadt", direction: "Waldstadt"),
-                    Line(id: "3", name: "Straßenbahn 2", directionID: "dir:wolfartsweier", direction: "Wolfartsweier"),
-                ]
-            )
-        )
-        .injectPreviewServices()
+        .injectPreviewEnvironment()
 }

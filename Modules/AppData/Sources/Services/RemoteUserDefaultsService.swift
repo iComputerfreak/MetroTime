@@ -17,4 +17,12 @@ public final class RemoteUserDefaultsService: UserDefaultsService {
     public func getFavoriteLines(at station: any StationProtocol) -> [any LineProtocol] {
         []
     }
+    
+    public func addFavoriteLine(_ line: any LineProtocol, at station: any StationProtocol) {
+        // TODO: Implement
+    }
+    
+    public func resetFavorites() {
+        // TODO: Implement
+    }
 }

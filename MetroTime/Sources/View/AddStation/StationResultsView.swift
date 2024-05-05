@@ -1,32 +1,42 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
 import AppData
+import AppFoundation
+import Combine
 import SwiftUI
 
 struct StationResultsView: StatefulView {
     @EnvironmentObject var viewModel: AddStationViewModel
     
+    @State var cancellable: AnyCancellable?
+    
+    // swiftlint:disable:next type_contents_order
+    init() {}
+    
     var body: some View {
-        if viewModel.results.isEmpty {
-            ContentUnavailableView(
-                title: Text("No Results"),
-                systemImage: "magnifyingglas",
-                description: Text("There are no results for your search.")
-            )
-        } else {
-            List {
-                // TODO: Group the results by locality
-                Section {
-                    ForEach(viewModel.results, id: \.id) { result in
-                        Button {
-                            // TODO: Add this station to the 
-                        } label: {
-                            StationRow(station: result)
+        LoadingErrorView(loadingState: $viewModel.state) {
+            if viewModel.stations.isEmpty {
+                ContentUnavailableView(
+                    "generic.noResults.title",
+                    systemImage: "magnifyingglas",
+                    description: Text("stationResultsView.noResults.description")
+                )
+            } else {
+                List {
+                    ForEach(viewModel.localities(), id: \.id) { localityID, localityName in
+                        Section {
+                            ForEach(viewModel.station(in: localityID), id: \.id) { station in
+                                // TODO: This should be a nav link to the list of lines available
+                                Button {} label: {
+                                    StationRow(station: station)
+                                        // Don't tint the name in the accent color
+                                        .tint(.primary)
+                                }
+                            }
+                        } header: {
+                            Text(localityName)
                         }
-                        .buttonStyle(.plain)
                     }
-                } header: {
-                    Text("Karlsruhe")
                 }
             }
         }
@@ -35,14 +45,12 @@ struct StationResultsView: StatefulView {
 
 #Preview("Results") {
     StationResultsView()
-        .environmentObject(AddStationViewModel(state: .loaded, searchText: "", results: [
-            Station(id: "1", name: "Karl-Wilhelm-Platz"),
-            Station(id: "2", name: "Europaplatz/Postgalerie (U)"),
-            Station(id: "3", name: "Otto-Sachs-Straße")
-        ]))
+        .injectPreviewEnvironment()
+        .environmentObject(AddStationViewModel(state: .loading, searchText: "Otto-Sachs-Straße", results: []))
 }
 
 #Preview("No Results") {
     StationResultsView()
-        .environmentObject(AddStationViewModel(state: .loaded, searchText: "", results: []))
+        .injectPreviewEnvironment()
+        .environmentObject(AddStationViewModel(state: .loaded, searchText: "Nobody-Street", results: []))
 }

@@ -17,6 +17,9 @@
     "Accent color" : {
 
     },
+    "addStationView.searchPrompt" : {
+
+    },
     "Button" : {
 
     },
@@ -25,6 +28,16 @@
     },
     "Departures" : {
 
+    },
+    "errorView.retry" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        }
+      }
     },
     "errorView.title" : {
       "localizations" : {
@@ -36,16 +49,21 @@
         }
       }
     },
+    "generic.noResults.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Results"
+          }
+        }
+      }
+    },
     "in 5 min." : {
 
     },
-    "Karlsruhe" : {
-
-    },
     "Lookup" : {
-
-    },
-    "No Results" : {
 
     },
     "No Results." : {
@@ -57,17 +75,37 @@
     "Prefixes" : {
 
     },
+    "Refresh" : {
+
+    },
     "Refresh interval" : {
+
+    },
+    "Result" : {
 
     },
     "Rows per station" : {
 
     },
-    "There are no results for your search." : {
-
+    "stationLineResultsView.noResults.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no results for your search."
+          }
+        }
+      }
     },
-    "TODO" : {
-
+    "stationResultsView.noResults.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no results for your search."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -24,7 +24,7 @@ final class StationLineResultsViewModel: ViewModelProtocol {
 
 extension StationLineResultsViewModel {
     static let `default` = StationLineResultsViewModel(
-        station: Station(id: "", name: ""),
+        station: Station(id: "", name: "", localityID: "", locality: ""),
         state: .loading,
         results: []
     )
