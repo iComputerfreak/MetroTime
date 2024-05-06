@@ -7,15 +7,48 @@ struct AddStationView: StatefulView {
     @StateObject var viewModel: AddStationViewModel = .default
     
     var body: some View {
-        StationResultsView()
-            .environmentObject(viewModel)
-            .searchable(text: $viewModel.searchText, prompt: Text("addStationView.searchPrompt"))
-            .submitLabel(.search)
-            .onSubmit(of: .search, viewModel.fetchStations)
+        LoadingErrorView(loadingState: $viewModel.state, loadingBackground: Color(.systemGroupedBackground)) {
+            if viewModel.stations.isEmpty {
+                ContentUnavailableView(
+                    "generic.noResults.title",
+                    systemImage: "magnifyingglass",
+                    description: Text("stationResultsView.noResults.description")
+                )
+            } else {
+                List {
+                    ForEach(viewModel.localities(), id: \.id) { localityID, localityName in
+                        Section {
+                            ForEach(viewModel.station(in: localityID), id: \.id) { station in
+                                // TODO: This should be a nav link to the list of lines available
+                                Button {} label: {
+                                    StationRow(station: station)
+                                        // Don't tint the name in the accent color
+                                        .tint(.primary)
+                                }
+                            }
+                        } header: {
+                            Text(localityName)
+                        }
+                    }
+                }
+            }
+        }
+        .environmentObject(viewModel)
+        .searchable(text: $viewModel.searchText, prompt: Text("addStationView.searchPrompt"))
+        .submitLabel(.search)
+        .onSubmit(of: .search, viewModel.fetchStations)
     }
 }
 
-#Preview {
+#Preview("Results") {
+    NavigationStack {
+        AddStationView(viewModel: .init(state: .loading, searchText: "Otto-Sachs-Straße", results: []))
+            .navigationTitle(Text(verbatim: "Add Station"))
+    }
+    .injectPreviewEnvironment()
+}
+
+#Preview("No Results") {
     NavigationStack {
         AddStationView()
             .navigationTitle(Text(verbatim: "Add Station"))
