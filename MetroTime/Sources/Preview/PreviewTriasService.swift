@@ -30,11 +30,14 @@ final class PreviewTriasService: TriasService {
     ]
     
     func fetchStations(byName name: String) async throws -> [any StationProtocol] {
-        print("Searching for '\(name)'...")
+        try await Task.sleep(for: .seconds(0.5))
+        
         return allStations.filter { $0.name.localizedCaseInsensitiveContains(name) }
     }
     
     func fetchStation(byID id: String) async throws -> any StationProtocol {
+        try await Task.sleep(for: .seconds(0.5))
+        
         guard let station = allStations.first(where: \.id, equals: id) else {
             throw APIError.unexpectedError
         }
@@ -82,6 +85,8 @@ final class PreviewTriasService: TriasService {
     }
     
     func fetchLines(at station: any StationProtocol) async throws -> [any LineProtocol] {
-        allLines[station.id, default: []]
+        try await Task.sleep(for: .seconds(0.5))
+        
+        return allLines[station.id, default: []]
     }
 }
