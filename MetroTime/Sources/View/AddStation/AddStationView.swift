@@ -11,16 +11,14 @@ struct AddStationView: StatefulView {
             .environmentObject(viewModel)
             .searchable(text: $viewModel.searchText, prompt: Text("addStationView.searchPrompt"))
             .submitLabel(.search)
-            .onSubmit(of: .search) {
-                viewModel.fetchStations()
-            }
+            .onSubmit(of: .search, viewModel.fetchStations)
     }
 }
 
 #Preview {
     NavigationStack {
         AddStationView()
-            .navigationTitle("Add Station")
+            .navigationTitle(Text(verbatim: "Add Station"))
     }
     .injectPreviewEnvironment()
 }
