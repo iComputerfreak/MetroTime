@@ -15,28 +15,31 @@ struct AddStationView: StatefulView {
                     description: Text("stationResultsView.noResults.description")
                 )
             } else {
-                List {
-                    ForEach(viewModel.localities(), id: \.id) { localityID, localityName in
-                        Section {
-                            ForEach(viewModel.station(in: localityID), id: \.id) { station in
-                                // TODO: This should be a nav link to the list of lines available
-                                Button {} label: {
-                                    StationRow(station: station)
-                                        // Don't tint the name in the accent color
-                                        .tint(.primary)
-                                }
-                            }
-                        } header: {
-                            Text(localityName)
-                        }
-                    }
-                }
+                resultsView
             }
         }
-        .environmentObject(viewModel)
         .searchable(text: $viewModel.searchText, prompt: Text("addStationView.searchPrompt"))
         .submitLabel(.search)
         .onSubmit(of: .search, viewModel.fetchStations)
+    }
+    
+    private var resultsView: some View {
+        List {
+            ForEach(viewModel.localities(), id: \.id) { localityID, localityName in
+                Section {
+                    ForEach(viewModel.station(in: localityID), id: \.id) { station in
+                        // TODO: This should be a nav link to the list of lines available
+                        Button {} label: {
+                            StationRow(station: station)
+                                // Don't tint the name in the accent color
+                                .tint(.primary)
+                        }
+                    }
+                } header: {
+                    Text(localityName)
+                }
+            }
+        }
     }
 }
 
