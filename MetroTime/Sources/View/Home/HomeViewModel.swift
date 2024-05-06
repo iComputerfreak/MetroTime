@@ -26,6 +26,9 @@ final class HomeViewModel: ViewModelProtocol {
         self.departures = departures
     }
     
+    /// Returns all departures for the given station
+    /// - Parameter station: The station to get the departures for
+    /// - Returns: An array of departures for the given station, sorted by estimated departure time
     func departures(for station: any StationProtocol) -> [any DepartureProtocol] {
         departures
             .filter { departure in

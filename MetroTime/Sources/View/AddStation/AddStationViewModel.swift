@@ -13,6 +13,7 @@ final class AddStationViewModel: ViewModelProtocol {
     
     @Injected(\.triasService)
     private var triasService: TriasService
+    
     @Injected(\.userDefaultsService)
     private var userDefaultsService: UserDefaultsService
     
@@ -31,6 +32,7 @@ final class AddStationViewModel: ViewModelProtocol {
             }
     }
     
+    /// Fetches all stations matching the `searchText` from the `TriasService`
     func fetchStations() {
         guard !searchText.isEmpty else {
             stations = []
@@ -57,12 +59,17 @@ final class AddStationViewModel: ViewModelProtocol {
         }
     }
     
+    /// Returns all stations in the given locality
+    /// - Parameter localityID: The ID of the locality
+    /// - Returns: An array of stations in the locality
     func station(in localityID: String) -> [any StationProtocol] {
         stations.filter { station in
             station.localityID == localityID
         }
     }
     
+    /// Returns all localities for the stored stations
+    /// - Returns: The localities (ID and name) without duplicates, sorted by their name
     func localities() -> [(id: String, name: String)] {
         stations
             .removingDuplicates(key: \.localityID)
@@ -70,6 +77,10 @@ final class AddStationViewModel: ViewModelProtocol {
             .sorted(on: \.name, by: { $0.lexicographicallyPrecedes($1) })
     }
     
+    /// Adds the given line at the given station to the favorites
+    /// - Parameters:
+    ///   - line: The line to add
+    ///   - station: The station to add the line to
     func addFavorite(line: any LineProtocol, at station: any StationProtocol) {
         userDefaultsService.addFavoriteLine(line, at: station)
     }
