@@ -14,7 +14,7 @@ struct StationResultsView: StatefulView {
     init() {}
     
     var body: some View {
-        LoadingErrorView(loadingState: $viewModel.state) {
+        LoadingErrorView(loadingState: $viewModel.state, loadingBackground: Color(.systemGroupedBackground)) {
             if viewModel.stations.isEmpty {
                 ContentUnavailableView(
                     "generic.noResults.title",
