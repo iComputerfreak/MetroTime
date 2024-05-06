@@ -3,34 +3,37 @@
 import SwiftUI
 
 struct HomeView: StatefulView {
-    @StateObject var viewModel: HomeViewModel = .init()
+    @StateObject var viewModel: HomeViewModel = .default
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(viewModel.stops, id: \.self) { stop in
-                    Section {
-                        ForEach(viewModel.departures(for: stop), id: \.self) { _ in
-                            HStack {
-                                Text("2 Wolfartsweier")
-                                Spacer()
-                                Text(
-                                    ["in 5 min.", "--:--"].randomElement()!
-                                )
+            LoadingErrorView(loadingState: $viewModel.loadingState, retryAction: retry, loadingBackground: Color(.systemGroupedBackground)) {
+                List {
+                    ForEach(viewModel.stations, id: \.id) { station in
+                        Section {
+                            ForEach(viewModel.departures(for: station), id: \.id) { departure in
+                                HStack {
+                                    Text("\(departure.lineName) \(departure.direction)")
+                                    Spacer()
+                                    Text(departure.estimatedDeparture.formatted(date: .omitted, time: .shortened))
+                                }
                             }
+                        } header: {
+                            Text(station.name)
                         }
-                    } header: {
-                        Text(stop)
                     }
                 }
             }
             .refreshable {
-                // TODO: Refresh
+                viewModel.fetchDepartures()
             }
             .toolbar {
                 addButton
             }
             .navigationTitle(Text("Departures"))
+        }
+        .onAppear {
+            viewModel.fetchDepartures()
         }
     }
     
@@ -43,8 +46,13 @@ struct HomeView: StatefulView {
             }
         }
     }
+    
+    func retry() {
+        viewModel.fetchDepartures()
+    }
 }
 
 #Preview {
     HomeView()
+        .injectPreviewEnvironment()
 }
