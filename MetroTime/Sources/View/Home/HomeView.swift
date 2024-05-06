@@ -13,7 +13,7 @@ struct HomeView: StatefulView {
                         Section {
                             ForEach(viewModel.departures(for: station), id: \.id) { departure in
                                 HStack {
-                                    Text("\(departure.lineName) \(departure.direction)")
+                                    Text(verbatim: "\(departure.lineName) \(departure.direction)")
                                     Spacer()
                                     Text(departure.estimatedDeparture.formatted(date: .omitted, time: .shortened))
                                 }
@@ -30,7 +30,7 @@ struct HomeView: StatefulView {
             .toolbar {
                 addButton
             }
-            .navigationTitle(Text("Departures"))
+            .navigationTitle(Text("homeView.navTitle"))
         }
         .onAppear {
             viewModel.fetchDepartures()

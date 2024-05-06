@@ -64,7 +64,7 @@ struct LoadingErrorView<Content: View, RetryLabel: View>: View {
 }
 
 #Preview("Loaded") {
-    LoadingErrorView(loadingState: .constant(.loaded), completionView: { Text("Result") })
+    LoadingErrorView(loadingState: .constant(.loaded), completionView: { Text(verbatim: "Result") })
 }
 
 #Preview("Error") {

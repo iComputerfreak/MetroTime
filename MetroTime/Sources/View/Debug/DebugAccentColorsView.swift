@@ -19,7 +19,7 @@ struct DebugAccentColorsView: View {
                 Button {
                     // Do nothing
                 } label: {
-                    Text("Button")
+                    Text(verbatim: "Button")
                 }
             }
             .tint(color)

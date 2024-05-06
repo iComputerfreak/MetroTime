@@ -4,6 +4,6 @@ import SwiftUI
 
 struct LookupView: View {
     var body: some View {
-        Text("Lookup")
+        Text(verbatim: "Lookup")
     }
 }

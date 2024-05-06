@@ -13,7 +13,7 @@ struct LineRow: View {
     
     var body: some View {
         HStack {
-            Text("\(line.name) \(line.direction)")
+            Text(verbatim: "\(line.name) \(line.direction)")
             Spacer()
             AddButtonLabel(isAdded: isAdded)
         }

@@ -6,13 +6,13 @@ struct RootView: View {
     var body: some View {
         TabView {
             HomeView()
-                .tabItem { Label("Home", systemImage: "house") }
+                .tabItem { Label("tabBar.home", systemImage: "house") }
             
             LookupView()
-                .tabItem { Label("Lookup", systemImage: "magnifyingglass") }
+                .tabItem { Label("tabBar.lookup", systemImage: "magnifyingglass") }
             
             SettingsView()
-                .tabItem { Label("Settings", systemImage: "gear") }
+                .tabItem { Label("tabBar.settings", systemImage: "gear") }
         }
     }
 }

@@ -6,19 +6,20 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Text("Rows per station")
-                Text("Accent color")
-                Text("Refresh interval")
+                Text(verbatim: "Rows per station")
+                Text(verbatim: "Accent color")
+                Text(verbatim: "Refresh interval")
                 // Set custom colors based on the available lines at the stations the user selected
-                Text("Custom Colors")
+                Text(verbatim: "Custom Colors")
                 // Allow the user to specify prefixes that should be removed from the monitor (e.g. "Straßenbahn")
-                Text("Prefixes")
+                Text(verbatim: "Prefixes")
             }
             .toolbar {
                 #if DEBUG
                     debugButton
                 #endif
             }
+            .navigationTitle(Text("settings.navTitle"))
         }
     }
     

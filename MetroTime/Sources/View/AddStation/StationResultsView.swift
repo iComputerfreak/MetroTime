@@ -18,7 +18,7 @@ struct StationResultsView: StatefulView {
             if viewModel.stations.isEmpty {
                 ContentUnavailableView(
                     "generic.noResults.title",
-                    systemImage: "magnifyingglas",
+                    systemImage: "magnifyingglass",
                     description: Text("stationResultsView.noResults.description")
                 )
             } else {
