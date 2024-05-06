@@ -42,7 +42,7 @@ final class PreviewTriasService: TriasService {
     }
     
     func fetchDepartures(at station: any StationProtocol) async throws -> [any DepartureProtocol] {
-        try await Task.sleep(for: .seconds(1))
+        try await Task.sleep(for: .seconds(0.5))
         
         guard let lines = allLines[station.id] else {
             throw APIError.unexpectedError
