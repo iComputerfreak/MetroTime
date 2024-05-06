@@ -27,9 +27,11 @@ final class HomeViewModel: ViewModelProtocol {
     }
     
     func departures(for station: any StationProtocol) -> [any DepartureProtocol] {
-        departures.filter { departure in
-            departure.stationID == station.id
-        }
+        departures
+            .filter { departure in
+                departure.stationID == station.id
+            }
+            .sorted(on: \.estimatedDeparture, by: <)
     }
     
     /// Fetches new departures from the `TriasService`
