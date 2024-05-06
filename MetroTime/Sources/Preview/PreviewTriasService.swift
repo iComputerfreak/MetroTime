@@ -61,7 +61,9 @@ final class PreviewTriasService: TriasService {
         return lines.map { line in
             Departure(
                 id: UUID().uuidString,
-                line: line.id,
+                stationID: station.id,
+                lineID: line.id,
+                lineName: line.name,
                 direction: line.direction,
                 plannedDeparture: plannedDepartures.removeFirst(),
                 estimatedDeparture: estimatedDepartures.removeFirst()
