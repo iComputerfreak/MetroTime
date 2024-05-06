@@ -39,9 +39,11 @@ final class PreviewUserDefaultsService: UserDefaultsService {
         if !stations.contains(where: { station in station.id == station.id }) {
             stations.append(station)
         }
+        
         if !lines.contains(where: { line in line.key == station.id }) {
             lines[station.id] = [line]
         }
+        
         lines[station.id]?.append(line)
     }
     

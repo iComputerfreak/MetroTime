@@ -16,16 +16,16 @@ final class PreviewTriasService: TriasService {
     private let allLines: [String: [any LineProtocol]] = [
         // Otto-Sachs-Straße
         "de:08212:508": [
-            Line(id: "kvv:21005:E:R", name: "Straßenbahn 5", directionID: "inward", direction: "Durlach Bahnhof"),
+            Line(id: "kvv:21005:E:R", name: "5", directionID: "inward", direction: "Durlach Bahnhof"),
         ],
         // Europaplatz/Postgalerie (U)
         "de:08212:1004": [
-            Line(id: "kvv:21001:E:H", name: "Straßenbahn 1", directionID: "outward", direction: "Heide"),
-            Line(id: "kvv:22305:E:R", name: "S-Bahn S5", directionID: "inward", direction: "Pforzheim Hbf"),
+            Line(id: "kvv:21001:E:H", name: "1", directionID: "outward", direction: "Heide"),
+            Line(id: "kvv:22305:E:R", name: "S5", directionID: "inward", direction: "Pforzheim Hbf"),
         ],
         // Karl-Wilhelm-Platz
         "de:08212:401": [
-            Line(id: "kvv:21004:E:R", name: "Straßenbahn 4", directionID: "inward", direction: "Waldstadt"),
+            Line(id: "kvv:21004:E:R", name: "4", directionID: "inward", direction: "Waldstadt"),
         ],
     ]
     
@@ -42,6 +42,8 @@ final class PreviewTriasService: TriasService {
     }
     
     func fetchDepartures(at station: any StationProtocol) async throws -> [any DepartureProtocol] {
+        try await Task.sleep(for: .seconds(1))
+        
         guard let lines = allLines[station.id] else {
             throw APIError.unexpectedError
         }
@@ -69,6 +71,14 @@ final class PreviewTriasService: TriasService {
                 estimatedDeparture: estimatedDepartures.removeFirst()
             )
         }
+    }
+    
+    func fetchDepartures(at stations: [any StationProtocol]) async throws -> [any DepartureProtocol] {
+        var departures: [any DepartureProtocol] = []
+        for station in stations {
+            try await departures.append(contentsOf: fetchDepartures(at: station))
+        }
+        return departures
     }
     
     func fetchLines(at station: any StationProtocol) async throws -> [any LineProtocol] {

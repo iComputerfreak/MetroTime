@@ -19,6 +19,10 @@ public final class RemoteTriasService: TriasService {
         []
     }
     
+    public func fetchDepartures(at stations: [any StationProtocol]) async throws -> [any DepartureProtocol] {
+        []
+    }
+    
     public func fetchLines(at station: any StationProtocol) async throws -> [any LineProtocol] {
         []
     }
