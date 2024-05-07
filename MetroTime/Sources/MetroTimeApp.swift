@@ -4,13 +4,8 @@ import SwiftUI
 
 @main
 struct MetroTimeApp: App {
-    // TODO: Move models into AppData and add protocols in AppDomain (e.g. DepartureProtocol)
-    // TODO: Move existing protocols into AppDomain
-    // TODO: Create service for API and for favorited stops and lines (incl. protocol)
-    // TODO: Services should not use other services
-    // TODO: Inject services into view hiearchy
-    // TODO: If a ViewModel needs to use a service, pass it into the function that needs to use it
     // TODO: OSLog Logging
+    // TODO: Add dev team to Tuist
     
     /*
      - RemoteTriasAPI: TriasAPI (fetches the data from TRIAS)

@@ -1,5 +1,6 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import OSLog
 import SwiftUI
 
 struct DebugAccentColorsView: View {
@@ -100,7 +101,7 @@ private extension Color {
         let green = Double.random(in: 0 ... 1)
         let blue = Double.random(in: 0 ... 1)
         let color = Color(red: red, green: green, blue: blue)
-        print("Generated a new random color: \(String(describing: color).dropLast(2))")
+        Logger.general.debug("Generated a new random color: \(String(describing: color).dropLast(2))")
         return color
     }
     
@@ -110,7 +111,7 @@ private extension Color {
         let saturation = Double.random(in: 0.5 ... 1.0)
         let brightness = Double.random(in: 0.7 ... 1.0)
         let color = Color(hue: hue, saturation: saturation, brightness: brightness)
-        print("Generated a new random color: \(String(describing: color).dropLast(2))")
+        Logger.general.debug("Generated a new random color: \(String(describing: color).dropLast(2))")
         return color
     }
 }
