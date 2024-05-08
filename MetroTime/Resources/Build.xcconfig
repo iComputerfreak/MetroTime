@@ -4,3 +4,4 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor
+SWIFT_EMIT_LOC_STRINGS = YES
