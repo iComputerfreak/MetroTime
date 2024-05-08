@@ -10,6 +10,7 @@ final class AddStationViewModel: ViewModelProtocol {
     @Published var state: LoadingState
     @Published var searchText: String
     @Published var stations: [any StationProtocol]
+    @Published var isSearchFocused: Bool
     
     @Injected(\.triasService)
     private var triasService: TriasService
@@ -20,10 +21,16 @@ final class AddStationViewModel: ViewModelProtocol {
     private var updateCancellable: AnyCancellable?
     private var fetchStationsTask: Task<(), Never>?
     
-    init(state: LoadingState, searchText: String, results: [any StationProtocol]) {
+    init(
+        state: LoadingState = `default`.state,
+        searchText: String = `default`.searchText,
+        stations: [any StationProtocol] = `default`.stations,
+        isSearchFocused: Bool = `default`.isSearchFocused
+    ) {
         self.state = state
         self.searchText = searchText
-        self.stations = results
+        self.stations = stations
+        self.isSearchFocused = isSearchFocused
         self.updateCancellable = $searchText
             .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
             .removeDuplicates()
@@ -40,20 +47,23 @@ final class AddStationViewModel: ViewModelProtocol {
             return
         }
         
+        if state == .loading {
+            // Cancel the previous task and start a new one
+            fetchStationsTask?.cancel()
+        }
+        
         state = .loading
-        fetchStationsTask = Task(priority: .userInitiated) { [weak self] in
-            guard let self, !Task.isCancelled else { return }
-            
+        fetchStationsTask = Task(priority: .userInitiated) {
             do {
                 // TODO: Logging
                 let stations = try await triasService.fetchStations(byName: searchText)
                 await MainActor.run {
                     self.stations = stations
-                    self.state = .loaded
+                    state = .loaded
                 }
             } catch {
                 await MainActor.run {
-                    self.state = .error(error)
+                    state = .error(error)
                 }
             }
         }
@@ -77,14 +87,6 @@ final class AddStationViewModel: ViewModelProtocol {
             .sorted(on: \.name, by: { $0.lexicographicallyPrecedes($1) })
     }
     
-    /// Adds the given line at the given station to the favorites
-    /// - Parameters:
-    ///   - line: The line to add
-    ///   - station: The station to add the line to
-    func addFavorite(line: any LineProtocol, at station: any StationProtocol) {
-        userDefaultsService.addFavoriteLine(line, at: station)
-    }
-    
     deinit {
         self.fetchStationsTask?.cancel()
         self.updateCancellable?.cancel()
@@ -95,6 +97,7 @@ extension AddStationViewModel {
     static let `default` = AddStationViewModel(
         state: .loaded,
         searchText: "",
-        results: []
+        stations: [],
+        isSearchFocused: true
     )
 }

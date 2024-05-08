@@ -12,11 +12,7 @@ struct StationRow: View {
     }
     
     var body: some View {
-        HStack {
-            Text(station.name)
-            Spacer()
-            AddButtonLabel(isAdded: isAdded)
-        }
+        Text(station.name)
     }
 }
 

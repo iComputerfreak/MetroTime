@@ -6,9 +6,16 @@ import SwiftUI
 struct AddStationView: StatefulView {
     @StateObject var viewModel: AddStationViewModel = .default
     
+    // swiftlint:disable:next type_contents_order
+    init(viewModel: AddStationViewModel = .default) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         LoadingErrorView(loadingState: $viewModel.state, loadingBackground: Color(.systemGroupedBackground)) {
-            if viewModel.stations.isEmpty {
+            // TODO: This immediately updates as soon as we enter text, but we only want the "No Results" view after the first request
+            // TODO: Maybe we need to create a custom "State" instead of a LoadingState again with `idle` case
+            if viewModel.stations.isEmpty, !viewModel.searchText.isEmpty {
                 ContentUnavailableView(
                     "generic.noResults.title",
                     systemImage: "magnifyingglass",
@@ -18,9 +25,15 @@ struct AddStationView: StatefulView {
                 resultsView
             }
         }
-        .searchable(text: $viewModel.searchText, prompt: Text("addStationView.searchPrompt"))
+        .searchable(text: $viewModel.searchText, isPresented: $viewModel.isSearchFocused, prompt: Text("addStationView.searchPrompt"))
+        .searchPresentationToolbarAvoidHidingContent()
         .submitLabel(.search)
         .onSubmit(of: .search, viewModel.fetchStations)
+        .toolbar {
+            DismissButton()
+                .bold()
+        }
+        .navigationTitle(Text("addStationView.navTitle"))
     }
     
     private var resultsView: some View {
@@ -28,8 +41,9 @@ struct AddStationView: StatefulView {
             ForEach(viewModel.localities(), id: \.id) { localityID, localityName in
                 Section {
                     ForEach(viewModel.station(in: localityID), id: \.id) { station in
-                        // TODO: This should be a nav link to the list of lines available
-                        Button {} label: {
+                        NavigationLink {
+                            AddLineView(station: station)
+                        } label: {
                             StationRow(station: station)
                                 // Don't tint the name in the accent color
                                 .tint(.primary)
@@ -44,8 +58,17 @@ struct AddStationView: StatefulView {
 }
 
 #Preview("Results") {
+    // TODO: There are no results for this
     NavigationStack {
-        AddStationView(viewModel: .init(state: .loading, searchText: "Otto-Sachs-Straße", results: []))
+        AddStationView(viewModel: .init(state: .loading, searchText: "Otto-Sachs-Straße", stations: []))
+            .navigationTitle(Text(verbatim: "Add Station"))
+    }
+    .injectPreviewEnvironment()
+}
+
+#Preview("No Search") {
+    NavigationStack {
+        AddStationView()
             .navigationTitle(Text(verbatim: "Add Station"))
     }
     .injectPreviewEnvironment()
@@ -53,7 +76,7 @@ struct AddStationView: StatefulView {
 
 #Preview("No Results") {
     NavigationStack {
-        AddStationView()
+        AddStationView(viewModel: .init(state: .loading, searchText: "Bahnhof"))
             .navigationTitle(Text(verbatim: "Add Station"))
     }
     .injectPreviewEnvironment()
