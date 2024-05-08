@@ -10,9 +10,9 @@ public struct Departure: DepartureProtocol {
     public let lineName: String
     public let direction: String
     public let plannedDeparture: Date
-    public let estimatedDeparture: Date
+    public let estimatedDeparture: Date?
     
-    public init(id: String, stationID: String, lineID: String, lineName: String, direction: String, plannedDeparture: Date, estimatedDeparture: Date) {
+    public init(id: String, stationID: String, lineID: String, lineName: String, direction: String, plannedDeparture: Date, estimatedDeparture: Date?) {
         self.id = id
         self.stationID = stationID
         self.lineID = lineID

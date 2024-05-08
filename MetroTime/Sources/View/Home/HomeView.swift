@@ -12,12 +12,7 @@ struct HomeView: StatefulView {
                     ForEach(viewModel.stations, id: \.id) { station in
                         Section {
                             ForEach(viewModel.departures(for: station), id: \.id) { departure in
-                                // TODO: Move to separate view
-                                HStack {
-                                    Text(verbatim: "\(departure.lineName) \(departure.direction)")
-                                    Spacer()
-                                    Text(departure.estimatedDeparture.formatted(date: .omitted, time: .shortened))
-                                }
+                                DepartureRow(departure: departure)
                             }
                         } header: {
                             Text(station.name)

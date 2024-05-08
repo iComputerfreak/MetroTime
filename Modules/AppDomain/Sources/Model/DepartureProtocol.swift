@@ -10,5 +10,5 @@ public protocol DepartureProtocol: Codable, Identifiable {
     var lineName: String { get }
     var direction: String { get }
     var plannedDeparture: Date { get }
-    var estimatedDeparture: Date { get }
+    var estimatedDeparture: Date? { get }
 }

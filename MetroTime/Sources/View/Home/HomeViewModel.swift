@@ -41,7 +41,7 @@ final class HomeViewModel: ViewModelProtocol {
             .filter { departure in
                 departure.stationID == station.id
             }
-            .sorted(on: \.estimatedDeparture, by: <)
+            .sorted(on: { $0.estimatedDeparture ?? $0.plannedDeparture }, by: <)
     }
     
     /// Fetches new departures from the `TriasService`

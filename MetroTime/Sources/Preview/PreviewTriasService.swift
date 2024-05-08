@@ -7,13 +7,13 @@ import Foundation
 import JFUtils
 
 final class PreviewTriasService: TriasService {
-    private let allStations: [any StationProtocol] = [
+    let allStations: [any StationProtocol] = [
         Station(id: "de:08212:508", name: "Otto-Sachs-Straße", localityID: "8212000:15", locality: "Karlsruhe"),
         Station(id: "de:08212:1004", name: "Europaplatz/Postgalerie (U)", localityID: "8212000:15", locality: "Karlsruhe"),
         Station(id: "de:08212:401", name: "Karl-Wilhelm-Platz", localityID: "8212000:15", locality: "Karlsruhe"),
     ]
     
-    private let allLines: [String: [any LineProtocol]] = [
+    let allLines: [String: [any LineProtocol]] = [
         // Otto-Sachs-Straße
         "de:08212:508": [
             Line(id: "kvv:21005:E:R", name: "5", directionID: "inward", direction: "Durlach Bahnhof"),
@@ -27,6 +27,39 @@ final class PreviewTriasService: TriasService {
         "de:08212:401": [
             Line(id: "kvv:21004:E:R", name: "4", directionID: "inward", direction: "Waldstadt"),
         ],
+    ]
+    
+    let allDepartures: [any DepartureProtocol] = [
+        // Line 5 from Otto-Sachs-Straße
+        Departure(
+            id: UUID().uuidString,
+            stationID: "de:08212:508",
+            lineID: "kvv:21005:E:R",
+            lineName: "5",
+            direction: "Durlach Bahnhof",
+            plannedDeparture: Date().addingTimeInterval(5 * .minute),
+            estimatedDeparture: Date().addingTimeInterval(5 * .minute)
+        ),
+        // Line 1 from Europaplatz/Postgalerie (U)
+        Departure(
+            id: UUID().uuidString,
+            stationID: "de:08212:1004",
+            lineID: "kvv:21001:E:H",
+            lineName: "1",
+            direction: "Heide",
+            plannedDeparture: Date().addingTimeInterval(13 * .minute),
+            estimatedDeparture: Date().addingTimeInterval(11 * .minute)
+        ),
+        // Line S5 from Europaplatz/Postgalerie (U)
+        Departure(
+            id: UUID().uuidString,
+            stationID: "de:08212:1004",
+            lineID: "kvv:22305:E:R",
+            lineName: "S5",
+            direction: "Pforzheim Hbf",
+            plannedDeparture: Date().addingTimeInterval(3 * .minute),
+            estimatedDeparture: Date().addingTimeInterval(5 * .minute)
+        ),
     ]
     
     func fetchStations(byName name: String) async throws -> [any StationProtocol] {
