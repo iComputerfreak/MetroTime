@@ -31,9 +31,9 @@ struct HomeView: StatefulView {
         .onAppear {
             viewModel.fetchDepartures()
         }
-        .sheet(isPresented: $viewModel.showingAddStationSheet) {
+        .sheet(isPresented: $viewModel.isShowingAddStationSheet) {
             NavigationStack {
-                AddStationView()
+                AddStationView(isShowingAddStationSheet: $viewModel.isShowingAddStationSheet)
             }
         }
     }
@@ -41,7 +41,7 @@ struct HomeView: StatefulView {
     @ToolbarContentBuilder var addButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                viewModel.showingAddStationSheet = true
+                viewModel.isShowingAddStationSheet = true
             } label: {
                 Label("homeView.addStationButton.label", systemImage: "plus")
             }

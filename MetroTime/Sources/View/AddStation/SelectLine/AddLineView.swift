@@ -6,19 +6,7 @@ import SwiftUI
 
 struct AddLineView: StatefulView {
     @StateObject var viewModel: AddLineViewModel
-    
-    @Environment(\.dismiss)
-    private var dismiss: DismissAction
-    
-    // swiftlint:disable:next type_contents_order
-    init(viewModel: AddLineViewModel = .default) {
-        self._viewModel = StateObject(wrappedValue: .init(loadingState: viewModel.loadingState, station: viewModel.station, lines: viewModel.lines))
-    }
-    
-    // swiftlint:disable:next type_contents_order
-    init(station: any StationProtocol) {
-        self.init(viewModel: .init(loadingState: .loaded, station: station, lines: []))
-    }
+    @Binding var isShowingAddStationSheet: Bool
     
     var body: some View {
         LoadingErrorView(
@@ -48,7 +36,7 @@ struct AddLineView: StatefulView {
                 let isFavorite = viewModel.isLineFavorite(line)
                 Button {
                     viewModel.addFavoriteLine(line)
-                    dismiss()
+                    isShowingAddStationSheet = false
                 } label: {
                     LineRow(line: line, isAdded: isFavorite)
                 }
@@ -71,7 +59,8 @@ struct AddLineView: StatefulView {
                 loadingState: .loaded,
                 station: Station(id: "", name: "", localityID: "", locality: ""),
                 lines: []
-            )
+            ),
+            isShowingAddStationSheet: .constant(false)
         )
     }
     .injectPreviewEnvironment()
@@ -84,7 +73,8 @@ struct AddLineView: StatefulView {
                 loadingState: .loading,
                 station: Station(id: "de:08212:1004", name: "Europaplatz/Postgalerie (U)", localityID: "8212000:15", locality: "Karlsruhe"),
                 lines: []
-            )
+            ),
+            isShowingAddStationSheet: .constant(false)
         )
     }
     .injectPreviewEnvironment()

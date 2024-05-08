@@ -8,7 +8,6 @@ final class PreviewUserDefaultsService: UserDefaultsService {
     var stations: [any StationProtocol] = [
         Station(id: "de:08212:508", name: "Otto-Sachs-Straße", localityID: "8212000:15", locality: "Karlsruhe"),
         Station(id: "de:08212:1004", name: "Europaplatz/Postgalerie (U)", localityID: "8212000:15", locality: "Karlsruhe"),
-        Station(id: "de:08212:401", name: "Karl-Wilhelm-Platz", localityID: "8212000:15", locality: "Karlsruhe"),
     ]
     
     var lines: [String: [any LineProtocol]] = [
@@ -19,10 +18,6 @@ final class PreviewUserDefaultsService: UserDefaultsService {
         // Europaplatz/Postgalerie (U)
         "de:08212:1004": [
             Line(id: "kvv:21001:E:H", name: "Straßenbahn 1", directionID: "outward", direction: "Heide"),
-        ],
-        // Karl-Wilhelm-Platz
-        "de:08212:401": [
-            Line(id: "kvv:21004:E:R", name: "Straßenbahn 4", directionID: "inward", direction: "Waldstadt"),
         ],
     ]
     

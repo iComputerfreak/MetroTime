@@ -5,11 +5,7 @@ import SwiftUI
 
 struct AddStationView: StatefulView {
     @StateObject var viewModel: AddStationViewModel = .default
-    
-    // swiftlint:disable:next type_contents_order
-    init(viewModel: AddStationViewModel = .default) {
-        self._viewModel = StateObject(wrappedValue: viewModel)
-    }
+    @Binding var isShowingAddStationSheet: Bool
     
     var body: some View {
         LoadingErrorView(loadingState: $viewModel.state, loadingBackground: Color(.systemGroupedBackground)) {
@@ -42,7 +38,7 @@ struct AddStationView: StatefulView {
                 Section {
                     ForEach(viewModel.station(in: localityID), id: \.id) { station in
                         NavigationLink {
-                            AddLineView(station: station)
+                            AddLineView(viewModel: .init(station: station), isShowingAddStationSheet: $isShowingAddStationSheet)
                         } label: {
                             StationRow(station: station)
                                 // Don't tint the name in the accent color
@@ -60,7 +56,7 @@ struct AddStationView: StatefulView {
 #Preview("Results") {
     // TODO: There are no results for this
     NavigationStack {
-        AddStationView(viewModel: .init(state: .loading, searchText: "Otto-Sachs-Straße", stations: []))
+        AddStationView(viewModel: .init(state: .loading, searchText: "Otto-Sachs-Straße", stations: []), isShowingAddStationSheet: .constant(false))
             .navigationTitle(Text(verbatim: "Add Station"))
     }
     .injectPreviewEnvironment()
@@ -68,7 +64,7 @@ struct AddStationView: StatefulView {
 
 #Preview("No Search") {
     NavigationStack {
-        AddStationView()
+        AddStationView(isShowingAddStationSheet: .constant(false))
             .navigationTitle(Text(verbatim: "Add Station"))
     }
     .injectPreviewEnvironment()
@@ -76,7 +72,7 @@ struct AddStationView: StatefulView {
 
 #Preview("No Results") {
     NavigationStack {
-        AddStationView(viewModel: .init(state: .loading, searchText: "Bahnhof"))
+        AddStationView(viewModel: .init(state: .loading, searchText: "Bahnhof"), isShowingAddStationSheet: .constant(false))
             .navigationTitle(Text(verbatim: "Add Station"))
     }
     .injectPreviewEnvironment()

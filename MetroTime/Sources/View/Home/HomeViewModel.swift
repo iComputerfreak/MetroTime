@@ -15,7 +15,7 @@ final class HomeViewModel: ViewModelProtocol {
     }
     @Published var departures: [any DepartureProtocol]
     @Published var loadingState: LoadingState
-    @Published var showingAddStationSheet: Bool
+    @Published var isShowingAddStationSheet: Bool
     
     @Injected(\.userDefaultsService)
     private var userDefaultsService: UserDefaultsService
@@ -26,11 +26,11 @@ final class HomeViewModel: ViewModelProtocol {
     init(
         departures: [any DepartureProtocol] = `default`.departures,
         loadingState: LoadingState = `default`.loadingState,
-        showingAddStationSheet: Bool = `default`.showingAddStationSheet
+        showingAddStationSheet: Bool = `default`.isShowingAddStationSheet
     ) {
         self.departures = departures
         self.loadingState = loadingState
-        self.showingAddStationSheet = showingAddStationSheet
+        self.isShowingAddStationSheet = showingAddStationSheet
     }
     
     /// Returns all departures for the given station

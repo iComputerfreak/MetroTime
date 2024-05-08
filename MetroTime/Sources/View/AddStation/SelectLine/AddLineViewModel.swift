@@ -5,6 +5,7 @@ import AppDomain
 import Factory
 import Foundation
 import OSLog
+import SwiftUI
 
 final class AddLineViewModel: ViewModelProtocol {
     let logger = Logger("AddLineViewModel")
