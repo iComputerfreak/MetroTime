@@ -14,7 +14,8 @@ final class HomeViewModel: ViewModelProtocol {
             }
     }
     @Published var departures: [any DepartureProtocol]
-    @Published var loadingState: LoadingState = .loading
+    @Published var loadingState: LoadingState
+    @Published var showingAddStationSheet: Bool
     
     @Injected(\.userDefaultsService)
     private var userDefaultsService: UserDefaultsService
@@ -22,8 +23,14 @@ final class HomeViewModel: ViewModelProtocol {
     @Injected(\.triasService)
     private var triasService: TriasService
     
-    init(departures: [any DepartureProtocol]) {
+    init(
+        departures: [any DepartureProtocol] = `default`.departures,
+        loadingState: LoadingState = `default`.loadingState,
+        showingAddStationSheet: Bool = `default`.showingAddStationSheet
+    ) {
         self.departures = departures
+        self.loadingState = loadingState
+        self.showingAddStationSheet = showingAddStationSheet
     }
     
     /// Returns all departures for the given station
@@ -59,6 +66,8 @@ final class HomeViewModel: ViewModelProtocol {
 
 extension HomeViewModel {
     static let `default` = HomeViewModel(
-        departures: []
+        departures: [],
+        loadingState: .loading,
+        showingAddStationSheet: false
     )
 }

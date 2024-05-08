@@ -19,7 +19,6 @@ final class PreviewUserDefaultsService: UserDefaultsService {
         // Europaplatz/Postgalerie (U)
         "de:08212:1004": [
             Line(id: "kvv:21001:E:H", name: "Straßenbahn 1", directionID: "outward", direction: "Heide"),
-            Line(id: "kvv:22305:E:R", name: "S-Bahn S5", directionID: "inward", direction: "Pforzheim Hbf"),
         ],
         // Karl-Wilhelm-Platz
         "de:08212:401": [
@@ -36,11 +35,15 @@ final class PreviewUserDefaultsService: UserDefaultsService {
     }
     
     func addFavoriteLine(_ line: any LineProtocol, at station: any StationProtocol) {
-        if !stations.contains(where: { station in station.id == station.id }) {
+        if !stations.contains(where: { station in
+            station.id == station.id
+        }) {
             stations.append(station)
         }
         
-        if !lines.contains(where: { line in line.key == station.id }) {
+        if !lines.contains(where: { line in
+            line.key == station.id
+        }) {
             lines[station.id] = [line]
         }
         

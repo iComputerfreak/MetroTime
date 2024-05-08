@@ -3,7 +3,7 @@
 import OSLog
 
 extension Logger {
-    static let subsystem = Bundle.main.bundleIdentifier ?? ""
+    static let subsystem: String = Bundle.main.bundleIdentifier ?? ""
     
     init(_ category: String) {
         self.init(subsystem: Self.subsystem, category: category)

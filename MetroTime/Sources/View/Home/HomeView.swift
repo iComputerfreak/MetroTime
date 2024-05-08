@@ -12,6 +12,7 @@ struct HomeView: StatefulView {
                     ForEach(viewModel.stations, id: \.id) { station in
                         Section {
                             ForEach(viewModel.departures(for: station), id: \.id) { departure in
+                                // TODO: Move to separate view
                                 HStack {
                                     Text(verbatim: "\(departure.lineName) \(departure.direction)")
                                     Spacer()
@@ -35,14 +36,19 @@ struct HomeView: StatefulView {
         .onAppear {
             viewModel.fetchDepartures()
         }
+        .sheet(isPresented: $viewModel.showingAddStationSheet) {
+            NavigationStack {
+                AddStationView()
+            }
+        }
     }
     
     @ToolbarContentBuilder var addButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            NavigationLink {
-                AddStationView()
+            Button {
+                viewModel.showingAddStationSheet = true
             } label: {
-                Label("Add", systemImage: "plus")
+                Label("homeView.addStationButton.label", systemImage: "plus")
             }
         }
     }
