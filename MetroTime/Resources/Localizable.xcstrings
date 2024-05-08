@@ -1,12 +1,58 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "addLineView.noResults.description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no lines available at this stop."
+          }
+        }
+      }
+    },
+    "addStationView.navTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Station"
+          }
+        }
+      }
+    },
     "addStationView.searchPrompt" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search Stations..."
+          }
+        }
+      }
+    },
+    "Colors" : {
+
+    },
+    "Debug" : {
+
+    },
+    "dismissButton.cancel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "dismissButton.done" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
           }
         }
       }
@@ -42,6 +88,16 @@
         }
       }
     },
+    "homeView.addStationButton.label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
+    },
     "homeView.navTitle" : {
       "localizations" : {
         "en" : {
@@ -51,6 +107,9 @@
           }
         }
       }
+    },
+    "Randomize" : {
+
     },
     "settings.navTitle" : {
       "localizations" : {
@@ -63,6 +122,7 @@
       }
     },
     "stationLineResultsView.noResults.description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
