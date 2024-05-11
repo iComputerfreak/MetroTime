@@ -2,15 +2,16 @@
 
 import AppData
 import AppDomain
+import OSLog
 import SwiftUI
 
 final class PreviewUserDefaultsService: UserDefaultsService {
-    var stations: [any StationProtocol] = [
+    @Published var stations: [any StationProtocol] = [
         Station(id: "de:08212:508", name: "Otto-Sachs-Straße", localityID: "8212000:15", locality: "Karlsruhe"),
         Station(id: "de:08212:1004", name: "Europaplatz/Postgalerie (U)", localityID: "8212000:15", locality: "Karlsruhe"),
     ]
     
-    var lines: [String: [any LineProtocol]] = [
+    @Published var lines: [String: [any LineProtocol]] = [
         // Otto-Sachs-Straße
         "de:08212:508": [
             Line(id: "kvv:21005:E:R", name: "Straßenbahn 5", directionID: "inward", direction: "Durlach Bahnhof"),
@@ -30,18 +31,20 @@ final class PreviewUserDefaultsService: UserDefaultsService {
     }
     
     func addFavoriteLine(_ line: any LineProtocol, at station: any StationProtocol) {
-        if !stations.contains(where: { station in
-            station.id == station.id
+        if !stations.contains(where: { currentStation in
+            currentStation.id == station.id
         }) {
+            Logger.userDefaultsService.debug("Adding station \(station.name)")
             stations.append(station)
         }
         
-        if !lines.contains(where: { line in
-            line.key == station.id
+        if !lines.contains(where: { entry in
+            entry.key == station.id
         }) {
-            lines[station.id] = [line]
+            lines[station.id] = []
         }
         
+        Logger.userDefaultsService.debug("Adding line \(line.name)")
         lines[station.id]?.append(line)
     }
     

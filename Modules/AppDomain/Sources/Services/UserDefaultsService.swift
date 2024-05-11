@@ -1,8 +1,9 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import Combine
 import Foundation
 
-public protocol UserDefaultsService {
+public protocol UserDefaultsService: ObservableObject {
     func getFavoriteStations() -> [any StationProtocol]
     func getFavoriteLines() -> [String: [any LineProtocol]]
     func getFavoriteLines(at station: any StationProtocol) -> [any LineProtocol]

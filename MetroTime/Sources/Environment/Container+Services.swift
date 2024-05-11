@@ -6,11 +6,13 @@ import Factory
 import SwiftUI
 
 extension Container {
-    var userDefaultsService: Factory<UserDefaultsService> {
+    var userDefaultsService: Factory<any UserDefaultsService> {
         self { RemoteUserDefaultsService() }
+            .singleton
     }
     
     var triasService: Factory<TriasService> {
         self { RemoteTriasService() }
+            .singleton
     }
 }

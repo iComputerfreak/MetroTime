@@ -18,7 +18,7 @@ final class HomeViewModel: ViewModelProtocol {
     @Published var isShowingAddStationSheet: Bool
     
     @Injected(\.userDefaultsService)
-    private var userDefaultsService: UserDefaultsService
+    private var userDefaultsService: any UserDefaultsService
     
     @Injected(\.triasService)
     private var triasService: TriasService

@@ -16,7 +16,7 @@ final class AddStationViewModel: ViewModelProtocol {
     private var triasService: TriasService
     
     @Injected(\.userDefaultsService)
-    private var userDefaultsService: UserDefaultsService
+    private var userDefaultsService: any UserDefaultsService
     
     private var updateCancellable: AnyCancellable?
     private var fetchStationsTask: Task<(), Never>?
