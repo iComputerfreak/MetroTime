@@ -36,6 +36,12 @@ struct HomeView: StatefulView {
                 AddStationView(isShowingAddStationSheet: $viewModel.isShowingAddStationSheet)
             }
         }
+        .onChange(of: viewModel.isShowingAddStationSheet) {
+            // After adding a line, we should re-fetch the departures to include the new line
+            if !viewModel.isShowingAddStationSheet {
+                viewModel.fetchDepartures()
+            }
+        }
     }
     
     @ToolbarContentBuilder var addButton: some ToolbarContent {
