@@ -1,0 +1,7 @@
+// Copyright © 2024 Jonas Frey. All rights reserved.
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor
+SWIFT_EMIT_LOC_STRINGS = YES

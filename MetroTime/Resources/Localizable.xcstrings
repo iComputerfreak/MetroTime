@@ -108,6 +108,9 @@
         }
       }
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
     "Randomize" : {
 
     },

@@ -14,58 +14,64 @@ fi
 
 let deploymentTarget: DeploymentTargets = .iOS("17.0")
 
+private let mainTarget: Target = .target(
+    name: "MetroTime",
+    destinations: .iOS,
+    product: .app,
+    productName: "MetroTime",
+    bundleId: "de.JonasFrey.MetroTime",
+    deploymentTargets: deploymentTarget,
+    infoPlist: .extendingDefault(
+        with: [
+            "UILaunchStoryboardName": "LaunchScreen.storyboard",
+        ]
+    ),
+    sources: ["MetroTime/Sources/**"],
+    resources: ["MetroTime/Resources/**"],
+    scripts: [.post(script: swiftLintScript, name: "SwiftLint", basedOnDependencyAnalysis: false)],
+    dependencies: [
+        .external(name: "XMLCoder", condition: nil),
+        .external(name: "JFUtils", condition: nil),
+        .external(name: "Factory", condition: nil),
+        .target(name: "AppFoundation"),
+        .target(name: "AppNetworking"),
+        .target(name: "AppDomain"),
+        .target(name: "AppData"),
+    ],
+    settings: .settings(
+        base: SettingsDictionary()
+            .automaticCodeSigning(devTeam: "46C9Y785NA"),
+        configurations: [
+            .debug(
+                name: .debug,
+                xcconfig: .relativeToRoot("MetroTime/Resources/Build.xcconfig")
+            ),
+            .release(
+                name: .release,
+                xcconfig: .relativeToRoot("MetroTime/Resources/Build.xcconfig")
+            ),
+        ]
+    )
+)
+
+private let testsTarget: Target = .target(
+    name: "MetroTimeTests",
+    destinations: .iOS,
+    product: .unitTests,
+    bundleId: "de.JonasFrey.MetroTimeTests",
+    infoPlist: .default,
+    sources: ["MetroTime/Tests/Sources/**"],
+    resources: ["MetroTime/Tests/Resources/**"],
+    dependencies: [
+        .target(name: "MetroTime"),
+    ]
+)
+
 let project = Project(
     name: "MetroTime",
     targets: [
-        .target(
-            name: "MetroTime",
-            destinations: .iOS,
-            product: .app,
-            productName: "MetroTime",
-            bundleId: "de.JonasFrey.MetroTime",
-            deploymentTargets: deploymentTarget,
-            infoPlist: .extendingDefault(
-                with: [
-                    "UILaunchStoryboardName": "LaunchScreen.storyboard",
-                ]
-            ),
-            sources: ["MetroTime/Sources/**"],
-            resources: ["MetroTime/Resources/**"],
-            scripts: [.post(script: swiftLintScript, name: "SwiftLint", basedOnDependencyAnalysis: false)],
-            dependencies: [
-                .external(name: "XMLCoder", condition: nil),
-                .external(name: "JFUtils", condition: nil),
-                .external(name: "Factory", condition: nil),
-                .target(name: "AppFoundation"),
-                .target(name: "AppNetworking"),
-                .target(name: "AppDomain"),
-                .target(name: "AppData"),
-            ],
-            settings: .settings(
-                configurations: [
-                    .debug(
-                        name: .debug,
-                        xcconfig: .relativeToRoot("MetroTime/Resources/Build.xcconfig")
-                    ),
-                    .release(
-                        name: .release,
-                        xcconfig: .relativeToRoot("MetroTime/Resources/Build.xcconfig")
-                    ),
-                ]
-            )
-        ),
-        .target(
-            name: "MetroTimeTests",
-            destinations: .iOS,
-            product: .unitTests,
-            bundleId: "de.JonasFrey.MetroTimeTests",
-            infoPlist: .default,
-            sources: ["MetroTime/Tests/Sources/**"],
-            resources: ["MetroTime/Tests/Resources/**"],
-            dependencies: [
-                .target(name: "MetroTime"),
-            ]
-        ),
+        mainTarget,
+        testsTarget,
     ] +
     createTargets(for: "AppFoundation") +
     createTargets(for: "AppNetworking", dependsOn: ["AppFoundation"]) +
@@ -94,8 +100,22 @@ private func createTargets(for module: String, dependsOn dependencies: [String] 
             deploymentTargets: deploymentTarget,
             infoPlist: .default,
             sources: ["Modules/\(module)/Sources/**"],
-            resources: [],
-            dependencies: dependencies.map { .target(name: $0, condition: nil) }
+            resources: ["Modules/\(module)/Resources/**"],
+            dependencies: dependencies.map { .target(name: $0, condition: nil) },
+            settings: .settings(
+                base: SettingsDictionary()
+                    .automaticCodeSigning(devTeam: "46C9Y785NA"),
+                configurations: [
+                    .debug(
+                        name: .debug,
+                        xcconfig: .relativeToRoot("MetroTime/Resources/Build.xcconfig")
+                    ),
+                    .release(
+                        name: .release,
+                        xcconfig: .relativeToRoot("MetroTime/Resources/Build.xcconfig")
+                    ),
+                ]
+            )
         ),
         .target(
             name: "\(module)Tests",
@@ -104,7 +124,7 @@ private func createTargets(for module: String, dependsOn dependencies: [String] 
             bundleId: "de.JonasFrey.MetroTime.\(module)Tests",
             infoPlist: .default,
             sources: ["Modules/\(module)/Tests/**"],
-            resources: [],
+            resources: ["Modules/\(module)/Tests/Resources/**"],
             dependencies: [
                 .target(name: module),
             ]

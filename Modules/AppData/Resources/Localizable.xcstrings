@@ -1,0 +1,86 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "locationInformationResponseError.noRefinement" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das angegebene Ortsobjekt konnte nicht verfeinert werden."
+          }
+        }
+      }
+    },
+    "locationInformationResponseError.noResults" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zu den Eingabedaten konnten keine Ortsobjekte gefunden werden."
+          }
+        }
+      }
+    },
+    "locationInformationResponseError.unknown" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbekannter Fehler."
+          }
+        }
+      }
+    },
+    "locationInformationResponseError.unsupportedCombination" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die verwendete Kombination von Eingabedaten (Zeichenkette, Koordinaten, Geo-Restriktion) wird vom Dienst nicht unterstützt."
+          }
+        }
+      }
+    },
+    "locationInformationResponseError.unsupportedLocality" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Dienst unterstützt keine Einschränkung durch Lokalitäten."
+          }
+        }
+      }
+    },
+    "locationInformationResponseError.unsupportedPTModes" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Dienst unterstützt keine Einschränkung der Verkehrsmittel."
+          }
+        }
+      }
+    },
+    "locationInformationResponseError.unsupportedType" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es wurden nur Objekttypen angefragt, die vom Dienst nicht unterstützt werden."
+          }
+        }
+      }
+    },
+    "locationInformationResponseError.usageIgnored" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Verwendungszweck wurde ignoriert."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
