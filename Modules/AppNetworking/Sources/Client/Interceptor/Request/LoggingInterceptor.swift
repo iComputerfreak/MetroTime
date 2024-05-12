@@ -2,7 +2,7 @@ import Foundation
 
 /// Implementation of a request interceptor which logs the request information.
 public final class LoggingInterceptor: Interceptor {
-    private var logger: Logger
+    private var logger: LoggerProtocol
 
     /**
      * # Summary
@@ -11,7 +11,7 @@ public final class LoggingInterceptor: Interceptor {
      * - Parameter logger:
      *  The logger to be used to pass the request information to. Default value for the logger is the `DefaultLogger`.
      */
-    public init(logger: Logger = DefaultLogger()) {
+    public init(logger: LoggerProtocol = DefaultLogger()) {
         self.logger = logger
     }
 

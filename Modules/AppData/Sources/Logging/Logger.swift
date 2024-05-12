@@ -1,8 +1,9 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppNetworking
 import OSLog
 
-extension Logger {
+public extension Logger {
     static let subsystem: String = Bundle.main.bundleIdentifier ?? ""
     
     init(_ category: String) {
@@ -10,10 +11,16 @@ extension Logger {
     }
 }
 
-extension Logger {
+public extension Logger {
     static let general = Logger("General")
     static let viewLifeCycle = Logger("ViewLifeCycle")
     static let network = Logger("Network")
     static let triasService = Logger("TriasService")
     static let userDefaultsService = Logger("UserDefaultsService")
+}
+
+extension Logger: LoggerProtocol {
+    public func log(_ message: String) {
+        self.log(level: .debug, "\(message)")
+    }
 }

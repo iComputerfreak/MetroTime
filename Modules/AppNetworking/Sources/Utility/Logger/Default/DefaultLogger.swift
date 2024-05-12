@@ -2,7 +2,7 @@ import Foundation
 import OSLog
 
 /// The default logger currently used within the logging interceptors using either `os_log` or `print`
-public final class DefaultLogger: Logger {
+public final class DefaultLogger: LoggerProtocol {
     private let logger = os.Logger(subsystem: Bundle.main.bundleIdentifier ?? "", category: "Network")
     
     public init() {

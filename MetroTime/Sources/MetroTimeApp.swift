@@ -4,9 +4,6 @@ import SwiftUI
 
 @main
 struct MetroTimeApp: App {
-    // TODO: OSLog Logging
-    // TODO: Add dev team to Tuist
-    
     /*
      - RemoteTriasAPI: TriasAPI (fetches the data from TRIAS)
         - MockTriasAPI, PreviewTriasAPI
