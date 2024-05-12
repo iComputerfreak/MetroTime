@@ -25,8 +25,6 @@ struct MetroTimeApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-                // TODO: Use real environment again
-                .injectPreviewEnvironment()
         }
     }
 }
