@@ -319,12 +319,6 @@ custom_rules:
     name: "Toggle Bool"
     message: "Use `toggle()` instead of toggling manually."
     severity: warning
-  too_much_indentation:
-    included: ".*.swift"
-    regex: '\n {0}[^\s\/][^\n]*[^,|&]\n+ {5,}\S|\n {4}[^\s\/][^\n]*[^,|&]\n+ {9,}\S|\n {8}[^\s\/][^\n]*[^,|&]\n+ {13,}\S|\n {12}[^\s\/][^\n]*[^,|&]\n+ {17,}\S|\n {16}[^\s\/][^\n]*[^,|&]\n+ {21,}\S|\n {20}[^\s\/][^\n]*[^,|&]\n+ {25,}\S'
-    name: "Too Much Indentation"
-    message: "Don't indent code by more than 4 whitespaces."
-    severity: warning
   tuple_index:
     included: ".*.swift"
     regex: '(\$\d|\w*[^\d \(\[\{])\.\d'
