@@ -2,10 +2,49 @@
 
 import AppFoundation
 import Foundation
+import JFUtils
+
+/// Sorts `LocationResult`s by their probability
+private struct LocationResultComparator: SortComparator {
+    var order: SortOrder
+    
+    func compare(_ lhs: LocationResult, _ rhs: LocationResult) -> ComparisonResult {
+        // Locations without a probability are sorted last
+        guard !(lhs.probability == nil && rhs.probability == nil) else { return .orderedSame }
+        guard let lhsProbability = lhs.probability else { return .orderedDescending }
+        guard let rhsProbability = rhs.probability else { return .orderedAscending }
+        
+        if lhsProbability == rhsProbability {
+            return .orderedSame
+        } else if lhsProbability < rhsProbability {
+            return .orderedAscending
+        } else {
+            return .orderedDescending
+        }
+    }
+}
 
 enum LocationInformationResponseMapper {
+    enum Error: LocalizedError {
+        case noLocations
+        case noStopPoint
+        case noLocality
+        
+        var errorDescription: String? {
+            switch self {
+            case .noLocations:
+                return String(localized: "locationInformationResponseMapper.error.noLocations")
+            
+            case .noStopPoint:
+                return String(localized: "locationInformationResponseMapper.error.noStopPoint")
+            
+            case .noLocality:
+                return String(localized: "locationInformationResponseMapper.error.noLocality")
+            }
+        }
+    }
+    
     static func map(_ response: LocationInformationResponse) throws -> [Station] {
-        // TODO: Only throw error if there are really no events
         if
             let messages = response.errorMessages,
             messages.isNotEmpty
@@ -15,10 +54,39 @@ enum LocationInformationResponseMapper {
             }
             throw CompoundError(errors: errors)
         }
-        return []
+        
+        guard let locations = response.locations else { throw Error.noLocations }
+        
+        return try locations.sorted(using: LocationResultComparator(order: .reverse)).map { locationResult in
+            guard let stopPoint = locationResult.location.stopPoint else {
+                throw Error.noStopPoint
+            }
+            guard let locality = locationResult.location.locality else {
+                throw Error.noLocality
+            }
+            let geoPosition = locationResult.location.geoPosition
+            
+            return Station(
+                id: stopPoint.stopPointRef,
+                name: stopPoint.stopPointName.text,
+                localityID: locality.localityCode,
+                locality: locality.localityName.text,
+                latitude: geoPosition.latitude,
+                longitude: geoPosition.longitude,
+                altitude: geoPosition.altitude
+            )
+        }
     }
     
     static func map(_ response: TriasResponse<LocationInformationResponse>) throws -> [Station] {
         try map(ResponseMapper.map(response))
+    }
+    
+    private static func compareLocationResults(_ lhs: LocationResult, _ rhs: LocationResult) -> Bool {
+        // Locations without a probability are sorted last
+        guard let lhsProbability = lhs.probability else { return false }
+        guard let rhsProbability = rhs.probability else { return true }
+        
+        return lhsProbability < rhsProbability
     }
 }

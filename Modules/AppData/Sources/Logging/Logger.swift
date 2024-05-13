@@ -15,6 +15,7 @@ public extension Logger {
     static let general = Logger("General")
     static let viewLifeCycle = Logger("ViewLifeCycle")
     static let network = Logger("Network")
+    static let networkMapping = Logger("NetworkMapping")
     static let triasService = Logger("TriasService")
     static let userDefaultsService = Logger("UserDefaultsService")
 }

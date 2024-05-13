@@ -80,6 +80,15 @@
           }
         }
       }
+    },
+    "locationInformationResponseMapper.error.noLocality" : {
+
+    },
+    "locationInformationResponseMapper.error.noLocations" : {
+
+    },
+    "locationInformationResponseMapper.error.noStopPoint" : {
+
     }
   },
   "version" : "1.0"
