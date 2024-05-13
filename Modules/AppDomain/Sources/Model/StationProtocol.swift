@@ -8,4 +8,7 @@ public protocol StationProtocol: Codable, Identifiable {
     var name: String { get }
     var localityID: String { get }
     var localityName: String { get }
+    var latitude: Double { get }
+    var longitude: Double { get }
+    var altitude: Double? { get }
 }

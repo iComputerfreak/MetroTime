@@ -18,8 +18,8 @@ struct StationRow: View {
 
 #Preview {
     List {
-        StationRow(station: Station(id: "1", name: "Europaplatz/Postgalerie (U)", localityID: "", locality: ""))
-        StationRow(station: Station(id: "2", name: "Europaplatz/Postgalerie (U)", localityID: "", locality: ""))
-        StationRow(station: Station(id: "3", name: "Europaplatz/Postgalerie (U)", localityID: "", locality: ""))
+        StationRow(station: Station(id: "1", name: "Europaplatz/Postgalerie (U)", localityID: "", locality: "", latitude: 0, longitude: 0, altitude: nil))
+        StationRow(station: Station(id: "2", name: "Europaplatz/Postgalerie (U)", localityID: "", locality: "", latitude: 0, longitude: 0, altitude: nil))
+        StationRow(station: Station(id: "3", name: "Europaplatz/Postgalerie (U)", localityID: "", locality: "", latitude: 0, longitude: 0, altitude: nil))
     }
 }

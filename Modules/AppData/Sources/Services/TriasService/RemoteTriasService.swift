@@ -31,7 +31,7 @@ public final class RemoteTriasService: TriasService {
     }
     
     public func fetchStation(byID id: String) async throws -> any StationProtocol {
-        Station(id: "", name: "", localityID: "", locality: "")
+        Station(id: "", name: "", localityID: "", locality: "", latitude: 0, longitude: 0, altitude: nil)
     }
     
     public func fetchDepartures(at station: any StationProtocol) async throws -> [any DepartureProtocol] {

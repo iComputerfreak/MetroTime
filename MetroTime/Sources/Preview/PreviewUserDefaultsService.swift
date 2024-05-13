@@ -7,8 +7,8 @@ import SwiftUI
 
 final class PreviewUserDefaultsService: UserDefaultsService {
     @Published var stations: [any StationProtocol] = [
-        Station(id: "de:08212:508", name: "Otto-Sachs-Straße", localityID: "8212000:15", locality: "Karlsruhe"),
-        Station(id: "de:08212:1004", name: "Europaplatz/Postgalerie (U)", localityID: "8212000:15", locality: "Karlsruhe"),
+        Station(id: "de:08212:508", name: "Otto-Sachs-Straße", localityID: "8212000:15", locality: "Karlsruhe", latitude: 49.009, longitude: 8.403),
+        Station(id: "de:08212:1004", name: "Europaplatz/Postgalerie (U)", localityID: "8212000:15", locality: "Karlsruhe", latitude: 49.007, longitude: 8.403),
     ]
     
     @Published var lines: [String: [any LineProtocol]] = [

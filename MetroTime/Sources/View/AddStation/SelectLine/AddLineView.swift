@@ -57,7 +57,7 @@ struct AddLineView: StatefulView {
         AddLineView(
             viewModel: .init(
                 loadingState: .loaded,
-                station: Station(id: "", name: "", localityID: "", locality: ""),
+                station: Station(id: "", name: "", localityID: "", locality: "", latitude: 0, longitude: 0, altitude: nil),
                 lines: []
             ),
             isShowingAddStationSheet: .constant(false)
@@ -71,7 +71,15 @@ struct AddLineView: StatefulView {
         AddLineView(
             viewModel: .init(
                 loadingState: .loading,
-                station: Station(id: "de:08212:1004", name: "Europaplatz/Postgalerie (U)", localityID: "8212000:15", locality: "Karlsruhe"),
+                station: Station(
+                    id: "de:08212:1004",
+                    name: "Europaplatz/Postgalerie (U)",
+                    localityID: "8212000:15",
+                    locality: "Karlsruhe",
+                    latitude: 49.007,
+                    longitude: 8.403,
+                    altitude: nil
+                ),
                 lines: []
             ),
             isShowingAddStationSheet: .constant(false)
