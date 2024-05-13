@@ -1,11 +1,10 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
-import AppData
 import AppDomain
 import Factory
 import SwiftUI
 
-extension Container {
+public extension Container {
     var userDefaultsService: Factory<any UserDefaultsService> {
         self { RemoteUserDefaultsService() }
             .singleton
