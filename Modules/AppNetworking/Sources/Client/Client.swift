@@ -1,7 +1,8 @@
+import AppFoundation
 import Foundation
 
 /// An error occuring  while sending a request
-public enum APIError: Error {
+public enum APIError: LocalizedError {
     case unexpectedError
     case responseMissing
     case decodingError(Error)
@@ -10,6 +11,38 @@ public enum APIError: Error {
     case informationalResponse(statusCode: Int, body: Data?)
     case missingResponseBody
     case invalidURLComponents
+    
+    public var errorDescription: String? {
+        switch self {
+        case .unexpectedError:
+            return String(localized: "apiError.unexpectedError")
+        
+        case .responseMissing:
+            return String(localized: "apiError.responseMissing")
+        
+        case let .decodingError(error):
+            return String(localized: "apiError.decodingError \(error.localizedDescription)")
+        
+        case let .unexpectedStatusCode(statusCode, _, _):
+            return String(localized: "apiError.unexpectedStatusCode \(statusCode) \(statusCodeString(statusCode))")
+        
+        case let .serverError(statusCode, _):
+            return String(localized: "apiError.serverError \(statusCode) \(statusCodeString(statusCode))")
+        
+        case let .informationalResponse(statusCode, _):
+            return String(localized: "apiError.informationalResponse \(statusCode) \(statusCodeString(statusCode))")
+        
+        case .missingResponseBody:
+            return String(localized: "apiError.missingResponseBody")
+        
+        case .invalidURLComponents:
+            return String(localized: "apiError.invalidURLComponents")
+        }
+    }
+    
+    private func statusCodeString(_ statusCode: Int) -> String {
+        HTTPURLResponse.localizedString(forStatusCode: statusCode).capitalized
+    }
 }
 
 public final class Client {
@@ -142,11 +175,16 @@ public final class Client {
             and: bodyData,
             andAdditionalHeaderFields: additionalHeaderFields
         )
-        let (data, urlResponse) = try await session.data(for: request)
-        return try responseHandler.handleResponse(
-            data: data,
-            urlResponse: urlResponse,
-            endpoint: endpoint
-        )
+        do {
+            let (data, urlResponse) = try await session.data(for: request)
+            return try responseHandler.handleResponse(
+                data: data,
+                urlResponse: urlResponse,
+                endpoint: endpoint
+            )
+        } catch {
+            DefaultLogger().log("Error executing request: \(error)")
+            throw error
+        }
     }
 }
