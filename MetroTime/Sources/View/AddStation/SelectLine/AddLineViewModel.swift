@@ -42,7 +42,9 @@ final class AddLineViewModel: ViewModelProtocol {
                     self.lines = lines
                 }
             } catch {
-                loadingState = .error(error)
+                await MainActor.run {
+                    loadingState = .error(error)
+                }
             }
         }
     }
