@@ -57,36 +57,30 @@ enum LocationInformationResponseMapper {
         
         guard let locations = response.locations else { throw Error.noLocations }
         
-        return try locations.sorted(using: LocationResultComparator(order: .reverse)).map { locationResult in
-            guard let stopPoint = locationResult.location.stopPoint else {
-                throw Error.noStopPoint
+        return locations
+            .sorted(using: LocationResultComparator(order: .reverse))
+            .compactMap { locationResult in
+                guard let stopPoint = locationResult.location.stopPoint else {
+                    return nil
+                }
+                guard let localityRef = stopPoint.localityRef else {
+                    return nil
+                }
+                let geoPosition = locationResult.location.geoPosition
+                
+                return Station(
+                    id: stopPoint.stopPointRef,
+                    name: stopPoint.stopPointName.text,
+                    localityID: localityRef,
+                    locality: locationResult.location.locationName.text,
+                    latitude: geoPosition.latitude,
+                    longitude: geoPosition.longitude,
+                    altitude: geoPosition.altitude
+                )
             }
-            guard let locality = locationResult.location.locality else {
-                throw Error.noLocality
-            }
-            let geoPosition = locationResult.location.geoPosition
-            
-            return Station(
-                id: stopPoint.stopPointRef,
-                name: stopPoint.stopPointName.text,
-                localityID: locality.localityCode,
-                locality: locality.localityName.text,
-                latitude: geoPosition.latitude,
-                longitude: geoPosition.longitude,
-                altitude: geoPosition.altitude
-            )
-        }
     }
     
     static func map(_ response: TriasResponse<LocationInformationResponse>) throws -> [Station] {
         try map(ResponseMapper.map(response))
-    }
-    
-    private static func compareLocationResults(_ lhs: LocationResult, _ rhs: LocationResult) -> Bool {
-        // Locations without a probability are sorted last
-        guard let lhsProbability = lhs.probability else { return false }
-        guard let rhsProbability = rhs.probability else { return true }
-        
-        return lhsProbability < rhsProbability
     }
 }

@@ -13,7 +13,7 @@ final class HomeViewModel: ViewModelProtocol {
                 lhsName.lexicographicallyPrecedes(rhsName)
             }
     }
-    @Published var departures: [any DepartureProtocol]
+    @Published var departures: [String: [any DepartureProtocol]]
     @Published var loadingState: LoadingState
     @Published var isShowingAddStationSheet: Bool
     
@@ -24,7 +24,7 @@ final class HomeViewModel: ViewModelProtocol {
     private var triasService: TriasService
     
     init(
-        departures: [any DepartureProtocol] = `default`.departures,
+        departures: [String: [any DepartureProtocol]] = `default`.departures,
         loadingState: LoadingState = `default`.loadingState,
         showingAddStationSheet: Bool = `default`.isShowingAddStationSheet
     ) {
@@ -37,10 +37,7 @@ final class HomeViewModel: ViewModelProtocol {
     /// - Parameter station: The station to get the departures for
     /// - Returns: An array of departures for the given station, sorted by estimated departure time
     func departures(for station: any StationProtocol) -> [any DepartureProtocol] {
-        departures
-            .filter { departure in
-                departure.stationID == station.id
-            }
+        departures[station.id, default: []]
             .sorted(on: { $0.estimatedDeparture ?? $0.plannedDeparture }, by: <)
     }
     
@@ -66,7 +63,7 @@ final class HomeViewModel: ViewModelProtocol {
 
 extension HomeViewModel {
     static let `default` = HomeViewModel(
-        departures: [],
+        departures: [:],
         loadingState: .loading,
         showingAddStationSheet: false
     )

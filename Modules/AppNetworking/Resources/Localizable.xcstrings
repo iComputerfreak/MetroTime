@@ -1,6 +1,51 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "apiError.decodingError %@" : {
+
+    },
+    "apiError.informationalResponse %lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "apiError.informationalResponse %1$lld %2$@"
+          }
+        }
+      }
+    },
+    "apiError.invalidURLComponents" : {
+
+    },
+    "apiError.missingResponseBody" : {
+
+    },
+    "apiError.responseMissing" : {
+
+    },
+    "apiError.serverError %lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "apiError.serverError %1$lld %2$@"
+          }
+        }
+      }
+    },
+    "apiError.unexpectedError" : {
+
+    },
+    "apiError.unexpectedStatusCode %lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "apiError.unexpectedStatusCode %1$lld %2$@"
+          }
+        }
+      }
+    }
   },
   "version" : "1.0"
 }

@@ -4,7 +4,7 @@ import Foundation
 
 enum APIRequestFactory {
     static func createLocationInformationRequest(
-        for searchString: String,
+        searchString: String,
         requestorRef: String,
         allowedTypes: [LocationParamType] = [.stop]
     ) -> TriasRequest<LocationInformationRequest> {
@@ -26,6 +26,7 @@ enum APIRequestFactory {
         )
     }
     
+    // TODO: Add line filter
     static func createStopEventRequest(
         for stopID: String,
         requestorRef: String

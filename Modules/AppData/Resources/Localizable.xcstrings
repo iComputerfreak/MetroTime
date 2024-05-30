@@ -89,6 +89,18 @@
     },
     "locationInformationResponseMapper.error.noStopPoint" : {
 
+    },
+    "stopEventResponseError.dateOutOfRange" : {
+
+    },
+    "stopEventResponseError.locationUnknown" : {
+
+    },
+    "stopEventResponseError.locationUnserved" : {
+
+    },
+    "stopEventResponseError.noEventFound" : {
+
     }
   },
   "version" : "1.0"

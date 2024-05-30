@@ -3,6 +3,7 @@
 import AppDomain
 import AppNetworking
 import Foundation
+import JFUtils
 import OSLog
 import XMLCoder
 
@@ -57,24 +58,78 @@ public final class RemoteTriasService: TriasService {
     
     public func fetchStations(byName name: String) async throws -> [any StationProtocol] {
         let endpoint: Endpoint<TriasResponse<LocationInformationResponse>> = .init(pathComponent: "")
-        let requestBody = APIRequestFactory.createLocationInformationRequest(for: name, requestorRef: "", allowedTypes: [.stop])
-        let response = try await client.post(endpoint: endpoint, body: requestBody)
-        return try LocationInformationResponseMapper.map(response)
+        // TODO: Keep out of git
+        let requestBody = APIRequestFactory.createLocationInformationRequest(searchString: name, requestorRef: "", allowedTypes: [.stop])
+        do {
+            let response = try await client.post(endpoint: endpoint, body: requestBody)
+            return try LocationInformationResponseMapper.map(response)
+        } catch {
+            Logger.network.error("Error fetching stations by name: \(error)")
+            throw error
+        }
     }
     
+    @available(*, unavailable)
     public func fetchStation(byID id: String) async throws -> any StationProtocol {
-        Station(id: "", name: "", localityID: "", locality: "", latitude: 0, longitude: 0, altitude: nil)
+        return Station(id: "", name: "", localityID: "", locality: "", latitude: 0, longitude: 0, altitude: nil)
     }
     
     public func fetchDepartures(at station: any StationProtocol) async throws -> [any DepartureProtocol] {
-        []
+        let endpoint: Endpoint<TriasResponse<StopEventResponse>> = .init(pathComponent: "")
+        // TODO: Keep out of git
+        let requestBody = APIRequestFactory.createStopEventRequest(for: station.id, requestorRef: "")
+        do {
+            let response = try await client.post(endpoint: endpoint, body: requestBody)
+            return try StopEventResponseMapper.map(response)
+        } catch {
+            Logger.network.error("Error fetching departures at station: \(error)")
+            throw error
+        }
     }
     
-    public func fetchDepartures(at stations: [any StationProtocol]) async throws -> [any DepartureProtocol] {
-        []
+    public func fetchDepartures(at stations: [any StationProtocol]) async throws -> [String: [any DepartureProtocol]] {
+        return try await withThrowingTaskGroup(
+            of: (stationID: String, departures: [any DepartureProtocol]).self,
+            returning: [String: [any DepartureProtocol]].self
+        ) { [weak self] taskGroup in
+            guard let self else { return [:] }
+            
+            // Add tasks
+            for stationChunk in stations.chunked(into: Constants.maxRequestsPerSecond) {
+                for station in stationChunk {
+                    let addTaskResult = taskGroup.addTaskUnlessCancelled(priority: .userInitiated) {
+                        let departures = try await self.fetchDepartures(at: station)
+                        return (station.id, departures)
+                    }
+                    // If we are cancelled, return
+                    guard addTaskResult else {
+                        return [:]
+                    }
+                }
+                // Wait a second before starting the next chunk of requests
+                try await Task.sleep(for: .seconds(1))
+            }
+            
+            // Put all departures into a dictionary
+            var departures: [String: [any DepartureProtocol]] = [:]
+            for try await result in taskGroup {
+                departures[result.stationID] = result.departures
+            }
+            
+            return departures
+        }
     }
     
     public func fetchLines(at station: any StationProtocol) async throws -> [any LineProtocol] {
-        []
+        try await fetchDepartures(at: station)
+            .removingDuplicates(key: \.lineID)
+            .map { departure in
+                Line(
+                    id: departure.lineID,
+                    name: departure.lineName,
+                    directionID: departure.directionID,
+                    direction: departure.direction
+                )
+            }
     }
 }
