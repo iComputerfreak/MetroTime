@@ -8,6 +8,7 @@ public protocol DepartureProtocol: Codable, Identifiable {
     var stationID: String { get }
     var lineID: String { get }
     var lineName: String { get }
+    var directionID: String { get }
     var direction: String { get }
     var plannedDeparture: Date { get }
     var estimatedDeparture: Date? { get }

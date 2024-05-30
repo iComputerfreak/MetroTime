@@ -8,15 +8,26 @@ public struct Departure: DepartureProtocol {
     public let stationID: String
     public let lineID: String
     public let lineName: String
+    public let directionID: String
     public let direction: String
     public let plannedDeparture: Date
     public let estimatedDeparture: Date?
     
-    public init(id: String, stationID: String, lineID: String, lineName: String, direction: String, plannedDeparture: Date, estimatedDeparture: Date?) {
+    public init(
+        id: String,
+        stationID: String,
+        lineID: String,
+        lineName: String,
+        directionID: String,
+        direction: String,
+        plannedDeparture: Date,
+        estimatedDeparture: Date?
+    ) {
         self.id = id
         self.stationID = stationID
         self.lineID = lineID
         self.lineName = lineName
+        self.directionID = directionID
         self.direction = direction
         self.plannedDeparture = plannedDeparture
         self.estimatedDeparture = estimatedDeparture

@@ -36,6 +36,7 @@ final class PreviewTriasService: TriasService {
             stationID: "de:08212:508",
             lineID: "kvv:21005:E:R",
             lineName: "5",
+            directionID: "inward",
             direction: "Durlach Bahnhof",
             plannedDeparture: Date().addingTimeInterval(5 * .minute),
             estimatedDeparture: Date().addingTimeInterval(5 * .minute)
@@ -46,6 +47,7 @@ final class PreviewTriasService: TriasService {
             stationID: "de:08212:1004",
             lineID: "kvv:21001:E:H",
             lineName: "1",
+            directionID: "outward",
             direction: "Heide",
             plannedDeparture: Date().addingTimeInterval(13 * .minute),
             estimatedDeparture: Date().addingTimeInterval(11 * .minute)
@@ -56,6 +58,7 @@ final class PreviewTriasService: TriasService {
             stationID: "de:08212:1004",
             lineID: "kvv:22305:E:R",
             lineName: "S5",
+            directionID: "inward",
             direction: "Pforzheim Hbf",
             plannedDeparture: Date().addingTimeInterval(3 * .minute),
             estimatedDeparture: Date().addingTimeInterval(5 * .minute)
@@ -96,23 +99,25 @@ final class PreviewTriasService: TriasService {
             plannedDepartures.count == allLines.map({ $0.value.count }).max(),
             "Not enough departure dates for all lines available. Please extend the above array."
         )
-        return lines.map { line in
-            Departure(
-                id: UUID().uuidString,
-                stationID: station.id,
-                lineID: line.id,
-                lineName: line.name,
-                direction: line.direction,
-                plannedDeparture: plannedDepartures.removeFirst(),
-                estimatedDeparture: estimatedDepartures.removeFirst()
-            )
-        }
+        return lines
+            .map { line in
+                Departure(
+                    id: UUID().uuidString,
+                    stationID: station.id,
+                    lineID: line.id,
+                    lineName: line.name,
+                    directionID: line.directionID,
+                    direction: line.direction,
+                    plannedDeparture: plannedDepartures.removeFirst(),
+                    estimatedDeparture: estimatedDepartures.removeFirst()
+                )
+            }
     }
     
-    func fetchDepartures(at stations: [any StationProtocol]) async throws -> [any DepartureProtocol] {
-        var departures: [any DepartureProtocol] = []
+    func fetchDepartures(at stations: [any StationProtocol]) async throws -> [String: [any DepartureProtocol]] {
+        var departures: [String: [any DepartureProtocol]] = [:]
         for station in stations {
-            try await departures.append(contentsOf: fetchDepartures(at: station))
+            departures[station.id] = try await fetchDepartures(at: station)
         }
         return departures
     }
