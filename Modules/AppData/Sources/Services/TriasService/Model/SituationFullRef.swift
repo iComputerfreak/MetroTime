@@ -21,5 +21,5 @@ struct SituationFullRef: Codable {
     /// Eindeutige ID des Schnittstellenpartners (vgl. 5.12). Stellt Namensraum für die ID der Situation bereit
     let updateParticipantRef: String?
     /// Versionsnummer des Updates zur Situation. Kann bei der Erstmeldung entfallen.
-    let version: String
+    let version: String?
 }
