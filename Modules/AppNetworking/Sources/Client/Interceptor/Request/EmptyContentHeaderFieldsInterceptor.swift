@@ -23,7 +23,7 @@ internal final class EmptyContentHeaderFieldsInterceptor: HeaderFieldsIntercepto
     ]
 
     convenience init() {
-        self.init(headerFields: Self.headerFieldsForEmptyContent)
+        self.init(addContentLength: false, headerFields: Self.headerFieldsForEmptyContent)
     }
 
     override func intercept(_ request: URLRequest) -> URLRequest {
