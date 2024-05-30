@@ -13,6 +13,8 @@ struct SettingsView: View {
                 Text(verbatim: "Custom Colors")
                 // Allow the user to specify prefixes that should be removed from the monitor (e.g. "Straßenbahn")
                 Text(verbatim: "Prefixes")
+                // Filter station results by a locality (to reduce amount of displayed results)
+                Text(verbatim: "Locality")
             }
             .toolbar {
                 #if DEBUG

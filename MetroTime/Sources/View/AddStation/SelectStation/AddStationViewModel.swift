@@ -55,7 +55,7 @@ final class AddStationViewModel: ViewModelProtocol {
         state = .loading
         fetchStationsTask = Task(priority: .userInitiated) {
             do {
-                // TODO: Logging
+                // TODO: Sort sections (localities) by distance to user's location
                 let stations = try await triasService.fetchStations(byName: searchText)
                 await MainActor.run {
                     self.stations = stations
