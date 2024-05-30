@@ -8,6 +8,29 @@ import XMLCoder
 
 // TODO: Implement
 public final class RemoteTriasService: TriasService {
+    private enum Constants {
+        static let maxRequestsPerSecond: Int = 10
+    }
+    
+    private static let encoder: AppNetworking.Encoder = {
+        let encoder = TriasXMLEncoder(
+            rootKey: "TriasRequest",
+            rootAttributes: [
+                "xmlns": "http://www.vdv.de/trias",
+                "version": "1.2",
+                "xmlns:siri": "http://www.siri.org.uk/siri"
+            ]
+        )
+        encoder.dateEncodingStrategy = .iso8601
+        return encoder
+    }()
+    
+    private static let decoder: AppNetworking.Decoder = {
+        let decoder = TriasXMLDecoder(trimValueWhitespaces: true)
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }()
+    
     private let client: Client
     
     public init() {
@@ -15,9 +38,18 @@ public final class RemoteTriasService: TriasService {
             configuration: .init(
                 // TODO: Store somewhere outside of git
                 baseURLProvider: URL(string: "")!,
-                interceptors: [LoggingInterceptor(logger: Logger.network)],
-                encoder: XMLEncoder(),
-                decoder: XMLDecoder(trimValueWhitespaces: true),
+                interceptors: [
+                    HeaderFieldsInterceptor(
+                        addContentLength: true,
+                        headerFields: [
+                            "Content-Type": "application/xml",
+                            "Accept": "*/*"
+                        ]
+                    ),
+                    LoggingInterceptor(logger: Logger.network)
+                ],
+                encoder: Self.encoder,
+                decoder: Self.decoder,
                 cache: .init()
             )
         )
