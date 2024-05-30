@@ -26,23 +26,42 @@ public final class LoggingInterceptor: Interceptor {
      * The intercepted request.
      */
     public func intercept(_ request: URLRequest) -> URLRequest {
-        var message: String = "\(String(describing: self)):\n"
+        var messageLines: [String] = []
+
         if let url = request.url {
-            message.append("Request URL: \(url)\n")
+            let method = request.httpMethod.map { "\($0) " } ?? ""
+            let scheme = url.scheme ?? ""
+            let host = url.host() ?? "No host"
+            messageLines.append("Request: \(method)\(scheme)\(host)")
+            let query = url.query() ?? "No query"
+            messageLines.append("Query: \(query)")
         }
 
         if let allHTTPHeaderFields = request.allHTTPHeaderFields {
-            message.append("All HTTP header fields: \(allHTTPHeaderFields)\n")
-        }
-
-        if let httpMethod = request.httpMethod {
-            message.append("HTTP method: \(httpMethod)\n")
+            messageLines.append("Headers:")
+            for (key, value) in allHTTPHeaderFields {
+                messageLines.append("  \(key): \(value)")
+            }
         }
 
         if let body = request.httpBody, let bodyString = String(data: body, encoding: .utf8) {
-            message.append("HTTP Body: \(bodyString)")
+            let indentedBody = bodyString
+                .components(separatedBy: .newlines)
+                .map({ "  \($0)" })
+                .joined(separator: "\n")
+            
+            messageLines.append("Body:")
+            messageLines.append(indentedBody)
         }
 
+        let message = [
+            "<-- Request",
+            messageLines
+                .map { "|   \($0)" }
+                .joined(separator: "\n"),
+            "--> End Request"
+        ].joined(separator: "\n")
+        
         logger.log(message)
 
         return request
@@ -62,26 +81,41 @@ public final class LoggingInterceptor: Interceptor {
      * - Returns:
      * The intercepted response.
      */
-    public func intercept(response: URLResponse?, data: Data?, error: Error?) -> URLResponse? {
-        var message: String = "\(String(describing: self)):\n"
-
-        if let url = response?.url {
-            message.append("Request URL: \(url)\n")
-        }
+    public func intercept(response: URLResponse?, data: Data?) -> URLResponse? {
+        var messageLines: [String] = []
 
         if let httpResponse = response as? HTTPURLResponse {
-            message.append("Status code: \(httpResponse.statusCode)\n")
-            message.append("All HTTP header fields: \(httpResponse.allHeaderFields)\n")
+            let statusCode = httpResponse.statusCode
+            let url = httpResponse.url?.absoluteString ?? "No URL"
+            messageLines.append("Response: \(statusCode) \(HTTPURLResponse.localizedString(forStatusCode: statusCode).capitalized)")
+            messageLines.append("Request: \(url)")
+
+            messageLines.append("Headers:")
+            for (key, value) in httpResponse.allHeaderFields {
+                messageLines.append("  \(key): \(value)")
+            }
+        } else if let url = response?.url {
+            messageLines.append("Request: \(url.absoluteString)")
         }
 
-        if let body = data, let bodyString = String(data: body, encoding: .utf8) {
-            message.append("HTTP Response Body: \(bodyString)")
+        if let data, let bodyString = String(data: data, encoding: .utf8) {
+            let indentedBody = bodyString
+                .components(separatedBy: .newlines)
+                .map { "  \($0)" }
+                .joined(separator: "\n")
+            
+            messageLines.append("Body:")
+            messageLines.append(indentedBody)
         }
 
-        if let error = error {
-            message.append(error.localizedDescription)
-        }
-
+        let message = [
+            "<-- Response",
+            messageLines
+                .map { "|   \($0)" }
+                .joined(separator: "\n"),
+            "--> End Response"
+        ].joined(separator: "\n")
+        
         logger.log(message)
 
         return response
