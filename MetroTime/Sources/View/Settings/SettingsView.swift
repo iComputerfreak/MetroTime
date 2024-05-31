@@ -1,12 +1,25 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppDomain
+import Factory
 import SwiftUI
 
 struct SettingsView: View {
+    @Injected(\.userDefaultsService)
+    private var userDefaultsService: any UserDefaultsService
+    
+    private var numberOfRowsPerStationBinding: Binding<Int> {
+        .init {
+            userDefaultsService.getNumberOfRowsPerStation()
+        } set: { newValue in
+            userDefaultsService.setNumberOfRowsPerStation(newValue)
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             List {
-                Text(verbatim: "Rows per station")
+                Stepper("settingsView.numberOfRowsPerStation.stepperLabel", value: numberOfRowsPerStationBinding, in: 1 ... 20)
                 Text(verbatim: "Accent color")
                 Text(verbatim: "Refresh interval")
                 // Set custom colors based on the available lines at the stations the user selected

@@ -22,6 +22,8 @@ final class PreviewUserDefaultsService: UserDefaultsService {
         ],
     ]
     
+    @Published var numberOfRowsPerStation: Int = 5
+    
     func getFavoriteStations() -> [any StationProtocol] {
         stations
     }
@@ -51,5 +53,14 @@ final class PreviewUserDefaultsService: UserDefaultsService {
     func resetFavorites() {
         stations = []
         lines = [:]
+    }
+    
+    func getNumberOfRowsPerStation() -> Int {
+        numberOfRowsPerStation
+    }
+    
+    func setNumberOfRowsPerStation(_ numberOfRows: Int) {
+        Logger.userDefaultsService.debug("Setting number of rows per station to \(numberOfRows)")
+        numberOfRowsPerStation = numberOfRows
     }
 }

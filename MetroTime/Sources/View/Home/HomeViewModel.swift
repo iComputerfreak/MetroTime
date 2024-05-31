@@ -42,6 +42,8 @@ final class HomeViewModel: ViewModelProtocol {
     func departures(for station: any StationProtocol) -> [any DepartureProtocol] {
         departures[station.id, default: []]
             .sorted(on: { $0.estimatedDeparture ?? $0.plannedDeparture }, by: <)
+            .prefix(userDefaultsService.getNumberOfRowsPerStation())
+            .asArray()
     }
     
     /// Fetches new departures from the `TriasService`

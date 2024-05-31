@@ -13,8 +13,14 @@ public final class StandardUserDefaultsService: UserDefaultsService {
     @UserDefault(key: "favoriteLines", defaultValue: [:])
     private var favoriteLines: [String: [Line]]
     
-    public init() {}
+    @UserDefault(key: "numberOfRowsPerStation", defaultValue: 5)
+    private var numberOfRowsPerStation: Int
     
+    public init() {}
+}
+
+// MARK: - Favorite Stations and Lines
+extension StandardUserDefaultsService {
     public func getFavoriteStations() -> [any StationProtocol] {
         favoriteStations
     }
@@ -42,5 +48,16 @@ public final class StandardUserDefaultsService: UserDefaultsService {
     public func resetFavorites() {
         favoriteStations = []
         favoriteLines = [:]
+    }
+}
+
+// MARK: - Number of Rows per Station
+extension StandardUserDefaultsService {
+    public func getNumberOfRowsPerStation() -> Int {
+        numberOfRowsPerStation
+    }
+    
+    public func setNumberOfRowsPerStation(_ numberOfRows: Int) {
+        numberOfRowsPerStation = numberOfRows
     }
 }

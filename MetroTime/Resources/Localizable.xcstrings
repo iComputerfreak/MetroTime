@@ -147,6 +147,9 @@
         }
       }
     },
+    "settingsView.numberOfRowsPerStation.stepperLabel" : {
+
+    },
     "stationLineResultsView.noResults.description" : {
       "extractionState" : "stale",
       "localizations" : {
