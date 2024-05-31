@@ -64,7 +64,7 @@ final class HomeViewModel: ViewModelProtocol {
 extension HomeViewModel {
     static let `default` = HomeViewModel(
         departures: [:],
-        loadingState: .loading,
+        loadingState: .idle,
         showingAddStationSheet: false
     )
 }

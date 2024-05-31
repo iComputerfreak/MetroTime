@@ -63,7 +63,7 @@ final class AddLineViewModel: ViewModelProtocol {
 
 extension AddLineViewModel {
     static let `default`: AddLineViewModel = .init(
-        loadingState: .loaded,
+        loadingState: .idle,
         station: Station(id: "", name: "", localityID: "", locality: "", latitude: 0, longitude: 0, altitude: nil),
         lines: []
     )

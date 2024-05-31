@@ -14,12 +14,14 @@ struct AddLineView: StatefulView {
             retryAction: viewModel.fetchLines,
             loadingBackground: Color(.systemGroupedBackground)
         ) {
-            if viewModel.lines.isEmpty {
+            if viewModel.lines.isEmpty, viewModel.loadingState == .loaded {
                 ContentUnavailableView(
                     "generic.noResults.title",
                     systemImage: "magnifyingglass",
                     description: Text("addLineView.noResults.description")
                 )
+            } else if viewModel.lines.isEmpty {
+                idleView
             } else {
                 resultsView
             }
@@ -28,6 +30,10 @@ struct AddLineView: StatefulView {
             viewModel.fetchLines()
         }
         .navigationTitle(viewModel.station.name)
+    }
+    
+    private var idleView: some View {
+        Text("addLineView.idleView.infoText")
     }
     
     private var resultsView: some View {
