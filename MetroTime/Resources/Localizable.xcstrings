@@ -1,12 +1,32 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "addLineView.idleView.infoText" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a line to your favorites"
+          }
+        }
+      }
+    },
     "addLineView.noResults.description" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "There are no lines available at this stop."
+          }
+        }
+      }
+    },
+    "addStationView.idleView.infoText" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a station to your favorites"
           }
         }
       }
@@ -32,6 +52,9 @@
       }
     },
     "Colors" : {
+
+    },
+    "Content Text" : {
 
     },
     "Debug" : {
