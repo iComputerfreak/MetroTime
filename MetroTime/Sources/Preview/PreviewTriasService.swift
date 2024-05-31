@@ -40,19 +40,8 @@ final class PreviewTriasService: TriasService {
             lineName: "5",
             directionID: "inward",
             direction: "Durlach Bahnhof",
-            plannedDeparture: Date().addingTimeInterval(5 * .minute),
-            estimatedDeparture: Date().addingTimeInterval(5 * .minute)
-        ),
-        // Line 1 from Europaplatz/Postgalerie (U)
-        Departure(
-            id: UUID().uuidString,
-            stationID: "de:08212:1004",
-            lineID: "kvv:21001:E:H",
-            lineName: "1",
-            directionID: "outward",
-            direction: "Heide",
-            plannedDeparture: Date().addingTimeInterval(13 * .minute),
-            estimatedDeparture: Date().addingTimeInterval(11 * .minute)
+            plannedDeparture: Date().addingTimeInterval(3 * .minute),
+            estimatedDeparture: Date().addingTimeInterval(3 * .minute)
         ),
         // Line S5 from Europaplatz/Postgalerie (U)
         Departure(
@@ -64,6 +53,17 @@ final class PreviewTriasService: TriasService {
             direction: "Pforzheim Hbf",
             plannedDeparture: Date().addingTimeInterval(3 * .minute),
             estimatedDeparture: Date().addingTimeInterval(5 * .minute)
+        ),
+        // Line 1 from Europaplatz/Postgalerie (U)
+        Departure(
+            id: UUID().uuidString,
+            stationID: "de:08212:1004",
+            lineID: "kvv:21001:E:H",
+            lineName: "1",
+            directionID: "outward",
+            direction: "Heide",
+            plannedDeparture: Date().addingTimeInterval(15 * .minute),
+            estimatedDeparture: Date().addingTimeInterval(13 * .minute)
         ),
     ]
     
