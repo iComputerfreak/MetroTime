@@ -15,6 +15,10 @@ struct SettingsView: View {
                 Text(verbatim: "Prefixes")
                 // Filter station results by a locality (to reduce amount of displayed results)
                 Text(verbatim: "Locality")
+                // Switch between filtering by directionID or directionName (directionID is `inward`, `outward` and can contains extra results)
+                // Example: Otto-Sachs-Straße, Line 5, inward: 5 Durlach Bahnhof und 5 Tullastraße
+                // Problem: If we use directionName, any name changes will require the user to configure again
+                Text(verbatim: "Use direction instead of direction name")
             }
             .toolbar {
                 #if DEBUG
