@@ -6,7 +6,7 @@ import SwiftUI
 
 public extension Container {
     var userDefaultsService: Factory<any UserDefaultsService> {
-        self { RemoteUserDefaultsService() }
+        self { StandardUserDefaultsService() }
             .singleton
     }
     

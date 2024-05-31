@@ -2,8 +2,13 @@
 
 import AppDomain
 import Foundation
+import JamitFoundation
+import UserDefaults
 
-public final class RemoteUserDefaultsService: UserDefaultsService {
+public final class StandardUserDefaultsService: UserDefaultsService {
+    @UserDefault(key: "favoriteLines", defaultValue: [])
+    private var favoriteLines: [String]
+    
     public init() {}
     
     public func getFavoriteStations() -> [any StationProtocol] {

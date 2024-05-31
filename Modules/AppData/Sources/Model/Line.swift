@@ -8,21 +8,6 @@ public  struct Line: LineProtocol {
     public let directionID: String
     public let direction: String
     
-    // TODO: Could we get the "Straßenbahn" prefix from the mode and remove it like this?
-    /*
-     <Mode>
-         <PtMode>tram</PtMode>
-         <TramSubmode>cityTram</TramSubmode>
-         <Name>
-             <Text>Straßenbahn</Text>
-             <Language>de</Language>
-         </Name>
-     </Mode>
-     <PublishedLineName>
-         <Text>Straßenbahn 5</Text>
-         <Language>de</Language>
-     </PublishedLineName>
-     */
     public init(id: String, name: String, directionID: String, direction: String) {
         self.id = id
         self.name = name
