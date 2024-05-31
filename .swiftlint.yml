@@ -241,12 +241,6 @@ custom_rules:
     name: "Logging Prefix"
     message: "Don't use logging prefixes with log.verbose/debug/info/warning/error – done automatically."
     severity: warning
-  multiple_closure_params:
-    included: ".*.swift"
-    regex: '\n *(?:[^\.\n=]+\.)+[^\(\s]+\([^\{\n]+\{[^\}\n]+\}\)\s*\{'
-    name: "Multiple Closure Params"
-    message: "Don't use multiple in-line closures – save one or more of them to variables instead."
-    severity: warning
   none_case_enum:
     included: ".*.swift"
     regex: 'enum\s+[^\{]+\{(?:\s*\/\/[^\n]*)*(?:\s*case\s+[^\n]+)*\s*case\s+none[^\S]'
