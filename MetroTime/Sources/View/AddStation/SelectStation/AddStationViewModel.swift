@@ -95,7 +95,7 @@ final class AddStationViewModel: ViewModelProtocol {
 
 extension AddStationViewModel {
     static let `default` = AddStationViewModel(
-        state: .loaded,
+        state: .idle,
         searchText: "",
         stations: [],
         isSearchFocused: true

@@ -9,14 +9,14 @@ struct AddStationView: StatefulView {
     
     var body: some View {
         LoadingErrorView(loadingState: $viewModel.state, loadingBackground: Color(.systemGroupedBackground)) {
-            // TODO: This immediately updates as soon as we enter text, but we only want the "No Results" view after the first request
-            // TODO: Maybe we need to create a custom "State" instead of a LoadingState again with `idle` case
-            if viewModel.stations.isEmpty, !viewModel.searchText.isEmpty {
+            if viewModel.stations.isEmpty, !viewModel.searchText.isEmpty, viewModel.state == .loaded {
                 ContentUnavailableView(
                     "generic.noResults.title",
                     systemImage: "magnifyingglass",
                     description: Text("stationResultsView.noResults.description")
                 )
+            } else if viewModel.stations.isEmpty {
+                idleView
             } else {
                 resultsView
             }
@@ -30,6 +30,10 @@ struct AddStationView: StatefulView {
                 .bold()
         }
         .navigationTitle(Text("addStationView.navTitle"))
+    }
+    
+    private var idleView: some View {
+        Text("addStationView.idleView.infoText")
     }
     
     private var resultsView: some View {
@@ -54,7 +58,6 @@ struct AddStationView: StatefulView {
 }
 
 #Preview("Results") {
-    // TODO: There are no results for this
     NavigationStack {
         AddStationView(viewModel: .init(state: .loading, searchText: "Otto-Sachs-Straße", stations: []), isShowingAddStationSheet: .constant(false))
             .navigationTitle(Text(verbatim: "Add Station"))

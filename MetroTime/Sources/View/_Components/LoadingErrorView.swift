@@ -4,6 +4,7 @@ import AppFoundation
 import SwiftUI
 
 enum LoadingState: Equatable {
+    case idle
     case loading
     case loaded
     case error(any Error)
@@ -11,7 +12,8 @@ enum LoadingState: Equatable {
     static func == (lhs: LoadingState, rhs: LoadingState) -> Bool {
         switch (lhs, rhs) {
         case (.loading, .loading),
-             (.loaded, .loaded):
+            (.loaded, .loaded),
+            (.idle, .idle):
             return true
         
         case let (.error(lhsError), .error(rhsError)):
@@ -36,7 +38,7 @@ struct LoadingErrorView<Content: View, RetryLabel: View>: View {
         loadingState: Binding<LoadingState>,
         retryAction: VoidCallback? = nil,
         retryLabel: RetryLabel? = nil as EmptyView?,
-        loadingBackground: Color? = nil,
+        loadingBackground: Color = .systemBackground,
         @ViewBuilder completionView: @escaping () -> Content
     ) {
         self._loadingState = loadingState
@@ -48,9 +50,14 @@ struct LoadingErrorView<Content: View, RetryLabel: View>: View {
     
     var body: some View {
         switch loadingState {
-        case .loaded, .loading:
+        case .idle, .loaded, .loading:
             completionView()
-                .overlay((loadingBackground ?? .systemBackground).opacity(loadingState == .loading ? 1 : 0))
+                .overlay(
+                    loadingBackground
+                        .ignoresSafeArea()
+                        .containerRelativeFrame([.horizontal, .vertical])
+                        .opacity(loadingState == .loading ? 1 : 0)
+                )
                 .overlay(ProgressView().opacity(loadingState == .loading ? 1 : 0))
         
         case let .error(error):
@@ -59,12 +66,16 @@ struct LoadingErrorView<Content: View, RetryLabel: View>: View {
     }
 }
 
+#Preview("Idle") {
+    LoadingErrorView(loadingState: .constant(.idle), completionView: { Color.orange.ignoresSafeArea(edges: .all) })
+}
+
 #Preview("Loading") {
-    LoadingErrorView(loadingState: .constant(.loading), completionView: { Color.orange.ignoresSafeArea(edges: .all) })
+    LoadingErrorView(loadingState: .constant(.loading), loadingBackground: .green, completionView: { Text("Content Text") })
 }
 
 #Preview("Loaded") {
-    LoadingErrorView(loadingState: .constant(.loaded), completionView: { Text(verbatim: "Result") })
+    LoadingErrorView(loadingState: .constant(.loaded), completionView: { Text(verbatim: "Result").background(.yellow) })
 }
 
 #Preview("Error") {
