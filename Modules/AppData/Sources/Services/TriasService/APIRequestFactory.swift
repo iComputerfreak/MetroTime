@@ -1,5 +1,6 @@
 // Copyright © 2024 Jonas Frey. All rights reserved.
 
+import AppDomain
 import Foundation
 
 enum APIRequestFactory {
@@ -26,12 +27,20 @@ enum APIRequestFactory {
         )
     }
     
-    // TODO: Add line filter
     static func createStopEventRequest(
         for stopID: String,
+        includedLines: [any LineProtocol]?,
         requestorRef: String
     ) -> TriasRequest<StopEventRequest> {
-        TriasRequest(
+        let lineFilter = includedLines.map { lines in
+            LineDirectionFilter(
+                line: lines.map { line in
+                    LineDirection(lineRef: line.id, directionRef: line.directionID)
+                }
+            )
+        }
+        
+        return TriasRequest(
             serviceRequest: .init(
                 requestTimestamp: .now,
                 requestorRef: requestorRef,
@@ -44,10 +53,10 @@ enum APIRequestFactory {
                             )
                         ),
                         params: StopEventParam(
-                             lineFilter: nil,
-                             stopEventType: nil,
-                             includeRealtimeData: true
-                         )
+                            lineFilter: lineFilter,
+                            stopEventType: nil,
+                            includeRealtimeData: true
+                        )
                     )
                 )
             )

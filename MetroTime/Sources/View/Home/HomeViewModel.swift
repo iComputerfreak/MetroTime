@@ -13,6 +13,9 @@ final class HomeViewModel: ViewModelProtocol {
                 lhsName.lexicographicallyPrecedes(rhsName)
             }
     }
+    var lines: [String: [any LineProtocol]] {
+        userDefaultsService.getFavoriteLines()
+    }
     @Published var departures: [String: [any DepartureProtocol]]
     @Published var loadingState: LoadingState
     @Published var isShowingAddStationSheet: Bool
@@ -49,7 +52,7 @@ final class HomeViewModel: ViewModelProtocol {
         }
         Task(priority: .userInitiated) {
             do {
-                let departures = try await triasService.fetchDepartures(at: stations)
+                let departures = try await triasService.fetchDepartures(at: stations, lines: lines)
                 await MainActor.run {
                     self.departures = departures
                     self.loadingState = .loaded

@@ -69,15 +69,10 @@ public final class RemoteTriasService: TriasService {
         }
     }
     
-    @available(*, unavailable)
-    public func fetchStation(byID id: String) async throws -> any StationProtocol {
-        return Station(id: "", name: "", localityID: "", locality: "", latitude: 0, longitude: 0, altitude: nil)
-    }
-    
-    public func fetchDepartures(at station: any StationProtocol) async throws -> [any DepartureProtocol] {
+    public func fetchDepartures(at station: any StationProtocol, lines: [any LineProtocol]? = nil) async throws -> [any DepartureProtocol] {
         let endpoint: Endpoint<TriasResponse<StopEventResponse>> = .init(pathComponent: "")
         // TODO: Keep out of git
-        let requestBody = APIRequestFactory.createStopEventRequest(for: station.id, requestorRef: "")
+        let requestBody = APIRequestFactory.createStopEventRequest(for: station.id, includedLines: lines, requestorRef: "")
         do {
             let response = try await client.post(endpoint: endpoint, body: requestBody)
             return try StopEventResponseMapper.map(response)
@@ -87,7 +82,10 @@ public final class RemoteTriasService: TriasService {
         }
     }
     
-    public func fetchDepartures(at stations: [any StationProtocol]) async throws -> [String: [any DepartureProtocol]] {
+    public func fetchDepartures(
+        at stations: [any StationProtocol],
+        lines: [String: [any LineProtocol]]? = nil
+    ) async throws -> [String: [any DepartureProtocol]] {
         return try await withThrowingTaskGroup(
             of: (stationID: String, departures: [any DepartureProtocol]).self,
             returning: [String: [any DepartureProtocol]].self
@@ -98,7 +96,8 @@ public final class RemoteTriasService: TriasService {
             for stationChunk in stations.chunked(into: Constants.maxRequestsPerSecond) {
                 for station in stationChunk {
                     let addTaskResult = taskGroup.addTaskUnlessCancelled(priority: .userInitiated) {
-                        let departures = try await self.fetchDepartures(at: station)
+                        let linesAtStation = lines?[station.id]
+                        let departures = try await self.fetchDepartures(at: station, lines: linesAtStation)
                         return (station.id, departures)
                     }
                     // If we are cancelled, return

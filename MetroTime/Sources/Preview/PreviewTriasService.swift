@@ -82,10 +82,13 @@ final class PreviewTriasService: TriasService {
         return station
     }
     
-    func fetchDepartures(at station: any StationProtocol) async throws -> [any DepartureProtocol] {
+    func fetchDepartures(at station: any StationProtocol, lines: [any LineProtocol]? = nil) async throws -> [any DepartureProtocol] {
         try await Task.sleep(for: .seconds(0.5))
         
-        guard let lines = allLines[station.id] else {
+        guard 
+            let lines = allLines[station.id]?
+                .filter({ line in lines?.contains(where: { $0.id == line.id }) ?? true })
+        else {
             throw APIError.unexpectedError
         }
         var plannedDepartures: [Date] = [
@@ -116,10 +119,11 @@ final class PreviewTriasService: TriasService {
             }
     }
     
-    func fetchDepartures(at stations: [any StationProtocol]) async throws -> [String: [any DepartureProtocol]] {
+    func fetchDepartures(at stations: [any StationProtocol], lines: [String: [any LineProtocol]]? = nil) async throws -> [String: [any DepartureProtocol]] {
         var departures: [String: [any DepartureProtocol]] = [:]
         for station in stations {
-            departures[station.id] = try await fetchDepartures(at: station)
+            let linesAtStation = lines?[station.id]
+            departures[station.id] = try await fetchDepartures(at: station, lines: linesAtStation)
         }
         return departures
     }
