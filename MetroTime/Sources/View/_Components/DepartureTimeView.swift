@@ -34,7 +34,7 @@ struct DepartureTimeView: View {
     
     var body: some View {
         // TODO: Finish implementation
-        Text(departure.plannedDeparture.formatted(date: .omitted, time: .shortened))
+        Text(departureDate.formatted(date: .omitted, time: .shortened))
             .foregroundStyle(departureColor)
     }
 }
