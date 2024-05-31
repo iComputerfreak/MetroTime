@@ -12,6 +12,7 @@ import PackageDescription
             "XMLCoder": .framework,
             "JFUtils": .framework,
             "Factory": .framework,
+            "JamitFoundation": .framework,
         ]
     )
 #endif
@@ -25,5 +26,6 @@ let package = Package(
         .package(url: "https://github.com/iComputerfreak/JFUtils", branch: "main"),
         .package(url: "https://github.com/CoreOffice/XMLCoder", from: "0.17.1"),
         .package(url: "https://github.com/hmlongco/Factory", from: "2.3.0"),
+        .package(url: "https://github.com/JamitLabs/JamitFoundation", branch: "develop"),
     ]
 )

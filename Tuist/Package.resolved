@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "jamitfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JamitLabs/JamitFoundation",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "bfbba68fbc1446b03822b2652d8fca8be5f69813"
+      }
+    },
+    {
       "identity" : "jfutils",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/iComputerfreak/JFUtils",

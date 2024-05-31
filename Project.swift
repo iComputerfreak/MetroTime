@@ -30,9 +30,11 @@ private let mainTarget: Target = .target(
     resources: ["MetroTime/Resources/**"],
     scripts: [.post(script: swiftLintScript, name: "SwiftLint", basedOnDependencyAnalysis: false)],
     dependencies: [
-        .external(name: "XMLCoder", condition: nil),
-        .external(name: "JFUtils", condition: nil),
-        .external(name: "Factory", condition: nil),
+        .external(name: "XMLCoder"),
+        .external(name: "JFUtils"),
+        .external(name: "Factory"),
+        .external(name: "JamitFoundation"),
+        .external(name: "UserDefaults"),
         .target(name: "AppFoundation"),
         .target(name: "AppNetworking"),
         .target(name: "AppDomain"),
@@ -74,9 +76,17 @@ let project = Project(
         testsTarget,
     ] +
     createTargets(for: "AppFoundation") +
-    createTargets(for: "AppNetworking", dependsOn: ["AppFoundation"]) +
-    createTargets(for: "AppDomain", dependsOn: ["AppFoundation"]) +
-    createTargets(for: "AppData", dependsOn: ["AppFoundation", "AppDomain"]),
+    createTargets(for: "AppNetworking", dependsOn: [.target(name: "AppFoundation")]) +
+    createTargets(for: "AppDomain", dependsOn: [.target(name: "AppFoundation")]) +
+    createTargets(
+        for: "AppData",
+        dependsOn: [
+            .target(name: "AppFoundation"),
+            .target(name: "AppDomain"),
+            .external(name: "JamitFoundation"),
+            .external(name: "UserDefaults"),
+        ]
+    ),
     schemes: [
         .scheme(
             name: "MetroTime",
@@ -86,11 +96,11 @@ let project = Project(
     ]
 )
 
-private func createTargets(for modules: [String], dependsOn dependencies: [String] = []) -> [Target] {
+private func createTargets(for modules: [String], dependsOn dependencies: [TargetDependency] = []) -> [Target] {
     modules.flatMap { createTargets(for: $0, dependsOn: dependencies) }
 }
 
-private func createTargets(for module: String, dependsOn dependencies: [String] = []) -> [Target] {
+private func createTargets(for module: String, dependsOn dependencies: [TargetDependency] = []) -> [Target] {
     [
         .target(
             name: module,
@@ -101,7 +111,7 @@ private func createTargets(for module: String, dependsOn dependencies: [String] 
             infoPlist: .default,
             sources: ["Modules/\(module)/Sources/**"],
             resources: ["Modules/\(module)/Resources/**"],
-            dependencies: dependencies.map { .target(name: $0, condition: nil) },
+            dependencies: dependencies,
             settings: .settings(
                 base: SettingsDictionary()
                     .automaticCodeSigning(devTeam: "46C9Y785NA"),
