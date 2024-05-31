@@ -8,6 +8,10 @@ struct SettingsView: View {
     @Injected(\.userDefaultsService)
     private var userDefaultsService: any UserDefaultsService
     
+    private var numberOfRowsPerStation: Int {
+        userDefaultsService.getNumberOfRowsPerStation()
+    }
+    
     private var numberOfRowsPerStationBinding: Binding<Int> {
         .init {
             userDefaultsService.getNumberOfRowsPerStation()
@@ -19,7 +23,13 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Stepper("settingsView.numberOfRowsPerStation.stepperLabel", value: numberOfRowsPerStationBinding, in: 1 ... 20)
+                // TODO: Get a binding from the UserDefaultsService?
+                // TODO: Updating the binding doesn't update the label
+                Stepper(
+                    "settingsView.numberOfRowsPerStation.stepperLabel \(numberOfRowsPerStationBinding.wrappedValue)",
+                    value: numberOfRowsPerStationBinding,
+                    in: 1 ... 20
+                )
                 Text(verbatim: "Accent color")
                 Text(verbatim: "Refresh interval")
                 // Set custom colors based on the available lines at the stations the user selected

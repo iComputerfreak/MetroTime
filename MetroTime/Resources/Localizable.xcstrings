@@ -147,7 +147,7 @@
         }
       }
     },
-    "settingsView.numberOfRowsPerStation.stepperLabel" : {
+    "settingsView.numberOfRowsPerStation.stepperLabel %lld" : {
 
     },
     "stationLineResultsView.noResults.description" : {
